@@ -202,30 +202,37 @@
   .bpbtns { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; margin: .4rem 0 1rem 0; }
   .bpbtns .primary { font-weight: 700; color: #fff; background: var(--navy); border: 0; border-radius: 10px; padding: .6rem 1.1rem; cursor: pointer; }
   .bpprint { display: none; }
+  .bpinfo { margin: .1rem 0 .5rem 2.1rem; font-size: .92rem; }
+  .bpinfo summary { cursor: pointer; color: var(--teal); font-weight: 700; font-size: .85rem; }
+  .bpinfo > div { background: var(--teal-lt); border-radius: 8px; padding: .6rem .8rem; margin-top: .35rem; }
+  .bpinfo p:last-child { margin-bottom: 0; }
+  .bpready { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; background: var(--teal-lt); border-radius: 10px; padding: .6rem .8rem; margin: 0 0 1rem 0; }
+  .bpsheet { font-size: 10pt; line-height: 1.35; color: #000; background: #fff; }
+  .bpsheet.pdf { padding: 0; font-family: "Noto Sans", "Noto Sans KR", Arial, sans-serif; }
+  .bpsheet .bph { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 2px solid var(--navy); padding-bottom: .4rem; margin-bottom: .5rem; }
+  .bpsheet .bph img { height: 46px; width: auto; }
+  .bpsheet h1 { font-size: 16pt; }
+  .bpsheet table { font-size: 9.5pt; margin: 0 0 .5rem 0; }
+  .bpsheet th, .bpsheet td { padding: .15rem .4rem; }
+  .bpsheet th { width: 32%; background: none; }
+  .bpsheet .cols { column-count: 2; column-gap: 1.4rem; }
+  .bpsheet.pdf .cols { column-count: 1; }
+  .bpsheet .sec { break-inside: avoid; margin-bottom: .5rem; }
+  .bpsheet h2 { font-size: 11pt; color: var(--navy); border-bottom: 1px solid var(--rule); margin: 0 0 .2rem 0; padding-bottom: .1rem; }
+  .bpsheet ul { list-style: none; padding: 0; margin: 0; }
+  .bpsheet li { margin: 0 0 .2rem 0; padding-left: 1rem; position: relative; break-inside: avoid; }
+  .bpsheet li::before { content: "\2713"; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+  .bpsheet .en { display: block; color: #555; font-size: 8.5pt; font-style: italic; }
+  .bpsheet .disc { font-size: 8.5pt; color: #444; margin: .4rem 0; }
+  .bpsheet .sign { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 1.2rem; font-size: 9pt; break-inside: avoid; page-break-inside: avoid; }
+  .bpsheet .sign div { border-top: 1px solid #000; padding-top: .15rem; }
   @media print {
     @page { margin: 12mm; }
     html, body { background: #fff; }
-    body { font-size: 10pt; line-height: 1.35; }
     .top { display: none !important; }
     main { max-width: none; padding: 0; }
     body.bpmode main > :not(.bpprint) { display: none !important; }
-    .bpprint { display: block !important; color: #000; }
-    .bpprint .bph { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 2px solid var(--navy); padding-bottom: .4rem; margin-bottom: .5rem; }
-    .bpprint .bph img { height: 46px; width: auto; }
-    .bpprint h1 { font-size: 16pt; }
-    .bpprint table { font-size: 9.5pt; margin: 0 0 .5rem 0; }
-    .bpprint th, .bpprint td { padding: .15rem .4rem; }
-    .bpprint th { width: 32%; background: none; }
-    .bpprint .cols { column-count: 2; column-gap: 1.4rem; }
-    .bpprint .sec { break-inside: avoid; margin-bottom: .5rem; }
-    .bpprint h2 { font-size: 11pt; color: var(--navy); border-bottom: 1px solid var(--rule); margin: 0 0 .2rem 0; padding-bottom: .1rem; }
-    .bpprint ul { list-style: none; padding: 0; margin: 0; }
-    .bpprint li { margin: 0 0 .2rem 0; padding-left: 1rem; position: relative; break-inside: avoid; }
-    .bpprint li::before { content: "\2713"; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
-    .bpprint .en { display: block; color: #555; font-size: 8.5pt; font-style: italic; }
-    .bpprint .disc { font-size: 8.5pt; color: #444; margin: .4rem 0; }
-    .bpprint .sign { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 1.2rem; font-size: 9pt; break-inside: avoid; page-break-inside: avoid; }
-    .bpprint .sign div { border-top: 1px solid #000; padding-top: .15rem; }
+    .bpprint { display: block !important; }
   }
   .loading { text-align: center; color: var(--mute); padding: 3rem 1rem; }
   .foot { font-size: .78rem; color: var(--mute); margin-top: 2rem; text-align: center; }
@@ -482,11 +489,49 @@ const BP_FORM = [
   ['csec', [['csupport','check'],['cdrape','check'],['cskin','check'],['ctell','check'],['cmusic','check']]],
   ['other', [['culture','area'],['concerns','area'],['notes','area']]]
 ];
+const BP_INFO = {
+en: {
+  delay:'<p>Delayed cord clamping means waiting at least 30 to 60 seconds after birth before clamping the umbilical cord. More blood flows from the placenta to the baby.</p><p>In full-term babies, this raises iron levels in the first months of life. In preterm babies, it improves blood flow and lowers the need for blood transfusions. ACOG recommends it for most healthy newborns.</p><p>It slightly raises the chance of newborn jaundice that needs light treatment. It may not be done if your baby needs help breathing right away or if you are bleeding heavily.</p>',
+  circ:'<p>Circumcision is surgery to remove the foreskin, the skin that covers the tip of the penis. It is not required.</p><p>Benefits include a lower risk of urinary tract infections in the first year, a lower risk of some sexually transmitted infections, including HIV, later in life, and a lower risk of penile cancer, which is rare. Problems are uncommon and usually minor, such as bleeding or infection. Pain medicine is used.</p><p>U.S. medical experts say the health benefits outweigh the risks, but not enough to recommend it for every baby. It is a personal, cultural, or religious choice for your family. Ask whether your insurance covers it.</p>',
+  newbornmeds:'<p>Three medicines are offered to newborns soon after birth.</p><p><b>Vitamin K shot.</b> Babies are born with low vitamin K. One shot prevents vitamin K deficiency bleeding, a rare but serious condition that can cause bleeding in the brain.</p><p><b>Eye ointment (erythromycin).</b> Prevents a serious eye infection from gonorrhea that a baby can get during birth.</p><p><b>Hepatitis B vaccine.</b> The first dose protects against hepatitis B, a liver infection that can pass from a parent or others to the baby. ACOG and the American Academy of Pediatrics recommend it within 24 hours of birth.</p><p>Ask your provider or your baby\'s pediatrician any questions.</p>',
+  monitor:'<p>Intermittent monitoring means a nurse or provider listens to your baby\'s heartbeat at set times with a handheld device, instead of using belts on your belly the whole time. It can let you move around more freely.</p><p>It is an option for healthy patients with low-risk labor. Continuous monitoring is needed with an epidural, with medicine to start or speed up labor, with some health conditions, or if there is any concern about your baby\'s heart rate.</p>',
+  skin:'<p>Your baby is placed bare on your bare chest right after birth and covered with a warm blanket. Skin-to-skin contact helps keep your baby warm, steadies your baby\'s heart rate, breathing, and blood sugar, and helps breastfeeding get started.</p><p>It can often be done after a cesarean, too. A support person can also do skin-to-skin if you are not able to.</p>',
+  cordblood:'<p>Blood left in the umbilical cord and placenta after birth contains stem cells that can treat some blood diseases. Public donation is free, and the blood may help another patient. Private banking stores the blood for your family for a fee. ACOG notes that the chance a child will use their own stored cord blood is very small.</p><p>Banking must be arranged before labor. Collecting cord blood should not change or delay your care or your baby\'s care, but delayed cord clamping leaves less blood to collect.</p>',
+  saline:'<p>A saline lock is a small, flexible tube placed in a vein in your hand or arm and capped off, without a bag of fluids attached. It lets you move freely while keeping a vein ready in case you need fluids or medicine quickly.</p><p>You will need IV fluids if you have an epidural, need medicine through the IV, or become dehydrated.</p>',
+  room:'<p>Rooming-in means your baby stays in your room with you day and night. It helps you learn your baby\'s hunger cues, supports breastfeeding, and helps you feel ready to care for your baby at home. Nurses still check on you and your baby.</p>' },
+es: {
+  delay:'<p>El pinzamiento tardío del cordón significa esperar por lo menos 30 a 60 segundos después del nacimiento antes de pinzar el cordón umbilical. Así pasa más sangre de la placenta al bebé.</p><p>En bebés nacidos a término, aumenta las reservas de hierro durante los primeros meses de vida. En bebés prematuros, mejora la circulación y reduce la necesidad de transfusiones de sangre. ACOG lo recomienda para la mayoría de los recién nacidos sanos.</p><p>Aumenta un poco la probabilidad de ictericia (color amarillo de la piel) que necesite tratamiento con luz. Puede que no se haga si su bebé necesita ayuda para respirar de inmediato o si usted tiene un sangrado abundante.</p>',
+  circ:'<p>La circuncisión es una cirugía para quitar el prepucio, la piel que cubre la punta del pene. No es obligatoria.</p><p>Sus beneficios incluyen un menor riesgo de infecciones urinarias en el primer año, un menor riesgo de algunas infecciones de transmisión sexual, incluido el VIH, más adelante en la vida, y un menor riesgo de cáncer de pene, que es poco común. Las complicaciones son poco frecuentes y casi siempre leves, como sangrado o infección. Se usa medicamento para el dolor.</p><p>Los expertos médicos de EE. UU. dicen que los beneficios para la salud son mayores que los riesgos, pero no lo suficiente como para recomendarla para todos los bebés. Es una decisión personal, cultural o religiosa de su familia. Pregunte si su seguro la cubre.</p>',
+  newbornmeds:'<p>Poco después del nacimiento se ofrecen tres medicamentos a los recién nacidos.</p><p><b>Inyección de vitamina K.</b> Los bebés nacen con poca vitamina K. Una inyección previene el sangrado por deficiencia de vitamina K, una afección poco común pero grave que puede causar sangrado en el cerebro.</p><p><b>Pomada para los ojos (eritromicina).</b> Previene una infección grave de los ojos causada por gonorrea, que el bebé puede contraer durante el parto.</p><p><b>Vacuna contra la hepatitis B.</b> La primera dosis protege contra la hepatitis B, una infección del hígado que puede pasar de uno de los padres o de otras personas al bebé. ACOG y la Academia Americana de Pediatría recomiendan aplicarla en las primeras 24 horas de vida.</p><p>Haga cualquier pregunta a su proveedor o al pediatra de su bebé.</p>',
+  monitor:'<p>El monitoreo intermitente significa que una enfermera o su proveedor escucha los latidos de su bebé a intervalos fijos con un aparato de mano, en lugar de usar cinturones sobre el vientre todo el tiempo. Le permite moverse con más libertad.</p><p>Es una opción para pacientes sanas con un trabajo de parto de bajo riesgo. Se necesita monitoreo continuo si recibe una epidural, si recibe medicamentos para iniciar o acelerar el trabajo de parto, si tiene ciertas afecciones de salud o si hay alguna preocupación por el ritmo cardíaco de su bebé.</p>',
+  skin:'<p>Se coloca a su bebé desnudo sobre su pecho desnudo justo después del nacimiento y se le cubre con una manta tibia. El contacto piel con piel ayuda a mantener caliente a su bebé, estabiliza su ritmo cardíaco, su respiración y su nivel de azúcar en la sangre, y ayuda a iniciar la lactancia.</p><p>Muchas veces también se puede hacer después de una cesárea. Si usted no puede, su persona de apoyo también puede hacerlo.</p>',
+  cordblood:'<p>La sangre que queda en el cordón umbilical y la placenta después del nacimiento contiene células madre que pueden tratar algunas enfermedades de la sangre. La donación pública es gratuita y la sangre puede ayudar a otro paciente. Los bancos privados guardan la sangre para su familia a cambio de un pago. ACOG señala que la probabilidad de que un niño use su propia sangre de cordón guardada es muy baja.</p><p>Debe organizarse antes del parto. La recolección no debe cambiar ni retrasar su atención ni la de su bebé, pero el pinzamiento tardío del cordón deja menos sangre para recolectar.</p>',
+  saline:'<p>Una vía intravenosa cerrada es un tubito flexible que se coloca en una vena de la mano o el brazo y se tapa, sin una bolsa de suero conectada. Le permite moverse libremente y deja una vena lista por si necesita líquidos o medicamentos con rapidez.</p><p>Necesitará suero si recibe una epidural, si necesita medicamentos por vía intravenosa o si se deshidrata.</p>',
+  room:'<p>El alojamiento conjunto significa que su bebé se queda en su habitación con usted de día y de noche. Le ayuda a conocer las señales de hambre de su bebé, apoya la lactancia y le ayuda a sentirse lista para cuidar a su bebé en casa. Las enfermeras siguen revisándolos a usted y a su bebé.</p>' },
+ko: {
+  delay:'<p>탯줄 늦게 자르기(지연 결찰)는 출생 후 최소 30~60초를 기다렸다가 탯줄을 집는 것입니다. 태반에서 아기에게 더 많은 혈액이 전달됩니다.</p><p>만삭아의 경우 생후 몇 개월 동안 철분 저장량이 늘어납니다. 조산아의 경우 혈액 순환이 좋아지고 수혈이 필요할 가능성이 줄어듭니다. ACOG는 대부분의 건강한 신생아에게 이를 권장합니다.</p><p>광선 치료가 필요한 신생아 황달의 가능성이 약간 높아집니다. 아기가 즉시 호흡 도움이 필요하거나 산모의 출혈이 많으면 시행하지 않을 수 있습니다.</p>',
+  circ:'<p>포경수술은 음경 끝을 덮고 있는 피부(포피)를 제거하는 수술입니다. 필수는 아닙니다.</p><p>장점으로는 생후 첫 1년 동안 요로 감염 위험 감소, 이후 HIV를 포함한 일부 성병 위험 감소, 드문 질환인 음경암 위험 감소가 있습니다. 합병증은 드물고 대개 출혈이나 감염처럼 경미합니다. 통증을 줄이는 약을 사용합니다.</p><p>미국 의학 전문가들은 건강상 이점이 위험보다 크지만 모든 아기에게 권장할 정도는 아니라고 말합니다. 가족의 개인적, 문화적 또는 종교적 선택입니다. 보험 적용 여부를 확인하십시오.</p>',
+  newbornmeds:'<p>출생 직후 신생아에게 세 가지 약을 권합니다.</p><p><b>비타민 K 주사.</b> 아기는 비타민 K가 적은 상태로 태어납니다. 주사 한 번으로 비타민 K 결핍성 출혈을 예방합니다. 이는 드물지만 뇌출혈을 일으킬 수 있는 심각한 질환입니다.</p><p><b>안연고(에리스로마이신).</b> 출산 중 아기에게 옮을 수 있는 임질로 인한 심각한 눈 감염을 예방합니다.</p><p><b>B형 간염 백신.</b> 첫 접종은 부모나 다른 사람에게서 아기에게 옮을 수 있는 간 감염인 B형 간염을 예방합니다. ACOG와 미국소아과학회는 출생 후 24시간 이내 접종을 권장합니다.</p><p>궁금한 점은 담당 의료진이나 아기의 소아과 의사에게 물어보십시오.</p>',
+  monitor:'<p>간헐적 태아 감시는 배에 벨트를 계속 두르는 대신 간호사나 의료진이 정해진 시간마다 휴대용 기기로 아기의 심장 박동을 듣는 방법입니다. 더 자유롭게 움직일 수 있습니다.</p><p>위험도가 낮은 진통 중인 건강한 산모가 선택할 수 있습니다. 경막외 마취를 받거나, 진통을 유도하거나 촉진하는 약을 쓰거나, 특정 건강 문제가 있거나, 아기의 심박수에 우려가 있으면 지속적 감시가 필요합니다.</p>',
+  skin:'<p>출생 직후 아기를 맨몸으로 산모의 맨가슴 위에 올리고 따뜻한 담요로 덮습니다. 피부 맞대기는 아기의 체온을 유지하고 심박수, 호흡, 혈당을 안정시키며 모유 수유 시작을 돕습니다.</p><p>제왕절개 후에도 할 수 있는 경우가 많습니다. 산모가 할 수 없으면 보호자가 대신할 수도 있습니다.</p>',
+  cordblood:'<p>출생 후 탯줄과 태반에 남은 혈액(제대혈)에는 일부 혈액 질환을 치료할 수 있는 줄기세포가 들어 있습니다. 공공 기증은 무료이며 다른 환자에게 도움이 될 수 있습니다. 개인 제대혈 은행은 비용을 받고 가족을 위해 보관합니다. ACOG는 아이가 자신의 보관된 제대혈을 사용할 가능성은 매우 낮다고 설명합니다.</p><p>진통 전에 미리 신청해야 합니다. 채취 때문에 산모나 아기의 진료가 바뀌거나 늦어져서는 안 되지만, 탯줄을 늦게 자르면 채취할 수 있는 혈액이 줄어듭니다.</p>',
+  saline:'<p>정맥 라인만 확보하는 것은 손이나 팔의 정맥에 작고 유연한 관을 넣고 수액 주머니를 연결하지 않은 채 막아 두는 것입니다. 자유롭게 움직일 수 있으면서도 수액이나 약이 급히 필요할 때 바로 쓸 수 있습니다.</p><p>경막외 마취를 받거나, 정맥으로 약을 맞아야 하거나, 탈수가 되면 수액이 필요합니다.</p>',
+  room:'<p>모자동실은 아기가 밤낮으로 산모와 같은 방에 머무는 것입니다. 아기의 배고픔 신호를 익히고, 모유 수유를 돕고, 집에서 아기를 돌볼 준비가 되었다고 느끼는 데 도움이 됩니다. 간호사가 계속 산모와 아기를 확인합니다.</p>' },
+ht: {
+  delay:'<p>Tann anvan yo kranpe kòd la vle di yo tann omwen 30 a 60 segonn apre tibebe a fèt anvan yo kranpe kòd lonbrit la. Konsa, plis san pase soti nan plasenta a al jwenn tibebe a.</p><p>Pou tibebe ki fèt a tèm, sa ogmante rezèv fè yo pandan premye mwa lavi yo. Pou tibebe ki fèt anvan lè, sa amelyore sikilasyon san an epi diminye bezwen pou transfizyon san. ACOG rekòmande l pou pifò tibebe ki fèk fèt an sante.</p><p>Li ogmante yon ti kras chans pou jonis (po jòn) ki bezwen tretman ak limyè. Yo ka pa fè l si tibebe a bezwen èd pou respire touswit oswa si ou ap senyen anpil.</p>',
+  circ:'<p>Sikonsizyon se yon operasyon pou retire prepis la, po ki kouvri pwent pati gason an. Li pa obligatwa.</p><p>Avantaj yo gen ladan yo: mwens risk enfeksyon nan pipi pandan premye ane a, mwens risk pou kèk enfeksyon seksyèlman transmisib, tankou VIH, pita nan lavi, ak mwens risk kansè penis, ki ra. Pwoblèm yo pa frekan e yo souvan piti, tankou senyen oswa enfeksyon. Yo bay medikaman pou doulè.</p><p>Ekspè medikal Ozetazini di avantaj pou sante yo pi gran pase risk yo, men se pa ase pou rekòmande l pou tout tibebe. Se yon chwa pèsonèl, kiltirèl, oswa relijye pou fanmi ou. Mande si asirans ou kouvri l.</p>',
+  newbornmeds:'<p>Yo ofri twa medikaman pou tibebe ki fèk fèt yo yon ti tan apre yo fèt.</p><p><b>Piki vitamin K.</b> Tibebe yo fèt ak ti kras vitamin K. Yon sèl piki anpeche senyen akoz mank vitamin K, yon kondisyon ki ra men ki grav, ki ka lakoz senyen nan sèvo.</p><p><b>Pomad pou je (eritwomisin).</b> Li anpeche yon enfeksyon grav nan je akoz gonore tibebe a ka pran pandan akouchman an.</p><p><b>Vaksen epatit B.</b> Premye dòz la pwoteje kont epatit B, yon enfeksyon nan fwa ki ka pase soti nan yon paran oswa lòt moun bay tibebe a. ACOG ak Akademi Ameriken Pedyatri rekòmande l nan 24 èdtan apre nesans.</p><p>Poze founisè ou oswa pedyat tibebe ou nenpòt kesyon.</p>',
+  monitor:'<p>Siveyans de tanzantan vle di yon enfimyè oswa founisè koute batman kè tibebe a nan lè fiks ak yon ti aparèy nan men, olye yo mete senti sou vant ou tout tan. Sa ka pèmèt ou deplase pi libman.</p><p>Se yon opsyon pou pasyan ki an sante ki gen yon tranche ki pa gen anpil risk. Yo bezwen siveyans kontinyèl si ou pran yon epidiral, si ou pran medikaman pou kòmanse oswa akselere tranche a, si ou gen sèten pwoblèm sante, oswa si gen nenpòt enkyetid sou batman kè tibebe a.</p>',
+  skin:'<p>Yo mete tibebe a toutouni sou pwatrin ou ki toutouni touswit apre li fèt, epi yo kouvri l ak yon lenn cho. Kontak po ak po ede kenbe tibebe a cho, estabilize batman kè l, respirasyon l, ak sik nan san l, epi li ede bay tete kòmanse.</p><p>Souvan yo ka fè l apre yon sezaryèn tou. Si ou pa ka fè l, moun k ap sipòte w la ka fè l tou.</p>',
+  cordblood:'<p>San ki rete nan kòd lonbrit la ak plasenta a apre nesans gen selil souch ki ka trete kèk maladi san. Don piblik la gratis, e san an ka ede yon lòt pasyan. Bank prive yo konsève san an pou fanmi ou pou yon frè. ACOG di chans pou yon timoun sèvi ak pwòp san kòd li ki konsève a piti anpil.</p><p>Fòk ou ranje sa anvan tranche. Ranmase san an pa dwe chanje ni retade swen ou oswa swen tibebe a, men lè yo tann pou kranpe kòd la, gen mwens san pou ranmase.</p>',
+  saline:'<p>Yon kateter nan venn san sewòm se yon ti tib fleksib yo mete nan yon venn nan men oswa nan bra ou epi yo bouche l, san sak sewòm konekte. Li pèmèt ou deplase libman pandan yon venn rete pare si ou bezwen likid oswa medikaman rapid.</p><p>Ou ap bezwen sewòm si ou pran yon epidiral, si ou bezwen medikaman nan venn, oswa si ou dezidrate.</p>',
+  room:'<p>Kenbe tibebe a nan chanm ou vle di tibebe a rete nan chanm nan avè w lajounen kou lannwit. Sa ede w aprann siy grangou tibebe a, li sipòte bay tete, epi li ede w santi w pare pou okipe tibebe a lakay. Enfimyè yo toujou ap tcheke ou menm ak tibebe a.</p>' }
+};
 const BP_LOCALE = { en:'en-US', es:'es-US', ko:'ko-KR', ht:'fr-HT' };
 const BP = {
 en: { title:'Birth Preferences', sub:'Fill out and print',
   intro:'Choose what matters to you. Print a copy or save it as a PDF, review it with your provider at a prenatal visit, and bring it to the hospital. Birth can be unpredictable. Your care team will follow your preferences when it is safe for you and your baby.',
-  saved:'Answers are saved only on this device.', print:'Print or save as PDF', clear:'Clear answers', clearConfirm:'Clear all birth preference answers on this device?', link:'Fill out my birth preferences',
+  saved:'Answers are saved only on this device.', print:'Print', pdf:'Save as PDF', making:'Creating PDF…', pdfFail:'The PDF could not be created. Use Print instead.', ready:'PDF ready:', open:'Open PDF', share:'Share', more:'More info', clear:'Clear answers', clearConfirm:'Clear all birth preference answers on this device?', link:'Fill out my birth preferences',
   sheet:'My Birth Preferences', doctor:'Doctor', practice:'Practice', phone:'Office phone', prepared:'Prepared', reviewed:'Reviewed with my provider (provider signature)', date:'Date', patientSig:'Patient signature', yes:'Yes',
   secs:{ about:'About me', env:'Labor environment', labor:'During labor', pain:'Pain relief', birth:'Pushing and birth', after:'After birth', csec:'If I need a cesarean', other:'Anything else' },
   q:{ name:'My name', due:'Due date', support:'Support people with me (names and relationship)', doula:'Doula (name, if any)', peds:"My baby's pediatrician", interp:'I need a medical interpreter', interpLang:'Language',
@@ -502,7 +547,7 @@ en: { title:'Birth Preferences', sub:'Fill out and print',
     circ:{ yes:'Yes', no:'No', undecided:'Not decided' } } },
 es: { title:'Preferencias para el Parto', sub:'Complete e imprima',
   intro:'Elija lo que es importante para usted. Imprima una copia o guárdela como PDF, revísela con su proveedor en una visita prenatal y llévela al hospital. El parto puede ser impredecible. Su equipo de atención seguirá sus preferencias cuando sea seguro para usted y su bebé.',
-  saved:'Las respuestas se guardan solo en este dispositivo.', print:'Imprimir o guardar como PDF', clear:'Borrar respuestas', clearConfirm:'¿Borrar todas las respuestas de preferencias para el parto en este dispositivo?', link:'Completar mis preferencias para el parto',
+  saved:'Las respuestas se guardan solo en este dispositivo.', print:'Imprimir', pdf:'Guardar como PDF', making:'Creando el PDF…', pdfFail:'No se pudo crear el PDF. Use Imprimir.', ready:'PDF listo:', open:'Abrir PDF', share:'Compartir', more:'Más información', clear:'Borrar respuestas', clearConfirm:'¿Borrar todas las respuestas de preferencias para el parto en este dispositivo?', link:'Completar mis preferencias para el parto',
   sheet:'Mis Preferencias para el Parto', doctor:'Médico', practice:'Consultorio', phone:'Teléfono del consultorio', prepared:'Preparado', reviewed:'Revisado con mi proveedor (firma del proveedor)', date:'Fecha', patientSig:'Firma de la paciente', yes:'Sí',
   secs:{ about:'Sobre mí', env:'Ambiente durante el trabajo de parto', labor:'Durante el trabajo de parto', pain:'Alivio del dolor', birth:'El pujo y el nacimiento', after:'Después del nacimiento', csec:'Si necesito una cesárea', other:'Otros detalles' },
   q:{ name:'Mi nombre', due:'Fecha probable de parto', support:'Personas de apoyo conmigo (nombres y relación)', doula:'Doula (nombre, si tengo)', peds:'El pediatra de mi bebé', interp:'Necesito un intérprete médico', interpLang:'Idioma',
@@ -518,7 +563,7 @@ es: { title:'Preferencias para el Parto', sub:'Complete e imprima',
     circ:{ yes:'Sí', no:'No', undecided:'No lo he decidido' } } },
 ko: { title:'출산 선호 사항', sub:'작성 후 인쇄',
   intro:'원하는 항목을 선택하십시오. 인쇄하거나 PDF로 저장하여 산전 진료 때 담당 의료진과 함께 검토하고 병원에 가져오십시오. 출산은 예측하기 어려울 수 있습니다. 진료팀은 산모와 아기에게 안전한 범위에서 선호 사항을 따릅니다.',
-  saved:'답변은 이 기기에만 저장됩니다.', print:'인쇄 또는 PDF로 저장', clear:'답변 지우기', clearConfirm:'이 기기에 저장된 출산 선호 사항 답변을 모두 지우시겠습니까?', link:'나의 출산 선호 사항 작성하기',
+  saved:'답변은 이 기기에만 저장됩니다.', print:'인쇄', pdf:'PDF로 저장', making:'PDF 만드는 중…', pdfFail:'PDF를 만들 수 없습니다. 인쇄를 사용하십시오.', ready:'PDF 준비 완료:', open:'PDF 열기', share:'공유', more:'자세히 보기', clear:'답변 지우기', clearConfirm:'이 기기에 저장된 출산 선호 사항 답변을 모두 지우시겠습니까?', link:'나의 출산 선호 사항 작성하기',
   sheet:'나의 출산 선호 사항', doctor:'담당 의사', practice:'진료소', phone:'진료소 전화', prepared:'작성일', reviewed:'담당 의료진과 검토함 (의료진 서명)', date:'날짜', patientSig:'환자 서명', yes:'예',
   secs:{ about:'나에 대하여', env:'진통 중 환경', labor:'진통 중', pain:'통증 완화', birth:'힘주기와 출산', after:'출산 후', csec:'제왕절개가 필요한 경우', other:'기타' },
   q:{ name:'이름', due:'출산 예정일', support:'함께할 보호자 (이름과 관계)', doula:'둘라 (있는 경우 이름)', peds:'아기의 소아과 의사', interp:'의료 통역이 필요합니다', interpLang:'언어',
@@ -534,7 +579,7 @@ ko: { title:'출산 선호 사항', sub:'작성 후 인쇄',
     circ:{ yes:'예', no:'아니요', undecided:'아직 정하지 않음' } } },
 ht: { title:'Preferans pou Akouchman', sub:'Ranpli epi enprime',
   intro:'Chwazi sa ki enpòtan pou ou. Enprime yon kopi oswa anrejistre l kòm PDF, revize l ak founisè ou nan yon vizit prenatal, epi pote l lopital la. Akouchman ka pa pase jan ou te prevwa. Ekip swen ou ap swiv preferans ou yo lè sa an sekirite pou ou ak tibebe ou.',
-  saved:'Repons yo anrejistre sèlman sou aparèy sa a.', print:'Enprime oswa anrejistre kòm PDF', clear:'Efase repons yo', clearConfirm:'Efase tout repons preferans pou akouchman sou aparèy sa a?', link:'Ranpli preferans mwen pou akouchman',
+  saved:'Repons yo anrejistre sèlman sou aparèy sa a.', print:'Enprime', pdf:'Anrejistre kòm PDF', making:'N ap kreye PDF la…', pdfFail:'Nou pa t ka kreye PDF la. Sèvi ak Enprime pito.', ready:'PDF la pare:', open:'Louvri PDF la', share:'Pataje', more:'Plis enfòmasyon', clear:'Efase repons yo', clearConfirm:'Efase tout repons preferans pou akouchman sou aparèy sa a?', link:'Ranpli preferans mwen pou akouchman',
   sheet:'Preferans Mwen pou Akouchman', doctor:'Doktè', practice:'Pratik', phone:'Telefòn biwo a', prepared:'Prepare', reviewed:'Revize ak founisè mwen (siyati founisè a)', date:'Dat', patientSig:'Siyati pasyan an', yes:'Wi',
   secs:{ about:'Konsènan mwen', env:'Anviwònman pandan tranche', labor:'Pandan tranche', pain:'Soulajman doulè', birth:'Pouse ak akouchman', after:'Apre akouchman', csec:'Si mwen bezwen yon sezaryèn', other:'Lòt bagay' },
   q:{ name:'Non mwen', due:'Dat akouchman', support:'Moun k ap sipòte m (non ak relasyon)', doula:'Doula (non, si genyen)', peds:'Pedyat tibebe mwen', interp:'Mwen bezwen yon entèprèt medikal', interpLang:'Lang',
@@ -706,21 +751,22 @@ function bpLoad() { let a = {}; try { a = JSON.parse(localStorage.getItem('hn_bp
 function bpSave(a) { try { localStorage.setItem('hn_bp', JSON.stringify(a)); if (a.due) localStorage.setItem('hn_due', a.due); } catch(e) {} }
 function bpHTML() {
   const b = BP[lang], a = bpLoad();
-  const btns = `<div class="bpbtns"><button type="button" class="primary" data-bpact="print">${b.print}</button><button type="button" class="linkbtn" data-bpact="clear">${b.clear}</button></div>`;
+  const btns = `<div class="bpbtns"><button type="button" class="primary" data-bpact="pdf">${b.pdf}</button><button type="button" class="linkbtn" data-bpact="print">${b.print}</button><button type="button" class="linkbtn" data-bpact="clear">${b.clear}</button></div><div class="bpready" hidden></div>`;
+  const info = id => BP_INFO[lang][id] ? `<details class="bpinfo"><summary>${b.more}</summary><div>${BP_INFO[lang][id]}</div></details>` : '';
   let h = `<button class="back" data-go="home">${UI[lang].home}</button><h1>${esc(b.title)}</h1><p style="margin-top:.5rem">${b.intro}</p><p class="small">${b.saved}</p>${btns}`;
   for (const [sec, items] of BP_FORM) {
     h += `<div class="card"><h2 style="margin-bottom:.5rem">${esc(b.secs[sec])}</h2>`;
     for (const [id, type, opts] of items) {
       const v = a[id] || '', lab = esc(b.q[id]);
-      if (type === 'check') h += `<label class="bpq"><input type="checkbox" data-bp="${id}"${v ? ' checked' : ''}><span>${lab}</span></label>`;
+      if (type === 'check') h += `<label class="bpq"><input type="checkbox" data-bp="${id}"${v ? ' checked' : ''}><span>${lab}</span></label>${info(id)}`;
       else if (type === 'head') h += `<div class="bpsub">${lab}</div>`;
-      else if (type === 'radio') h += `<fieldset class="bpr"><legend>${lab}</legend>` + opts.map(o => `<label class="bpq"><input type="radio" name="bp_${id}" data-bp="${id}" value="${o}"${v === o ? ' checked' : ''}><span>${esc(b.opt[id][o])}</span></label>`).join('') + `</fieldset>`;
+      else if (type === 'radio') h += `<fieldset class="bpr"><legend>${lab}</legend>${info(id) ? info(id).replace('class="bpinfo"', 'class="bpinfo" style="margin-left:0"') : ''}` + opts.map(o => `<label class="bpq"><input type="radio" name="bp_${id}" data-bp="${id}" value="${o}"${v === o ? ' checked' : ''}><span>${esc(b.opt[id][o])}</span></label>`).join('') + `</fieldset>`;
       else if (type === 'area') h += `<div class="field"><label for="bp_${id}">${lab}</label><textarea id="bp_${id}" data-bp="${id}">${esc(v)}</textarea></div>`;
       else h += `<div class="field"><label for="bp_${id}">${lab}</label><input type="${type}" id="bp_${id}" data-bp="${id}" value="${esc(v)}"></div>`;
     }
     h += `</div>`;
   }
-  return h + btns + `<div class="bpprint" id="bpPrint"></div>`;
+  return h + btns + `<div class="bpprint bpsheet" id="bpPrint"></div>`;
 }
 function bpUpdate(el) {
   const a = bpLoad(), id = el.dataset.bp;
@@ -762,6 +808,50 @@ function bpPrintHTML() {
     <p class="disc">${b.intro}</p>
     <div class="cols">${secs}</div>
     <div class="sign"><div>${lbl(b.patientSig, en.patientSig)}</div><div>${lbl(b.date, en.date)}</div><div>${lbl(b.reviewed, en.reviewed)}</div><div>${lbl(b.date, en.date)}</div></div>`;
+}
+
+const _scripts = {};
+function loadScript(src) { return _scripts[src] || (_scripts[src] = new Promise((res, rej) => { const el = document.createElement('script'); el.src = src; el.onload = res; el.onerror = () => { delete _scripts[src]; rej(new Error(src)); }; document.head.appendChild(el); })); }
+async function bpPdf(btn) {
+  const b = BP[lang], label = btn.textContent; let host;
+  btn.disabled = true; btn.textContent = b.making;
+  document.querySelectorAll('.bpready').forEach(r => { r.hidden = true; r.innerHTML = ''; });
+  try {
+    await Promise.all([loadScript('vendor/html2canvas.min.js'), loadScript('vendor/jspdf.umd.min.js')]);
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    host = document.createElement('div'); host.className = 'bpsheet pdf';
+    host.style.cssText = 'position:absolute;left:-10000px;top:0;width:720px;';
+    host.innerHTML = bpPrintHTML(); document.body.appendChild(host);
+    await Promise.all([...host.querySelectorAll('img')].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
+    const W = host.offsetWidth, H = host.scrollHeight, top = host.getBoundingClientRect().top;
+    const canvas = await html2canvas(host, { scale: 2, backgroundColor: '#ffffff', logging: false });
+    const k = canvas.width / W, pageH = Math.floor(W * 720 / 540);
+    const cuts = [...host.querySelectorAll('li, tr, .sec, table, .disc, .sign, .bph')].map(e => Math.ceil(e.getBoundingClientRect().bottom - top)).sort((x, y) => x - y);
+    const pdf = new window.jspdf.jsPDF({ unit: 'pt', format: 'letter' });
+    let y = 0, first = true;
+    while (y < H - 2) {
+      let end = Math.min(H, y + pageH);
+      if (end < H) { const c = cuts.filter(v => v > y + 60 && v <= end); if (c.length) end = c[c.length - 1] + 2; }
+      const sh = Math.ceil((end - y) * k), pc = document.createElement('canvas'); pc.width = canvas.width; pc.height = sh;
+      const ctx = pc.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, pc.width, sh);
+      ctx.drawImage(canvas, 0, Math.floor(y * k), canvas.width, sh, 0, 0, canvas.width, sh);
+      if (!first) pdf.addPage(); first = false;
+      pdf.addImage(pc.toDataURL('image/jpeg', 0.92), 'JPEG', 36, 36, 540, (end - y) * 540 / W);
+      y = end;
+    }
+    const name = 'birth-preferences.pdf', blob = pdf.output('blob'), url = URL.createObjectURL(blob);
+    const file = typeof File === 'function' ? new File([blob], name, { type: 'application/pdf' }) : null;
+    const canShare = file && navigator.canShare && navigator.canShare({ files: [file] });
+    document.querySelectorAll('.bpready').forEach(r => {
+      r.innerHTML = `<b>${b.ready}</b><a class="linkbtn" href="${url}" download="${name}" target="_blank" rel="noopener">${b.open}</a>` + (canShare ? `<button type="button" class="linkbtn" data-bpact="share">${b.share}</button>` : '');
+      r.hidden = false;
+    });
+    window._bpFile = file;
+    const mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    if (mobile && canShare) { try { await navigator.share({ files: [file], title: b.sheet }); } catch (e) { /* user cancelled or gesture expired: links stay visible */ } }
+    else if (!mobile) { const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
+  } catch (e) { alert(b.pdfFail); }
+  finally { if (host) host.remove(); btn.disabled = false; btn.textContent = label; }
 }
 
 function searchHTML(q) {
@@ -809,6 +899,8 @@ $('main').addEventListener('click', e => {
   const go = e.target.closest('[data-go]'); if (go) { show(go.dataset.go); return; }
   const bpa = e.target.closest('[data-bpact]'); if (bpa) {
     if (bpa.dataset.bpact === 'print') { $('bpPrint').innerHTML = bpPrintHTML(); window.print(); }
+    else if (bpa.dataset.bpact === 'pdf') bpPdf(bpa);
+    else if (bpa.dataset.bpact === 'share') { if (window._bpFile) navigator.share({ files: [window._bpFile], title: BP[lang].sheet }).catch(() => {}); }
     else if (confirm(BP[lang].clearConfirm)) { try { localStorage.removeItem('hn_bp'); } catch(err) {} show('bp'); }
     return;
   }
