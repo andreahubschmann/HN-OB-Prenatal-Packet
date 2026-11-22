@@ -281,7 +281,7 @@ const PRACTICES = {
     offices: [] },
   whp: { org: "Holy Name Women's Health Partners", logo: 'img/logo_whp.png', phone: '(201) 833-7087', afterhours: 'office',
     groups: [
-      { k:'whpDocs', names:[['JaQuellah Taylor','f'],['Paula Barcia-Pena','f'],['Vibha Joshi','f'],['Tamara Aviles','f'],['Neelam Sharma','f'],['Angelica Matteo De Pablo','f'],['Hazel Brana-Leon','f'],['Ruben Barrera Vera','m'],['Maria Pachon','f'],['Weiping Lin','m'],['Yissel Borrego, APN','']] },
+      { k:'whpDocs', names:[['JaQuellah Taylor','f'],['Paula Barcia-Pena','f'],['Vibha Joshi','f'],['Tamara Aviles','f'],['Neelam Sharma','f'],['Angelica Matteo De Pablo','f'],['Hazel Brana-Leon','f'],['Ruben Barrera Vera','m'],['Maria Pachon','f'],['Weiping Lin','m'],['Yissel Borrego, APN','',['Aviles|Tamara','Borrego|Yissel']]] },
       { k:'laborists', names:[['Andrea Hubschmann','f'],['Babalola Jinadu','m'],['Bibiancy Gutierrez','f'],['Judith Pinto','f'],['Ben Mapa','m']] },
       { k:'cnm', names:[['Atinuke Asaolu, CNM, DNP',''],['Sheva Gluck, CNM','']] } ],
     offices: [
@@ -289,7 +289,7 @@ const PRACTICES = {
       { city:'Englewood', addr:'46 North Van Brunt Street<br>Englewood, NJ 07631', phone:'(551) 333-1322', docs:[['Weiping Lin','m'],['Neelam Sharma','f']] },
       { city:'Hackensack', addr:'301 Beech Street<br>Hackensack, NJ 07601', phone:'(201) 880-7641', docs:[['Vibha Joshi','f']] },
       { city:'Cliffside Park', addr:'663 Palisade Avenue, Suite 301<br>Cliffside Park, NJ 07010', phone:'(201) 943-4884', docs:[['Ruben Barrera Vera','m'],['Maria Pachon','f'],['Angelica Matteo De Pablo','f']] },
-      { city:'West New York', addr:'419 66th Street<br>West New York, NJ 07093', phone:'(201) 861-9229', docs:[['Tamara Aviles','f'],['Yissel Borrego, APN','']] } ] },
+      { city:'West New York', addr:'419 66th Street<br>West New York, NJ 07093', phone:'(201) 861-9229', docs:[['Tamara Aviles','f'],['Yissel Borrego, APN','',['Aviles|Tamara','Borrego|Yissel']]] } ] },
   whcg: { org: "Holy Name Women's Health Care Group", logo: 'img/logo_whcg.png', phone: '(201) 907-0900', afterhours: 'main',
     groups: [
       { k:'whcgDocs', names:[['Payal Shah','f'],['Nicole Palomar','f'],['Sneha Sudanagunta','f'],['Amalia Gonzalez-Tineo','f'],['Gokce Incekara, APN','']] },
@@ -652,9 +652,10 @@ function buildDoctorSelect() {
 /* ---------- screens ---------- */
 function coverHTML() {
   const s = STR[lang], p = PRACTICES[practice];
-  const groups = p.groups.map(g => `<div><b>${s.groups[g.k]}</b>${g.names.map(n => memberHTML(n, s)).join('')}</div>`).join('');
+  const shown = n => !n[2] || n[2].includes(doctor);
+  const groups = p.groups.map(g => `<div><b>${s.groups[g.k]}</b>${g.names.filter(shown).map(n => memberHTML(n, s)).join('')}</div>`).join('');
   let offices = '';
-  if (p.offices.length) offices = `<h3>${s.officesHeading}</h3><div class="offices">` + p.offices.map(o => `<div class="office"><b>${o.city}</b><br>${o.addr}<br><b>${telLink(o.phone)}</b>${o.docs.length ? '<br><span class="docs">' + o.docs.map(n => nameLine(n, s)).join(', ') + '</span>' : ''}</div>`).join('') + '</div>';
+  if (p.offices.length) offices = `<h3>${s.officesHeading}</h3><div class="offices">` + p.offices.map(o => `<div class="office"><b>${o.city}</b><br>${o.addr}<br><b>${telLink(o.phone)}</b>${o.docs.filter(shown).length ? '<br><span class="docs">' + o.docs.filter(shown).map(n => nameLine(n, s)).join(', ') + '</span>' : ''}</div>`).join('') + '</div>';
   return `<div class="card">
     <img class="cover-logo" src="${p.logo}" alt="${p.org}">
     <h1>${s.h1}</h1>
