@@ -154,6 +154,12 @@
   .cover-logo { width: min(320px, 80%); display:block; margin: 0 0 1.2rem 0; }
   .team { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem 1rem; margin: .6rem 0 1rem 0; font-size: .95rem; }
   @media (min-width: 700px) { .team { grid-template-columns: repeat(3, 1fr); } }
+  .mem { display: flex; align-items: center; gap: .55rem; margin: 0 0 .45rem 0; line-height: 1.25; }
+  .mem img, .mem .ini { width: 42px; height: 50px; border-radius: 8px; object-fit: cover; flex: 0 0 auto; background: var(--navy-lt); }
+  .mem .ini { display: flex; align-items: center; justify-content: center; color: var(--navy); font-weight: 700; font-size: .85rem; }
+  .docrow { display: flex; align-items: center; gap: .8rem; margin-top: .6rem; }
+  .docrow img { width: 72px; height: 87px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; }
+  .docrow .who { margin: 0; }
   .team b { display:block; color: var(--teal); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .2rem; }
   .offices { display: grid; grid-template-columns: 1fr; gap: .6rem; margin: .5rem 0 1rem 0; }
   @media (min-width: 600px) { .offices { grid-template-columns: repeat(2, 1fr); } }
@@ -437,6 +443,14 @@ const ICON = {
 };
 ICON.peds = '<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M10 8.5h.01M14 8.5h.01"/><path d="M10.5 11a2 2 0 0 0 3 0"/><path d="M6 21a6 6 0 0 1 12 0"/></svg>';
 const PED_LINKS = { ped1:'00314', ped2:'84132', ped3:'84539', ped4:'87923', ped5:'89010' };
+const PHOTOS = { 'Payal Shah':'shah', 'Shonda Corbett':'corbett', 'Amalia Gonzalez-Tineo':'gonzalez-tineo', 'Nicole Palomar':'palomar', 'Kimberly Fallon':'fallon', 'Sneha Sudanagunta':'sudanagunta', 'Gokce Incekara':'incekara', 'Linneah Olsen':'olsen',
+  'Paula Barcia-Pena':'barcia-pena', 'Vibha Joshi':'joshi', 'Tamara Aviles':'aviles', 'Angelica Matteo De Pablo':'matteo-de-pablo', 'JaQuellah Taylor':'taylor', 'Hazel Brana-Leon':'brana-leon', 'Neelam Sharma':'sharma', 'Ruben Barrera Vera':'barrera-vera', 'Weiping Lin':'lin', 'Henry Fernandez-Cos':'fernandez-cos', 'Maria Pachon':'pachon', 'Yissel Borrego':'borrego',
+  'Andrea Hubschmann':'hubschmann', 'Bibiancy Gutierrez':'gutierrez', 'Judith Pinto':'pinto', 'Babalola Jinadu':'jinadu', 'Atinuke Asaolu':'asaolu', 'Sheva Gluck':'gluck' };
+function photoFor(name) { const k = Object.keys(PHOTOS).find(k => name === k || name.startsWith(k + ',')); return k ? `img/team/${PHOTOS[k]}.jpg` : ''; }
+function memberHTML(n, s) {
+  const src = photoFor(n[0]), ini = n[0].split(',')[0].split(' ').filter(Boolean).map(w => w[0]).filter((c, i, a) => i === 0 || i === a.length - 1).join('');
+  return `<div class="mem">${src ? `<img src="${src}" alt="" loading="lazy">` : `<span class="ini" aria-hidden="true">${esc(ini)}</span>`}<span>${nameLine(n, s)}</span></div>`;
+}
 ICON.bp = '<svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.5h6V4"/><path d="M12 17s-3-1.8-3-4a1.6 1.6 0 0 1 3-.8 1.6 1.6 0 0 1 3 .8c0 2.2-3 4-3 4z"/></svg>';
 const TOPIC_ORDER = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','portal','refs'];
 
@@ -637,7 +651,7 @@ function buildDoctorSelect() {
 /* ---------- screens ---------- */
 function coverHTML() {
   const s = STR[lang], p = PRACTICES[practice];
-  const groups = p.groups.map(g => `<div><b>${s.groups[g.k]}</b>${g.names.map(n => nameLine(n, s)).join('<br>')}</div>`).join('');
+  const groups = p.groups.map(g => `<div><b>${s.groups[g.k]}</b>${g.names.map(n => memberHTML(n, s)).join('')}</div>`).join('');
   let offices = '';
   if (p.offices.length) offices = `<h3>${s.officesHeading}</h3><div class="offices">` + p.offices.map(o => `<div class="office"><b>${o.city}</b><br>${o.addr}<br><b>${telLink(o.phone)}</b>${o.docs.length ? '<br><span class="docs">' + o.docs.map(n => nameLine(n, s)).join(', ') + '</span>' : ''}</div>`).join('') + '</div>';
   return `<div class="card">
@@ -662,7 +676,7 @@ function homeHTML() {
   const d = doctor ? docById(doctor) : null;
   const who = d ? `${d.last}, ${d.first}, ${d.cred} · ${PRACTICE_NAMES[practice]}` : PRACTICE_NAMES[practice];
   const hero = doctor ? `<div class="card hero">
-      <div><img src="${p.logo}" alt="${p.org}"><p class="who">${esc(who)}</p><div class="small" style="margin-top:.3rem">${s.after[p.afterhours]}</div></div>
+      <div><img src="${p.logo}" alt="${p.org}">${photoFor(`${d.first} ${d.last}`) ? `<div class="docrow"><img src="${photoFor(`${d.first} ${d.last}`)}" alt="${esc(d.first + ' ' + d.last)}"><p class="who">${esc(who)}</p></div>` : `<p class="who">${esc(who)}</p>`}<div class="small" style="margin-top:.3rem">${s.after[p.afterhours]}</div></div>
       <div class="herorow"><a class="callbtn" href="tel:${p.phone.replace(/[^0-9]/g,'')}"><span>${u.call}</span><b>${p.phone}</b></a></div>
     </div>` : `<div class="card hero">
       <div><img src="img/logo_hn.png" alt="Holy Name"><p style="margin-top:.6rem">${u.choosePrompt}</p></div>
