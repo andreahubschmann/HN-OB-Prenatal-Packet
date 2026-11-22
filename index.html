@@ -444,7 +444,8 @@ ICON.peds = '<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M10
 const PED_LINKS = { ped1:'00314', ped2:'84132', ped3:'84539', ped4:'87923', ped5:'89010' };
 const PHOTOS = { 'Payal Shah':'shah', 'Shonda Corbett':'corbett', 'Amalia Gonzalez-Tineo':'gonzalez-tineo', 'Nicole Palomar':'palomar', 'Kimberly Fallon':'fallon', 'Sneha Sudanagunta':'sudanagunta', 'Gokce Incekara':'incekara', 'Linneah Olsen':'olsen',
   'Paula Barcia-Pena':'barcia-pena', 'Vibha Joshi':'joshi', 'Tamara Aviles':'aviles', 'Angelica Matteo De Pablo':'matteo-de-pablo', 'JaQuellah Taylor':'taylor', 'Hazel Brana-Leon':'brana-leon', 'Neelam Sharma':'sharma', 'Ruben Barrera Vera':'barrera-vera', 'Weiping Lin':'lin', 'Maria Pachon':'pachon', 'Yissel Borrego':'borrego',
-  'Andrea Hubschmann':'hubschmann', 'Bibiancy Gutierrez':'gutierrez', 'Judith Pinto':'pinto', 'Babalola Jinadu':'jinadu', 'Atinuke Asaolu':'asaolu', 'Sheva Gluck':'gluck' };
+  'Andrea Hubschmann':'hubschmann', 'Bibiancy Gutierrez':'gutierrez', 'Judith Pinto':'pinto', 'Babalola Jinadu':'jinadu', 'Atinuke Asaolu':'asaolu', 'Sheva Gluck':'gluck',
+  'Andrea Dwiggins':'dwiggins', 'Noelle Mayers':'mayers', 'Brianna Mosley':'mosley' };
 function photoFor(name) { const k = Object.keys(PHOTOS).find(k => name === k || name.startsWith(k + ',')); return k ? `img/team/${PHOTOS[k]}.jpg` : ''; }
 function memberHTML(n, s) {
   const src = photoFor(n[0]), ini = n[0].split(',')[0].split(' ').filter(Boolean).map(w => w[0]).filter((c, i, a) => i === 0 || i === a.length - 1).join('');
