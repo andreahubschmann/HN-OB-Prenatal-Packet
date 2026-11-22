@@ -452,6 +452,7 @@ function memberHTML(n, s) {
   const src = photoFor(n[0]), ini = n[0].split(',')[0].split(' ').filter(Boolean).map(w => w[0]).filter((c, i, a) => i === 0 || i === a.length - 1).join('');
   return `<div class="mem">${src ? `<img src="${src}" alt="" loading="lazy">` : `<span class="ini" aria-hidden="true">${esc(ini)}</span>`}<span>${nameLine(n, s)}</span></div>`;
 }
+ICON.teambirth = '<svg viewBox="0 0 24 24"><circle cx="12" cy="6" r="2.5"/><circle cx="5" cy="10" r="2"/><circle cx="19" cy="10" r="2"/><path d="M8 20v-3a4 4 0 0 1 8 0v3"/><path d="M2 20v-2a3 3 0 0 1 5-2.2"/><path d="M22 20v-2a3 3 0 0 0-5-2.2"/></svg>';
 ICON.bp = '<svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.5h6V4"/><path d="M12 17s-3-1.8-3-4a1.6 1.6 0 0 1 3-.8 1.6 1.6 0 0 1 3 .8c0 2.2-3 4-3 4z"/></svg>';
 const TOPIC_ORDER = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','portal','refs'];
 
@@ -628,6 +629,52 @@ ht: { title:'Preferans pou Akouchman', sub:'Ranpli epi enprime',
     vitk:{ yes:'Wi', discuss:'Mwen gen kesyon. Mwen vle pale ak pedyat la anvan.' }, eye:{ yes:'Wi', discuss:'Mwen gen kesyon. Mwen vle pale ak pedyat la anvan.' }, hepb:{ yes:'Wi', discuss:'Mwen gen kesyon. Mwen vle pale ak pedyat la anvan.' } } }
 };
 
+/* ---------- TeamBirth ---------- */
+const TB = {
+en: { title:'TeamBirth', sub:'How we plan your labor together',
+  intro:'The BirthPlace at Holy Name uses TeamBirth, a way of planning care during labor that makes you a full member of your care team. TeamBirth was developed by Ariadne Labs, a joint center of Brigham and Women\'s Hospital and the Harvard T.H. Chan School of Public Health. Hospitals across New Jersey use it through TeamBirth NJ.',
+  items:[
+   ['What is TeamBirth?','<p>TeamBirth is a way for you, your support people, your nurse, and your doctor or midwife to make decisions together during labor. Your input counts as much as anyone else\'s. You know your body, your values, and how you feel. Your team brings medical knowledge and experience. Together, you agree on a plan.</p>'],
+   ['Team huddles','<p>A huddle is a short conversation at your bedside with you, your nurse, and your doctor or midwife. Your support person or doula is welcome to join.</p><h4>When huddles happen</h4><ul><li>When you are admitted</li><li>When the plan for your care may change</li><li>Any time you, your support person, or anyone on your team asks for one</li></ul><h4>What the team talks about</h4><ul><li>How you and your baby are doing</li><li>How labor is going</li><li>Your preferences, questions, and concerns</li><li>The plan, and when the team will huddle next</li></ul>'],
+   ['The planning board','<p>Your room has a whiteboard that shows your team\'s plan. It lists who is on your team, your preferences, the plan for you, your baby, and your labor, and when the next huddle will happen. The board is updated after each huddle, so everyone, including you, can see the current plan.</p>'],
+   ['How to take part','<ul><li>Fill out your Birth Preferences before you come to the hospital, and bring a copy.</li><li>Share what matters most to you at your first huddle.</li><li>Ask questions. Speak up if something is unclear or does not feel right.</li><li>Ask for a huddle at any time.</li><li>Invite your support person or doula to join huddles.</li></ul>'],
+   ['If there is an emergency','<p>If you or your baby need urgent care, your team will act quickly. As soon as it is safe, they will explain what happened and huddle with you to review the plan.</p>'],
+   ['Why it matters','<p>When patients take part in huddles, they are more likely to report feeling respected and involved in decisions about their care. Hospitals that use TeamBirth also report better communication between patients and staff.</p><p class="small">Sources: Ariadne Labs, TeamBirth; New Jersey Health Care Quality Institute, TeamBirth NJ.</p>'] ] },
+es: { title:'TeamBirth', sub:'Cómo planificamos su parto en equipo',
+  intro:'The BirthPlace de Holy Name usa TeamBirth, una forma de planificar la atención durante el trabajo de parto que la convierte en un miembro pleno de su equipo de atención. TeamBirth fue creado por Ariadne Labs, un centro conjunto de Brigham and Women\'s Hospital y la Escuela de Salud Pública T.H. Chan de Harvard. Hospitales de todo Nueva Jersey lo usan a través de TeamBirth NJ.',
+  items:[
+   ['¿Qué es TeamBirth?','<p>TeamBirth es una forma en que usted, sus personas de apoyo, su enfermera y su médico o partera toman decisiones juntos durante el trabajo de parto. Su opinión cuenta tanto como la de cualquier otra persona. Usted conoce su cuerpo, sus valores y cómo se siente. Su equipo aporta conocimientos y experiencia médica. Juntos acuerdan un plan.</p>'],
+   ['Reuniones del equipo (huddles)','<p>Un huddle es una conversación breve junto a su cama con usted, su enfermera y su médico o partera. Su persona de apoyo o doula puede participar.</p><h4>Cuándo se hacen</h4><ul><li>Cuando la admiten en el hospital</li><li>Cuando el plan de atención puede cambiar</li><li>En cualquier momento en que usted, su persona de apoyo o alguien de su equipo lo pida</li></ul><h4>De qué se habla</h4><ul><li>Cómo están usted y su bebé</li><li>Cómo avanza el trabajo de parto</li><li>Sus preferencias, preguntas y preocupaciones</li><li>El plan y cuándo será la próxima reunión</li></ul>'],
+   ['El tablero del plan','<p>Su habitación tiene una pizarra que muestra el plan de su equipo. Indica quiénes forman su equipo, sus preferencias, el plan para usted, su bebé y su trabajo de parto, y cuándo será la próxima reunión. La pizarra se actualiza después de cada reunión, para que todos, incluida usted, puedan ver el plan actual.</p>'],
+   ['Cómo participar','<ul><li>Complete sus Preferencias para el Parto antes de venir al hospital y traiga una copia.</li><li>Comparta lo que más le importa en la primera reunión.</li><li>Haga preguntas. Hable si algo no está claro o no le parece bien.</li><li>Pida una reunión en cualquier momento.</li><li>Invite a su persona de apoyo o doula a participar en las reuniones.</li></ul>'],
+   ['Si hay una emergencia','<p>Si usted o su bebé necesitan atención urgente, su equipo actuará con rapidez. En cuanto sea seguro, le explicarán lo que pasó y se reunirán con usted para revisar el plan.</p>'],
+   ['Por qué es importante','<p>Cuando las pacientes participan en las reuniones, es más probable que digan sentirse respetadas e incluidas en las decisiones sobre su atención. Los hospitales que usan TeamBirth también informan una mejor comunicación entre las pacientes y el personal.</p><p class="small">Sources: Ariadne Labs, TeamBirth; New Jersey Health Care Quality Institute, TeamBirth NJ.</p>'] ] },
+ko: { title:'TeamBirth', sub:'함께 세우는 출산 계획',
+  intro:'Holy Name의 The BirthPlace는 TeamBirth를 사용합니다. TeamBirth는 산모를 진료팀의 동등한 일원으로 하여 진통 중 진료를 함께 계획하는 방식입니다. TeamBirth는 Brigham and Women\'s Hospital과 하버드 T.H. Chan 보건대학원의 공동 센터인 Ariadne Labs가 개발했습니다. 뉴저지 전역의 병원이 TeamBirth NJ를 통해 이를 사용하고 있습니다.',
+  items:[
+   ['TeamBirth란 무엇입니까?','<p>TeamBirth는 산모, 보호자, 간호사, 담당 의사나 조산사가 진통 중에 함께 결정을 내리는 방식입니다. 산모의 의견은 다른 누구의 의견만큼 중요합니다. 산모는 자신의 몸과 가치관, 자신이 느끼는 것을 가장 잘 압니다. 진료팀은 의학적 지식과 경험을 제공합니다. 함께 계획을 정합니다.</p>'],
+   ['팀 허들(짧은 회의)','<p>허들은 산모, 간호사, 담당 의사나 조산사가 침대 옆에서 나누는 짧은 대화입니다. 보호자나 둘라도 함께할 수 있습니다.</p><h4>허들을 하는 때</h4><ul><li>입원할 때</li><li>진료 계획이 바뀔 수 있을 때</li><li>산모, 보호자, 또는 진료팀 누구든 요청할 때 언제든지</li></ul><h4>이야기하는 내용</h4><ul><li>산모와 아기의 상태</li><li>진통 진행 상황</li><li>산모의 선호 사항, 질문, 걱정</li><li>계획, 그리고 다음 허들 시간</li></ul>'],
+   ['계획 보드','<p>병실에는 진료팀의 계획을 보여 주는 화이트보드가 있습니다. 진료팀 구성원, 산모의 선호 사항, 산모와 아기와 진통에 대한 계획, 다음 허들 시간이 적혀 있습니다. 보드는 허들이 끝날 때마다 업데이트되므로 산모를 포함한 모두가 현재 계획을 볼 수 있습니다.</p>'],
+   ['참여하는 방법','<ul><li>병원에 오기 전에 출산 선호 사항을 작성하고 사본을 가져오십시오.</li><li>첫 허들에서 가장 중요한 것을 말씀해 주십시오.</li><li>질문하십시오. 이해가 안 되거나 옳지 않다고 느껴지면 말씀해 주십시오.</li><li>언제든지 허들을 요청하십시오.</li><li>보호자나 둘라가 허들에 함께하도록 하십시오.</li></ul>'],
+   ['응급 상황일 때','<p>산모나 아기에게 긴급한 진료가 필요하면 진료팀이 신속하게 조치합니다. 안전해지는 대로 무슨 일이 있었는지 설명하고 산모와 허들을 하여 계획을 다시 검토합니다.</p>'],
+   ['왜 중요합니까','<p>허들에 참여한 환자는 존중받고 진료 결정에 참여했다고 느꼈다고 답할 가능성이 더 높습니다. TeamBirth를 사용하는 병원들은 환자와 의료진 사이의 소통이 좋아졌다고 보고합니다.</p><p class="small">Sources: Ariadne Labs, TeamBirth; New Jersey Health Care Quality Institute, TeamBirth NJ.</p>'] ] },
+ht: { title:'TeamBirth', sub:'Kijan nou planifye tranche ou ansanm',
+  intro:'The BirthPlace nan Holy Name sèvi ak TeamBirth, yon fason pou planifye swen pandan tranche ki fè ou vin yon manm konplè nan ekip swen ou. Se Ariadne Labs ki kreye TeamBirth, yon sant Brigham and Women\'s Hospital ak Lekòl Sante Piblik T.H. Chan Harvard jere ansanm. Lopital nan tout New Jersey sèvi avè l atravè TeamBirth NJ.',
+  items:[
+   ['Kisa TeamBirth ye?','<p>TeamBirth se yon fason pou ou menm, moun k ap sipòte w yo, enfimyè ou, ak doktè oswa fanmsaj ou pran desizyon ansanm pandan tranche. Opinyon ou konte otan ke opinyon nenpòt lòt moun. Ou konnen kò ou, valè ou, ak jan ou santi w. Ekip ou pote konesans ak eksperyans medikal. Ansanm, nou dakò sou yon plan.</p>'],
+   ['Reyinyon ekip (huddles)','<p>Yon huddle se yon ti konvèsasyon bò kabann ou avè w, enfimyè ou, ak doktè oswa fanmsaj ou. Moun k ap sipòte w la oswa doula ou ka patisipe.</p><h4>Kilè yo fèt</h4><ul><li>Lè yo admèt ou</li><li>Lè plan swen ou ka chanje</li><li>Nenpòt lè ou menm, moun k ap sipòte w la, oswa nenpòt moun nan ekip ou mande youn</li></ul><h4>Sa yo pale de li</h4><ul><li>Kijan ou menm ak tibebe a ye</li><li>Kijan tranche a ap mache</li><li>Preferans ou, kesyon ou, ak enkyetid ou</li><li>Plan an, ak kilè pwochen reyinyon an ap fèt</li></ul>'],
+   ['Tablo plan an','<p>Chanm ou gen yon tablo blan ki montre plan ekip ou. Li bay non moun ki nan ekip ou, preferans ou, plan pou ou, pou tibebe a, ak pou tranche a, ak kilè pwochen reyinyon an ap fèt. Yo mete tablo a ajou apre chak reyinyon, konsa tout moun, ou menm tou, ka wè plan aktyèl la.</p>'],
+   ['Kijan pou patisipe','<ul><li>Ranpli Preferans pou Akouchman ou anvan ou vin lopital, epi pote yon kopi.</li><li>Pataje sa ki pi enpòtan pou ou nan premye reyinyon an.</li><li>Poze kesyon. Pale si yon bagay pa klè oswa si li pa sanble bon pou ou.</li><li>Mande yon reyinyon nenpòt lè.</li><li>Envite moun k ap sipòte w la oswa doula ou patisipe nan reyinyon yo.</li></ul>'],
+   ['Si gen yon ijans','<p>Si ou menm oswa tibebe ou bezwen swen ijan, ekip ou ap aji vit. Depi sa an sekirite, y ap esplike w sa k te pase epi fè yon reyinyon avè w pou revize plan an.</p>'],
+   ['Poukisa sa enpòtan','<p>Lè pasyan patisipe nan reyinyon yo, gen plis chans pou yo di yo santi yo respekte e yo patisipe nan desizyon sou swen yo. Lopital ki sèvi ak TeamBirth di kominikasyon ant pasyan ak anplwaye yo vin pi bon tou.</p><p class="small">Sources: Ariadne Labs, TeamBirth; New Jersey Health Care Quality Institute, TeamBirth NJ.</p>'] ] }
+};
+function tbHTML() {
+  const t = TB[lang], u = UI[lang];
+  let h = `<button class="back" data-go="home">${u.home}</button><div class="topic"><h1>${esc(t.title)}</h1><div class="rowbtns"><button type="button" data-acc="open">${u.expandAll}</button><button type="button" data-acc="close">${u.collapseAll}</button></div><div class="intro"><p>${t.intro}</p></div>`;
+  t.items.forEach(([title, body], i) => { h += accordion({t: esc(title), h: body + (i === 3 ? `<p><button class="linkbtn" data-go="bp">${esc(BP[lang].title)} &rarr;</button></p>` : '')}, i, i === 0); });
+  return h + '</div>';
+}
+
 /* ---------- state ---------- */
 const $ = id => document.getElementById(id);
 let lang = 'en', doctor = '', practice = 'wch', content = null, screen = 'home';
@@ -688,7 +735,7 @@ function homeHTML() {
     <div class="sectitle">${u.tools}</div>
     <div class="tiles">${tile('week', u.toolTiles.week[0], u.toolTiles.week[1], 'week', 'tool')}${tile('warn', u.toolTiles.warn[0], u.toolTiles.warn[1], 'warn', 'tool')}${tile('weight', u.toolTiles.weight[0], u.toolTiles.weight[1], 'weight', 'tool')}${tile('bp', BP[lang].title, BP[lang].sub, 'bp', 'tool')}</div>
     <div class="sectitle">${u.topicsHead}</div>
-    <div class="tiles">${tile('team', u.team, u.teamSub, 'team')}${TOPIC_ORDER.map(t => tile('t-' + t, u.topics[t][0], u.topics[t][1], t) + (t === 's8' ? tile('peds', u.pediatrics, u.pedsSub, 'peds') : '')).join('')}</div>
+    <div class="tiles">${tile('team', u.team, u.teamSub, 'team')}${TOPIC_ORDER.map(t => tile('t-' + t, u.topics[t][0], u.topics[t][1], t) + (t === 's7' ? tile('teambirth', TB[lang].title, TB[lang].sub, 'teambirth') : '') + (t === 's8' ? tile('peds', u.pediatrics, u.pedsSub, 'peds') : '')).join('')}</div>
     <p class="foot">Holy Name Medical Center${doctor ? ' · ' + esc(PRACTICE_NAMES[practice]) : ''}</p>`;
 }
 
@@ -941,6 +988,7 @@ function show(id, opts) {
   else if (id === 'weight') { main.innerHTML = weightHTML(); main.querySelectorAll('input').forEach(i => i.addEventListener('input', renderWeight)); main.querySelectorAll('[data-u]').forEach(b => b.addEventListener('click', () => { wUnits = b.dataset.u; show('weight'); })); }
   else if (id === 'warn') main.innerHTML = warnHTML();
   else if (id === 'peds') main.innerHTML = pedsHTML();
+  else if (id === 'teambirth') main.innerHTML = tbHTML();
   else if (id === 'bp') { main.innerHTML = bpHTML(); main.querySelectorAll('[data-bp]').forEach(el => { el.addEventListener('change', () => bpUpdate(el)); el.addEventListener('input', () => bpUpdate(el)); }); }
   else if (id === 'search') main.innerHTML = searchHTML(opts.q || '');
   else { main.innerHTML = homeHTML(); screen = 'home'; }
