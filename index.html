@@ -124,7 +124,7 @@
   .qrrow { display:flex; align-items:center; gap: .8rem; margin-top: .9rem; padding: .8rem 1rem; background: var(--navy-lt); border-radius: 10px; }
   a.qrrow.link { text-decoration: none; color: var(--ink); border: 2px solid var(--navy); background: #fff; }
   a.qrrow.link:hover { background: var(--navy-lt); }
-  a.qrrow.link > div { flex: 1 1 auto; }
+  a.qrrow.link > div { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
   a.qrrow.link .arrow { font-size: 1.4rem; color: var(--teal); flex: 0 0 auto; }
   .classes .row { display: grid; grid-template-columns: 1fr; gap: .25rem; padding: .7rem 0; border-bottom: 1px dotted var(--rule); }
   @media (min-width: 700px) { .classes .row { grid-template-columns: 220px 1fr; gap: 1rem; } }
@@ -613,8 +613,9 @@ function homeHTML() {
     <p class="foot">Holy Name Medical Center${doctor ? ' · ' + esc(PRACTICE_NAMES[practice]) : ''}</p>`;
 }
 
+function wrapUrls(h) { return h.replace(/(^|[>\s])((?:www\.)?holyname\.org\/[^\s<"]*)/g, (m, pre, url) => pre + url.replace(/\//g, '/<wbr>')); }
 function accordion(item, idx, open) {
-  return `<div class="acc${open ? ' open' : ''}" data-i="${idx}"><button type="button" aria-expanded="${open ? 'true' : 'false'}">${item.t}</button><div class="ac">${item.h}</div></div>`;
+  return `<div class="acc${open ? ' open' : ''}" data-i="${idx}"><button type="button" aria-expanded="${open ? 'true' : 'false'}">${item.t}</button><div class="ac">${wrapUrls(item.h)}</div></div>`;
 }
 
 function topicHTML(t) {
