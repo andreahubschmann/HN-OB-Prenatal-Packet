@@ -623,13 +623,16 @@ function topicHTML(t) {
   let h = `<button class="back" data-go="home">${u.home}</button><div class="topic"><h1>${esc(u.topics[t][0])}</h1>`;
   h += `<div class="rowbtns"><button type="button" data-acc="open">${u.expandAll}</button><button type="button" data-acc="close">${u.collapseAll}</button></div>`;
   let n = 0, srcs = [];
+  if (t === 's7') {
+    const tour = ((content.topics.s8 || []).flatMap(pg => pg.items).map(it => (it.h.match(/<a class="qrrow link"[^>]*>(?:(?!<\/a>)[\s\S])*?201-833-3153[\s\S]*?<\/a>/) || [])[0]).find(Boolean)) || '';
+    h += `<div class="grid2" style="margin-bottom:1rem"><a class="qrrow link" href="#bp" data-go="bp" style="margin-top:0"><div class="big"><b style="color:var(--navy)">${esc(BP[lang].title)}</b><br>${esc(BP[lang].sub)}</div><span aria-hidden="true" class="arrow">&rarr;</span></a>${wrapUrls(tour).replace('class="qrrow link"', 'class="qrrow link" style="margin-top:0"')}</div>`;
+  }
   pages.forEach((pg, pi) => {
     if (pages.length > 1 && pg.title !== (pages[pi-1] || {}).title && pg.title !== u.topics[t][0] && !(pg.items.length === 1 && pg.items[0].t === pg.title)) h += `<div class="pagehead">${esc(pg.title)}</div>`;
     if (pg.intro) h += `<div class="intro">${pg.intro}</div>`;
     pg.items.forEach(it => { h += accordion(it, n++, t === 'refs' || t === 'portal'); });
     if (pg.src) srcs.push(pg.src);
   });
-  if (t === 's7') h += `<p style="margin-top:1rem"><button class="linkbtn" data-go="bp">${BP[lang].link} &rarr;</button></p>`;
   if (srcs.length) h += `<details class="srcbox"><summary>${u.sources}</summary>${srcs.map(x => `<div class="src">${x}</div>`).join('')}</details>`;
   return h + '</div>';
 }
