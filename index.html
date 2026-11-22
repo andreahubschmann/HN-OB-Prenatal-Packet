@@ -141,6 +141,9 @@
   .big { font-size: 1.08rem; }
   .pcard { display:grid; grid-template-columns: 86px 1fr; gap: .7rem; align-items:start; border: 1px solid var(--rule); border-top: 4px solid var(--teal); border-radius: 8px; padding: .6rem .7rem; }
   .pcard .photo { width:86px; height:104px; background: var(--navy-lt); border-radius: 6px; overflow:hidden; }
+  a.pcard.link { text-decoration: none; color: var(--ink); cursor: pointer; transition: box-shadow .1s, transform .1s; }
+  a.pcard.link:hover, a.pcard.link:focus { box-shadow: 0 4px 14px rgba(27,52,86,.14); transform: translateY(-1px); border-color: var(--teal); }
+  a.pcard.link .book { display: inline-block; margin-top: .3rem; color: #fff; background: var(--teal); border-radius: 8px; padding: .25rem .65rem; font-weight: 700; font-size: .85rem; }
   .pcard .photo img { width:100%; height:100%; object-fit:cover; display:block; }
   .phone { font-family: "Noto Serif", Georgia, serif; font-size: 1.5rem; color: var(--navy); font-weight: 700; }
   .phone a { text-decoration: none; }
@@ -432,6 +435,8 @@ const ICON = {
   warn:'<svg viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5"/><circle cx="12" cy="18" r=".6"/></svg>',
   weight:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 7a5 5 0 0 1 5 5H7a5 5 0 0 1 5-5z"/><path d="M12 12l2-2.5"/></svg>'
 };
+ICON.peds = '<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M10 8.5h.01M14 8.5h.01"/><path d="M10.5 11a2 2 0 0 0 3 0"/><path d="M6 21a6 6 0 0 1 12 0"/></svg>';
+const PED_LINKS = { ped1:'00314', ped2:'84132', ped3:'84539', ped4:'87923', ped5:'89010' };
 ICON.bp = '<svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.5h6V4"/><path d="M12 17s-3-1.8-3-4a1.6 1.6 0 0 1 3-.8 1.6 1.6 0 0 1 3 .8c0 2.2-3 4-3 4z"/></svg>';
 const TOPIC_ORDER = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','portal','refs'];
 
@@ -440,7 +445,7 @@ const UI = {
 en: { topics:{ s1:['Getting Started','First visit, labs, visit schedule'], s2:['Tests by Trimester','Ultrasounds, screening, vaccines'], s3:['Food & Daily Life','Vitamins, weight, caffeine, fish'], s4:['Exercise & Everyday Questions','Sex, dental, travel, hair dye'], s5:['Common Symptoms','Nausea, heartburn, back pain, swelling'], s6:['Safe Medicines','What to take, what to avoid'], s7:['Planning for Birth','Vaginal birth, cesarean, VBAC'], s8:['Classes, Tour & Pediatrics','Register, book, choose a pediatrician'], s9:['Breastfeeding','Basics, positions, hunger cues'], portal:['Patient Portal App','HNCareCompass download'], refs:['References','ACOG sources'] },
   toolTiles:{ week:['My Week','Enter your due date'], warn:['When to Call','Warning signs by topic'], weight:['Weight Gain','Calculator by BMI'] },
   choosePrompt:'Choose your doctor from the list above to see your practice, phone number, care team, and offices.', chooseBtn:'Choose my doctor', yourOffice:'your office', home:'Home', back:'Back', team:'My Care Team', teamSub:'Welcome letter, team, offices', tools:'Tools', topicsHead:'Topics', call:'Call the office', afterhours:'24 hours a day, 7 days a week', sources:'Sources', expandAll:'Expand all', collapseAll:'Collapse all', results:'Search results', noResults:'No results', callNow:'Call now',
-  pediatrics:'Holy Name Pediatrics',
+  pediatrics:'Holy Name Pediatrics', pedsSub:'Meet the pediatricians, book online', book:'Book online',
   week:{ due:'Your due date', today:'Today you are', weeks:'weeks', days:'days', trimester:['First trimester','Second trimester','Third trimester','Past your due date'], visits:'Visit schedule', v1:'Every 4 weeks until 28 weeks', v2:'Every 2 weeks from 28 to 36 weeks', v3:'Every week from 36 weeks until birth', checklist:'Tests and vaccines', now:'Now', past:'Window passed', soon:'Coming up', any:'Any time', note:'Timing follows ACOG guidance as described in this packet. Your provider sets your actual schedule.', notset:'Enter your due date to see where you are in pregnancy and what is coming up.', open:'See details',
     items:{ dating:'Dating ultrasound', labs:'First-visit blood and urine tests', carrier:'Carrier screening (any time, once in your life)', nipt:'Cell-free DNA screening (NIPT), 10 weeks or later', fts:'First-trimester screening (blood test + nuchal translucency ultrasound)', cvs:'CVS (diagnostic test, if chosen)', quad:'Quad screen or AFP blood test', amnio:'Amniocentesis (diagnostic test, if chosen), 16 weeks or later', anat:'Anatomy ultrasound, 20 weeks or later', glucose:'Glucose test for gestational diabetes', cbc:'Repeat blood count (anemia check)', tdap:'Tdap (whooping cough) vaccine', rhogam:'Rh immune globulin (RhoGAM) if Rh negative', rsv:'RSV vaccine (September through January)', gbs:'Group B strep (GBS) swab', hiv:'Third-trimester HIV and syphilis tests', flu:'Flu shot (during flu season)', covid:'COVID-19 vaccine' } },
   weight:{ height:'Height before pregnancy', weight:'Weight before pregnancy', bmi:'BMI', cat:'Category', gain:'Recommended total gain', cats:['Underweight','Normal weight','Overweight','Obesity'], lb:'lb', kg:'kg', ftin:'ft / in', cm:'cm', note:'These ranges are a general guide (ACOG Committee Opinion No. 548). Your provider will tailor them to you. Most people need only about 340 extra calories a day in the second trimester and 450 in the third.', enter:'Enter your height and weight before pregnancy.' },
@@ -448,7 +453,7 @@ en: { topics:{ s1:['Getting Started','First visit, labs, visit schedule'], s2:['
 es: { topics:{ s1:['Primeros Pasos','Primera visita, análisis, calendario'], s2:['Pruebas por Trimestre','Ecografías, pruebas de detección, vacunas'], s3:['Alimentación y Vida Diaria','Vitaminas, peso, cafeína, pescado'], s4:['Ejercicio y Preguntas Comunes','Sexo, dentista, viajes, tinte'], s5:['Síntomas Comunes','Náuseas, acidez, dolor de espalda, hinchazón'], s6:['Medicamentos Seguros','Qué tomar y qué evitar'], s7:['Planificación del Parto','Parto vaginal, cesárea, PVDC'], s8:['Clases, Recorrido y Pediatría','Inscríbase, reserve, elija pediatra'], s9:['Lactancia Materna','Conceptos básicos, posiciones, señales de hambre'], portal:['Aplicación del Portal del Paciente','Descargue HNCareCompass'], refs:['Referencias','Fuentes de ACOG'] },
   toolTiles:{ week:['Mi Semana','Ingrese su fecha probable de parto'], warn:['Cuándo Llamar','Señales de alarma por tema'], weight:['Aumento de Peso','Calculadora según IMC'] },
   choosePrompt:'Elija a su médico en la lista de arriba para ver su consultorio, número de teléfono, equipo de atención y oficinas.', chooseBtn:'Elegir mi médico', yourOffice:'su oficina', home:'Inicio', back:'Atrás', team:'Mi Equipo de Atención', teamSub:'Carta de bienvenida, equipo, oficinas', tools:'Herramientas', topicsHead:'Temas', call:'Llamar a la oficina', afterhours:'24 horas al día, 7 días a la semana', sources:'Fuentes', expandAll:'Expandir todo', collapseAll:'Contraer todo', results:'Resultados de búsqueda', noResults:'Sin resultados', callNow:'Llamar ahora',
-  pediatrics:'Holy Name Pediatrics',
+  pediatrics:'Holy Name Pediatrics', pedsSub:'Conozca a los pediatras, reserve en línea', book:'Reservar en línea',
   week:{ due:'Su fecha probable de parto', today:'Hoy tiene', weeks:'semanas', days:'días', trimester:['Primer trimestre','Segundo trimestre','Tercer trimestre','Pasada la fecha probable de parto'], visits:'Calendario de visitas', v1:'Cada 4 semanas hasta las 28 semanas', v2:'Cada 2 semanas de las 28 a las 36 semanas', v3:'Cada semana desde las 36 semanas hasta el parto', checklist:'Pruebas y vacunas', now:'Ahora', past:'Periodo pasado', soon:'Próximamente', any:'En cualquier momento', note:'Los tiempos siguen las guías de ACOG descritas en este paquete. Su proveedor define su calendario real.', notset:'Ingrese su fecha probable de parto para ver en qué punto del embarazo está y qué viene.', open:'Ver detalles',
     items:{ dating:'Ecografía para fechar el embarazo', labs:'Análisis de sangre y orina de la primera visita', carrier:'Prueba de portadores (en cualquier momento, una vez en la vida)', nipt:'Prueba de ADN fetal libre (NIPT), desde las 10 semanas', fts:'Prueba de detección del primer trimestre (sangre + ecografía de translucencia nucal)', cvs:'Biopsia de vellosidades coriónicas (prueba diagnóstica, si la elige)', quad:'Prueba cuádruple o prueba de AFP en sangre', amnio:'Amniocentesis (prueba diagnóstica, si la elige), desde las 16 semanas', anat:'Ecografía de anatomía, desde las 20 semanas', glucose:'Prueba de glucosa para diabetes gestacional', cbc:'Repetición del hemograma (anemia)', tdap:'Vacuna Tdap (tos ferina)', rhogam:'Inmunoglobulina Rh (RhoGAM) si es Rh negativo', rsv:'Vacuna contra el VRS (septiembre a enero)', gbs:'Prueba de estreptococo del grupo B (EGB)', hiv:'Pruebas de VIH y sífilis del tercer trimestre', flu:'Vacuna contra la gripe (en temporada de gripe)', covid:'Vacuna contra la COVID-19' } },
   weight:{ height:'Estatura antes del embarazo', weight:'Peso antes del embarazo', bmi:'IMC', cat:'Categoría', gain:'Aumento total recomendado', cats:['Bajo peso','Peso normal','Sobrepeso','Obesidad'], lb:'lb', kg:'kg', ftin:'pies / pulg', cm:'cm', note:'Estos rangos son una guía general (ACOG Committee Opinion No. 548). Su proveedor los adaptará a usted. La mayoría de las personas solo necesitan unas 340 calorías adicionales al día en el segundo trimestre y 450 en el tercero.', enter:'Ingrese su estatura y su peso antes del embarazo.' },
@@ -456,7 +461,7 @@ es: { topics:{ s1:['Primeros Pasos','Primera visita, análisis, calendario'], s2
 ko: { topics:{ s1:['시작하기','첫 진료, 검사, 진료 일정'], s2:['삼분기별 검사','초음파, 선별검사, 예방접종'], s3:['음식과 일상생활','비타민, 체중, 카페인, 생선'], s4:['운동과 자주 묻는 질문','성관계, 치과, 여행, 염색'], s5:['흔한 증상','메스꺼움, 속쓰림, 허리 통증, 부종'], s6:['안전한 약','복용 가능한 약과 피해야 할 약'], s7:['출산 계획','질식 분만, 제왕절개, VBAC'], s8:['교실, 견학, 소아과','등록, 예약, 소아과 선택'], s9:['모유 수유','기본, 자세, 배고픔 신호'], portal:['환자 포털 앱','HNCareCompass 다운로드'], refs:['참고 문헌','ACOG 출처'] },
   toolTiles:{ week:['나의 임신 주수','출산 예정일 입력'], warn:['전화해야 할 때','주제별 경고 신호'], weight:['체중 증가','BMI 계산기'] },
   choosePrompt:'위 목록에서 담당 의사를 선택하면 진료소, 전화번호, 진료팀, 사무실 정보를 볼 수 있습니다.', chooseBtn:'담당 의사 선택', yourOffice:'귀하의 진료소', home:'홈', back:'뒤로', team:'나의 진료팀', teamSub:'환영 편지, 팀, 진료소', tools:'도구', topicsHead:'주제', call:'사무실에 전화', afterhours:'연중무휴 24시간', sources:'출처', expandAll:'모두 펼치기', collapseAll:'모두 접기', results:'검색 결과', noResults:'결과 없음', callNow:'지금 전화',
-  pediatrics:'Holy Name 소아과',
+  pediatrics:'Holy Name 소아과', pedsSub:'소아과 의사 소개, 온라인 예약', book:'온라인 예약',
   week:{ due:'출산 예정일', today:'오늘 임신', weeks:'주', days:'일', trimester:['임신 초기','임신 중기','임신 후기','출산 예정일 경과'], visits:'진료 일정', v1:'28주까지 4주마다', v2:'28주부터 36주까지 2주마다', v3:'36주부터 출산까지 매주', checklist:'검사와 예방접종', now:'지금', past:'기간 지남', soon:'예정', any:'언제든지', note:'시기는 이 안내서에 설명된 ACOG 지침을 따릅니다. 실제 일정은 담당 의료진이 정합니다.', notset:'출산 예정일을 입력하면 현재 임신 주수와 앞으로의 일정을 볼 수 있습니다.', open:'자세히 보기',
     items:{ dating:'임신 주수 확인 초음파', labs:'첫 진료 혈액 및 소변 검사', carrier:'보인자 선별검사 (언제든, 평생 한 번)', nipt:'세포 유리 DNA 선별검사(NIPT), 10주 이후', fts:'임신 초기 선별검사 (혈액 검사 + 목덜미 투명대 초음파)', cvs:'융모막 융모 검사(CVS) (진단검사, 선택 시)', quad:'쿼드 검사 또는 AFP 혈액 검사', amnio:'양수 검사 (진단검사, 선택 시), 16주 이후', anat:'정밀 초음파, 20주 이후', glucose:'임신성 당뇨 검사', cbc:'혈구 검사 재검 (빈혈 확인)', tdap:'Tdap (백일해) 백신', rhogam:'Rh 음성인 경우 Rh 면역글로불린(RhoGAM)', rsv:'RSV 백신 (9월–1월)', gbs:'B군 연쇄상구균(GBS) 검사', hiv:'임신 후기 HIV 및 매독 검사', flu:'독감 예방접종 (독감 유행 시기)', covid:'COVID-19 백신' } },
   weight:{ height:'임신 전 키', weight:'임신 전 체중', bmi:'BMI', cat:'분류', gain:'권장 총 체중 증가', cats:['저체중','정상 체중','과체중','비만'], lb:'lb', kg:'kg', ftin:'피트 / 인치', cm:'cm', note:'이 범위는 일반적인 지침입니다 (ACOG Committee Opinion No. 548). 담당 의료진이 귀하에게 맞게 조정합니다. 대부분의 사람은 임신 중기에 하루 약 340칼로리, 후기에 450칼로리만 더 필요합니다.', enter:'임신 전 키와 체중을 입력하십시오.' },
@@ -464,7 +469,7 @@ ko: { topics:{ s1:['시작하기','첫 진료, 검사, 진료 일정'], s2:['삼
 ht: { topics:{ s1:['Kòmanse','Premye vizit, tès, orè vizit'], s2:['Tès pa Trimès','Sonografi, depistaj, vaksen'], s3:['Manje ak Lavi Chak Jou','Vitamin, pwa, kafeyin, pwason'], s4:['Egzèsis ak Kesyon Kouran','Sèks, dantis, vwayaj, tenti cheve'], s5:['Sentòm Kouran','Kè plen, brili lestomak, doulè do, anfle'], s6:['Medikaman ki San Danje','Sa pou pran, sa pou evite'], s7:['Planifye Akouchman an','Akouchman nòmal, sezaryèn, VBAC'], s8:['Klas, Vizit ak Pedyatri','Enskri, rezève, chwazi yon pedyat'], s9:['Bay Tete','Baz, pozisyon, siy grangou'], portal:['Aplikasyon Pòtay Pasyan','Telechaje HNCareCompass'], refs:['Referans','Sous ACOG'] },
   toolTiles:{ week:['Semèn Mwen','Antre dat akouchman ou'], warn:['Kilè pou Rele','Siy danje pa sijè'], weight:['Pran Pwa','Kalkilatè selon IMC'] },
   choosePrompt:'Chwazi doktè ou nan lis ki anwo a pou wè pratik ou, nimewo telefòn, ekip swen, ak biwo yo.', chooseBtn:'Chwazi doktè mwen', yourOffice:'biwo ou a', home:'Akèy', back:'Retounen', team:'Ekip Swen Mwen', teamSub:'Lèt byenveni, ekip, biwo', tools:'Zouti', topicsHead:'Sijè', call:'Rele biwo a', afterhours:'24 èdtan pa jou, 7 jou pa semèn', sources:'Sous', expandAll:'Ouvri tout', collapseAll:'Fèmen tout', results:'Rezilta rechèch', noResults:'Pa gen rezilta', callNow:'Rele kounye a',
-  pediatrics:'Holy Name Pediatrics',
+  pediatrics:'Holy Name Pediatrics', pedsSub:'Rankontre pedyat yo, rezève sou entènèt', book:'Rezève sou entènèt',
   week:{ due:'Dat akouchman ou', today:'Jodi a ou gen', weeks:'semèn', days:'jou', trimester:['Premye trimès','Dezyèm trimès','Twazyèm trimès','Dat akouchman an pase'], visits:'Orè vizit', v1:'Chak 4 semèn jiska 28 semèn', v2:'Chak 2 semèn soti 28 rive 36 semèn', v3:'Chak semèn apati 36 semèn jiska akouchman', checklist:'Tès ak vaksen', now:'Kounye a', past:'Peryòd la pase', soon:'K ap vini', any:'Nenpòt lè', note:'Dat yo swiv gid ACOG jan yo dekri nan pake sa a. Se founisè ou ki fikse orè reyèl ou.', notset:'Antre dat akouchman ou pou wè ki kote ou ye nan gwosès la ak sa k ap vini.', open:'Wè detay',
     items:{ dating:'Sonografi pou dat gwosès la', labs:'Tès san ak pipi premye vizit la', carrier:'Depistaj pòtè (nenpòt lè, yon sèl fwa nan lavi ou)', nipt:'Depistaj ADN lib (NIPT), apati 10 semèn', fts:'Depistaj premye trimès (tès san + sonografi klète nikal)', cvs:'CVS (tès dyagnostik, si ou chwazi l)', quad:'Tès quad oswa tès san AFP', amnio:'Amniyosentèz (tès dyagnostik, si ou chwazi l), apati 16 semèn', anat:'Sonografi anatomi, apati 20 semèn', glucose:'Tès glikoz pou dyabèt gwosès', cbc:'Repete konte san (anemi)', tdap:'Vaksen Tdap (koklich)', rhogam:'Iminoglobilin Rh (RhoGAM) si ou Rh negatif', rsv:'Vaksen RSV (septanm rive janvye)', gbs:'Tès estreptokòk gwoup B (GBS)', hiv:'Tès VIH ak sifilis twazyèm trimès', flu:'Vaksen grip (nan sezon grip)', covid:'Vaksen COVID-19' } },
   weight:{ height:'Wotè anvan gwosès', weight:'Pwa anvan gwosès', bmi:'IMC', cat:'Kategori', gain:'Total pwa yo rekòmande pou pran', cats:['Pwa twò ba','Pwa nòmal','Twòp pwa','Obezite'], lb:'lb', kg:'kg', ftin:'pye / pous', cm:'cm', note:'Ranje sa yo se yon gid jeneral (ACOG Committee Opinion No. 548). Founisè ou ap adapte yo pou ou. Pifò moun bezwen sèlman anviwon 340 kalori anplis pa jou nan dezyèm trimès la ak 450 nan twazyèm lan.', enter:'Antre wotè ou ak pwa ou anvan gwosès la.' },
@@ -667,7 +672,7 @@ function homeHTML() {
     <div class="sectitle">${u.tools}</div>
     <div class="tiles">${tile('week', u.toolTiles.week[0], u.toolTiles.week[1], 'week', 'tool')}${tile('warn', u.toolTiles.warn[0], u.toolTiles.warn[1], 'warn', 'tool')}${tile('weight', u.toolTiles.weight[0], u.toolTiles.weight[1], 'weight', 'tool')}${tile('bp', BP[lang].title, BP[lang].sub, 'bp', 'tool')}</div>
     <div class="sectitle">${u.topicsHead}</div>
-    <div class="tiles">${tile('team', u.team, u.teamSub, 'team')}${TOPIC_ORDER.map(t => tile('t-' + t, u.topics[t][0], u.topics[t][1], t)).join('')}</div>
+    <div class="tiles">${tile('team', u.team, u.teamSub, 'team')}${TOPIC_ORDER.map(t => tile('t-' + t, u.topics[t][0], u.topics[t][1], t) + (t === 's8' ? tile('peds', u.pediatrics, u.pedsSub, 'peds') : '')).join('')}</div>
     <p class="foot">Holy Name Medical Center${doctor ? ' · ' + esc(PRACTICE_NAMES[practice]) : ''}</p>`;
 }
 
@@ -867,6 +872,25 @@ async function bpPdf(btn) {
   finally { if (host) host.remove(); btn.disabled = false; btn.textContent = label; }
 }
 
+function pedsHTML() {
+  const u = UI[lang];
+  const pg = (content.topics.s8 || []).find(pg => pg.items.some(it => it.h.includes('pcard')));
+  let h = `<button class="back" data-go="home">${u.home}</button><div class="topic"><h1>${esc(u.pediatrics)}</h1>`;
+  if (!pg) return h + '</div>';
+  if (pg.intro) h += `<div class="intro">${pg.intro}</div>`;
+  const items = [...pg.items.filter(it => it.h.includes('pcard')), ...pg.items.filter(it => !it.h.includes('pcard'))];
+  items.forEach((it, i) => { h += accordion(it, i, true); });
+  return h + '</div>';
+}
+function linkPediatricians(root) {
+  root.querySelectorAll('div.pcard').forEach(card => {
+    const m = (card.querySelector('img') || {}).getAttribute ? card.querySelector('img').getAttribute('src').match(/(ped\d)\./) : null;
+    const id = m && PED_LINKS[m[1]]; if (!id) return;
+    const a = document.createElement('a'); a.className = 'pcard link'; a.href = `https://www.holyname.org/physician/details.aspx?phyid=${id}`; a.target = '_blank'; a.rel = 'noopener';
+    a.innerHTML = card.innerHTML; const body = a.children[1]; if (body) body.insertAdjacentHTML('beforeend', `<span class="book">${esc(UI[lang].book)} &#8599;</span>`);
+    card.replaceWith(a);
+  });
+}
 function searchHTML(q) {
   const u = UI[lang], terms = q.trim().split(/\s+/).filter(Boolean), lower = terms.map(x => x.toLowerCase());
   let h = `<button class="back" data-go="home">${u.home}</button><h1>${esc(u.results)}</h1><div class="results"><ol>`; let n = 0;
@@ -900,9 +924,11 @@ function show(id, opts) {
   else if (id === 'week') { main.innerHTML = weekHTML(); renderWeek(); $('due').addEventListener('change', renderWeek); $('due').addEventListener('input', renderWeek); }
   else if (id === 'weight') { main.innerHTML = weightHTML(); main.querySelectorAll('input').forEach(i => i.addEventListener('input', renderWeight)); main.querySelectorAll('[data-u]').forEach(b => b.addEventListener('click', () => { wUnits = b.dataset.u; show('weight'); })); }
   else if (id === 'warn') main.innerHTML = warnHTML();
+  else if (id === 'peds') main.innerHTML = pedsHTML();
   else if (id === 'bp') { main.innerHTML = bpHTML(); main.querySelectorAll('[data-bp]').forEach(el => { el.addEventListener('change', () => bpUpdate(el)); el.addEventListener('input', () => bpUpdate(el)); }); }
   else if (id === 'search') main.innerHTML = searchHTML(opts.q || '');
   else { main.innerHTML = homeHTML(); screen = 'home'; }
+  linkPediatricians(main);
   main.querySelectorAll('.ph').forEach(el => el.innerHTML = doctor ? telLink(PRACTICES[practice].phone) : UI[lang].yourOffice);
   if (!opts.silent) { try { history.replaceState(null, '', '#' + screen); } catch(e) {} }
   window.scrollTo({top: 0});
