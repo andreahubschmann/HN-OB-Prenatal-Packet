@@ -191,6 +191,42 @@
   .results li button b { color: var(--navy); display: block; font-size: 1rem; }
   .results li button small { color: var(--teal); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
   .results li button .snip { font-size: .9rem; color: var(--mute); }
+  /* ---- birth preferences ---- */
+  .bpq { display: flex; gap: .65rem; align-items: flex-start; padding: .5rem 0; border-bottom: 1px solid var(--rule); cursor: pointer; }
+  .bpq:last-child { border-bottom: 0; }
+  .bpq input { width: 20px; height: 20px; margin: .15rem 0 0 0; accent-color: var(--teal); flex: 0 0 auto; }
+  fieldset.bpr { border: 0; padding: 0; margin: .3rem 0 .8rem 0; }
+  fieldset.bpr legend { font-weight: 700; color: var(--navy); padding: 0; margin-bottom: .2rem; }
+  .bpsub { font-weight: 700; color: var(--navy); margin: .6rem 0 .1rem 0; }
+  .field textarea { font: inherit; font-size: 1rem; border: 1px solid var(--rule); border-radius: 10px; padding: .5rem .7rem; background: #fff; min-height: 4.5rem; resize: vertical; }
+  .bpbtns { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; margin: .4rem 0 1rem 0; }
+  .bpbtns .primary { font-weight: 700; color: #fff; background: var(--navy); border: 0; border-radius: 10px; padding: .6rem 1.1rem; cursor: pointer; }
+  .bpprint { display: none; }
+  @media print {
+    @page { margin: 12mm; }
+    html, body { background: #fff; }
+    body { font-size: 10pt; line-height: 1.35; }
+    .top { display: none !important; }
+    main { max-width: none; padding: 0; }
+    body.bpmode main > :not(.bpprint) { display: none !important; }
+    .bpprint { display: block !important; color: #000; }
+    .bpprint .bph { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 2px solid var(--navy); padding-bottom: .4rem; margin-bottom: .5rem; }
+    .bpprint .bph img { height: 46px; width: auto; }
+    .bpprint h1 { font-size: 16pt; }
+    .bpprint table { font-size: 9.5pt; margin: 0 0 .5rem 0; }
+    .bpprint th, .bpprint td { padding: .15rem .4rem; }
+    .bpprint th { width: 32%; background: none; }
+    .bpprint .cols { column-count: 2; column-gap: 1.4rem; }
+    .bpprint .sec { break-inside: avoid; margin-bottom: .5rem; }
+    .bpprint h2 { font-size: 11pt; color: var(--navy); border-bottom: 1px solid var(--rule); margin: 0 0 .2rem 0; padding-bottom: .1rem; }
+    .bpprint ul { list-style: none; padding: 0; margin: 0; }
+    .bpprint li { margin: 0 0 .2rem 0; padding-left: 1rem; position: relative; break-inside: avoid; }
+    .bpprint li::before { content: "\2713"; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+    .bpprint .en { display: block; color: #555; font-size: 8.5pt; font-style: italic; }
+    .bpprint .disc { font-size: 8.5pt; color: #444; margin: .4rem 0; }
+    .bpprint .sign { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 1.2rem; font-size: 9pt; break-inside: avoid; page-break-inside: avoid; }
+    .bpprint .sign div { border-top: 1px solid #000; padding-top: .15rem; }
+  }
   .loading { text-align: center; color: var(--mute); padding: 3rem 1rem; }
   .foot { font-size: .78rem; color: var(--mute); margin-top: 2rem; text-align: center; }
 </style>
@@ -389,6 +425,7 @@ const ICON = {
   warn:'<svg viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5"/><circle cx="12" cy="18" r=".6"/></svg>',
   weight:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 7a5 5 0 0 1 5 5H7a5 5 0 0 1 5-5z"/><path d="M12 12l2-2.5"/></svg>'
 };
+ICON.bp = '<svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.5h6V4"/><path d="M12 17s-3-1.8-3-4a1.6 1.6 0 0 1 3-.8 1.6 1.6 0 0 1 3 .8c0 2.2-3 4-3 4z"/></svg>';
 const TOPIC_ORDER = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','portal','refs'];
 
 /* ---------- UI strings per language (home, tools) ---------- */
@@ -433,6 +470,85 @@ const WINDOWS = [
   ['quad',15,22,'s2'],['amnio',16,null,'s2'],['anat',20,null,'s2'],['glucose',24,28,'s2'],['cbc',24,28,'s2'],
   ['tdap',27,36,'s2'],['rhogam',28,28,'s2'],['rsv',32,36,'s2'],['gbs',36,37,'s2'],['hiv',28,null,'s2'],['flu',null,null,'s2'],['covid',null,null,'s2']
 ];
+
+/* ---------- birth preferences ---------- */
+const BP_FORM = [
+  ['about', [['name','text'],['due','date'],['support','text'],['doula','text'],['peds','text'],['interp','check'],['interpLang','text']]],
+  ['env', [['lights','check'],['quiet','check'],['music','check'],['clothes','check'],['visitors','check'],['photos','check']]],
+  ['labor', [['move','check'],['monitor','check'],['fluids','check'],['saline','check'],['explain','check']]],
+  ['pain', [['pain','radio',['epidural','open','none','undecided']],['comfort','head'],['breathing','check'],['massage','check'],['heat','check'],['ball','check'],['shower','check']]],
+  ['birth', [['pushurge','check'],['pushpos','check'],['mirror','check'],['touch','check'],['cut','check'],['delay','check'],['cordblood','check']]],
+  ['after', [['skin','check'],['weigh','check'],['room','check'],['feed','radio',['breast','formula','both','undecided']],['pacifier','check'],['lactation','check'],['newbornmeds','check'],['circ','radio',['yes','no','undecided']]]],
+  ['csec', [['csupport','check'],['cdrape','check'],['cskin','check'],['ctell','check'],['cmusic','check']]],
+  ['other', [['culture','area'],['concerns','area'],['notes','area']]]
+];
+const BP_LOCALE = { en:'en-US', es:'es-US', ko:'ko-KR', ht:'fr-HT' };
+const BP = {
+en: { title:'Birth Preferences', sub:'Fill out and print',
+  intro:'Choose what matters to you. Print a copy or save it as a PDF, review it with your provider at a prenatal visit, and bring it to the hospital. Birth can be unpredictable. Your care team will follow your preferences when it is safe for you and your baby.',
+  saved:'Answers are saved only on this device.', print:'Print or save as PDF', clear:'Clear answers', clearConfirm:'Clear all birth preference answers on this device?', link:'Fill out my birth preferences',
+  sheet:'My Birth Preferences', doctor:'Doctor', practice:'Practice', phone:'Office phone', prepared:'Prepared', reviewed:'Reviewed with my provider (provider signature)', date:'Date', patientSig:'Patient signature', yes:'Yes',
+  secs:{ about:'About me', env:'Labor environment', labor:'During labor', pain:'Pain relief', birth:'Pushing and birth', after:'After birth', csec:'If I need a cesarean', other:'Anything else' },
+  q:{ name:'My name', due:'Due date', support:'Support people with me (names and relationship)', doula:'Doula (name, if any)', peds:"My baby's pediatrician", interp:'I need a medical interpreter', interpLang:'Language',
+    lights:'Dim lights', quiet:'A quiet room', music:'My own music', clothes:'Wear my own clothes', visitors:'Visitors limited to my support people', photos:'Photos or video (following hospital policy)',
+    move:'Walk and change positions', monitor:'Intermittent fetal monitoring, if safe for me and my baby', fluids:'Drink clear liquids, if my provider says it is safe', saline:'A saline lock instead of a continuous IV, if possible', explain:'Explain each procedure and ask me before it is done',
+    pain:'My plan for pain relief', comfort:'Comfort methods I want to try', breathing:'Breathing and relaxation', massage:'Massage', heat:'Warm or cold packs', ball:'Birth ball', shower:'Shower',
+    pushurge:'Push when I feel the urge, with guidance as needed', pushpos:'Try different positions for pushing', mirror:'A mirror to see the birth', touch:"Touch my baby's head as it is born", cut:'My support person would like to cut the cord', delay:'Delayed cord clamping, if my baby is healthy at birth', cordblood:'Cord blood banking or donation (arranged in advance)',
+    skin:'Skin-to-skin contact right away, for at least the first hour if my baby and I are well', weigh:'Weigh and measure my baby after the first feeding', room:'Keep my baby in my room (rooming-in)', feed:'How I plan to feed my baby', pacifier:'If breastfeeding: no pacifiers or formula unless medically needed or I ask', lactation:'A visit from a lactation consultant', newbornmeds:'I have questions about newborn medicines (vitamin K shot, eye ointment, hepatitis B vaccine)', circ:'If my baby is a boy, circumcision',
+    csupport:'My support person with me in the operating room', cdrape:'Lower the drape or use a clear drape so I can see my baby born, if possible', cskin:'Skin-to-skin contact in the operating room, if possible', ctell:'Tell me what is happening during the surgery', cmusic:'Music in the operating room',
+    culture:'Cultural, religious, or personal preferences', concerns:'Fears or concerns my care team should know about', notes:'Other notes' },
+  opt:{ pain:{ epidural:'I plan to have an epidural', open:'I want to start without medicine and decide during labor', none:'I would like to avoid pain medicine. I will ask if I want it.', undecided:'I have not decided' },
+    feed:{ breast:'Breast milk only', formula:'Formula', both:'Breast milk and formula', undecided:'Not decided' },
+    circ:{ yes:'Yes', no:'No', undecided:'Not decided' } } },
+es: { title:'Preferencias para el Parto', sub:'Complete e imprima',
+  intro:'Elija lo que es importante para usted. Imprima una copia o guárdela como PDF, revísela con su proveedor en una visita prenatal y llévela al hospital. El parto puede ser impredecible. Su equipo de atención seguirá sus preferencias cuando sea seguro para usted y su bebé.',
+  saved:'Las respuestas se guardan solo en este dispositivo.', print:'Imprimir o guardar como PDF', clear:'Borrar respuestas', clearConfirm:'¿Borrar todas las respuestas de preferencias para el parto en este dispositivo?', link:'Completar mis preferencias para el parto',
+  sheet:'Mis Preferencias para el Parto', doctor:'Médico', practice:'Consultorio', phone:'Teléfono del consultorio', prepared:'Preparado', reviewed:'Revisado con mi proveedor (firma del proveedor)', date:'Fecha', patientSig:'Firma de la paciente', yes:'Sí',
+  secs:{ about:'Sobre mí', env:'Ambiente durante el trabajo de parto', labor:'Durante el trabajo de parto', pain:'Alivio del dolor', birth:'El pujo y el nacimiento', after:'Después del nacimiento', csec:'Si necesito una cesárea', other:'Otros detalles' },
+  q:{ name:'Mi nombre', due:'Fecha probable de parto', support:'Personas de apoyo conmigo (nombres y relación)', doula:'Doula (nombre, si tengo)', peds:'El pediatra de mi bebé', interp:'Necesito un intérprete médico', interpLang:'Idioma',
+    lights:'Luces tenues', quiet:'Una habitación tranquila', music:'Mi propia música', clothes:'Usar mi propia ropa', visitors:'Visitas limitadas a mis personas de apoyo', photos:'Fotos o video (según las normas del hospital)',
+    move:'Caminar y cambiar de posición', monitor:'Monitoreo fetal intermitente, si es seguro para mí y mi bebé', fluids:'Tomar líquidos claros, si mi proveedor dice que es seguro', saline:'Una vía intravenosa cerrada en lugar de suero continuo, si es posible', explain:'Que me expliquen cada procedimiento y me pregunten antes de hacerlo',
+    pain:'Mi plan para el alivio del dolor', comfort:'Métodos de comodidad que quiero probar', breathing:'Respiración y relajación', massage:'Masajes', heat:'Compresas calientes o frías', ball:'Pelota de parto', shower:'Ducha',
+    pushurge:'Pujar cuando sienta la necesidad, con orientación si hace falta', pushpos:'Probar distintas posiciones para pujar', mirror:'Un espejo para ver el nacimiento', touch:'Tocar la cabeza de mi bebé mientras nace', cut:'Mi persona de apoyo quiere cortar el cordón', delay:'Pinzamiento tardío del cordón, si mi bebé nace sano', cordblood:'Almacenamiento o donación de sangre del cordón (organizado con anticipación)',
+    skin:'Contacto piel con piel de inmediato, por lo menos durante la primera hora si mi bebé y yo estamos bien', weigh:'Pesar y medir a mi bebé después de la primera alimentación', room:'Tener a mi bebé en mi habitación (alojamiento conjunto)', feed:'Cómo planeo alimentar a mi bebé', pacifier:'Si doy el pecho: sin chupetes ni fórmula, a menos que sea médicamente necesario o yo lo pida', lactation:'Una visita de una consultora de lactancia', newbornmeds:'Tengo preguntas sobre los medicamentos del recién nacido (inyección de vitamina K, pomada para los ojos, vacuna contra la hepatitis B)', circ:'Si mi bebé es varón, circuncisión',
+    csupport:'Mi persona de apoyo conmigo en el quirófano', cdrape:'Bajar la cortina o usar una cortina transparente para ver nacer a mi bebé, si es posible', cskin:'Contacto piel con piel en el quirófano, si es posible', ctell:'Que me digan lo que está pasando durante la cirugía', cmusic:'Música en el quirófano',
+    culture:'Preferencias culturales, religiosas o personales', concerns:'Miedos o preocupaciones que mi equipo de atención debe conocer', notes:'Otras notas' },
+  opt:{ pain:{ epidural:'Planeo recibir una epidural', open:'Quiero empezar sin medicamentos y decidir durante el trabajo de parto', none:'Prefiero evitar los medicamentos para el dolor. Los pediré si los quiero.', undecided:'No lo he decidido' },
+    feed:{ breast:'Solo leche materna', formula:'Fórmula', both:'Leche materna y fórmula', undecided:'No lo he decidido' },
+    circ:{ yes:'Sí', no:'No', undecided:'No lo he decidido' } } },
+ko: { title:'출산 선호 사항', sub:'작성 후 인쇄',
+  intro:'원하는 항목을 선택하십시오. 인쇄하거나 PDF로 저장하여 산전 진료 때 담당 의료진과 함께 검토하고 병원에 가져오십시오. 출산은 예측하기 어려울 수 있습니다. 진료팀은 산모와 아기에게 안전한 범위에서 선호 사항을 따릅니다.',
+  saved:'답변은 이 기기에만 저장됩니다.', print:'인쇄 또는 PDF로 저장', clear:'답변 지우기', clearConfirm:'이 기기에 저장된 출산 선호 사항 답변을 모두 지우시겠습니까?', link:'나의 출산 선호 사항 작성하기',
+  sheet:'나의 출산 선호 사항', doctor:'담당 의사', practice:'진료소', phone:'진료소 전화', prepared:'작성일', reviewed:'담당 의료진과 검토함 (의료진 서명)', date:'날짜', patientSig:'환자 서명', yes:'예',
+  secs:{ about:'나에 대하여', env:'진통 중 환경', labor:'진통 중', pain:'통증 완화', birth:'힘주기와 출산', after:'출산 후', csec:'제왕절개가 필요한 경우', other:'기타' },
+  q:{ name:'이름', due:'출산 예정일', support:'함께할 보호자 (이름과 관계)', doula:'둘라 (있는 경우 이름)', peds:'아기의 소아과 의사', interp:'의료 통역이 필요합니다', interpLang:'언어',
+    lights:'조명을 어둡게', quiet:'조용한 방', music:'내가 준비한 음악', clothes:'내 옷 착용', visitors:'방문객은 보호자로 제한', photos:'사진 또는 동영상 (병원 규정에 따름)',
+    move:'걷고 자세 바꾸기', monitor:'산모와 아기에게 안전하다면 간헐적 태아 감시', fluids:'담당 의료진이 안전하다고 하면 맑은 음료 마시기', saline:'가능하다면 수액을 계속 맞는 대신 정맥 라인만 확보', explain:'모든 처치 전에 설명하고 동의를 구해 주십시오',
+    pain:'통증 완화 계획', comfort:'시도하고 싶은 편안함 방법', breathing:'호흡과 이완', massage:'마사지', heat:'온찜질 또는 냉찜질', ball:'짐볼(출산 볼)', shower:'샤워',
+    pushurge:'힘줄 느낌이 올 때 힘주기 (필요하면 안내받기)', pushpos:'다양한 자세로 힘주기', mirror:'출산 장면을 볼 수 있는 거울', touch:'아기 머리가 나올 때 만져 보기', cut:'보호자가 탯줄 자르기를 원함', delay:'아기가 건강하게 태어나면 탯줄 늦게 자르기(지연 결찰)', cordblood:'제대혈 보관 또는 기증 (사전 신청)',
+    skin:'산모와 아기가 괜찮다면 출산 직후 최소 첫 1시간 동안 피부 맞대기', weigh:'첫 수유 후에 아기 체중과 키 측정', room:'아기와 같은 방 쓰기(모자동실)', feed:'아기 수유 계획', pacifier:'모유 수유 시: 의학적으로 필요하거나 요청하지 않는 한 공갈젖꼭지나 분유 사용 안 함', lactation:'수유 상담사 방문', newbornmeds:'신생아 약에 대해 질문이 있습니다 (비타민 K 주사, 안연고, B형 간염 백신)', circ:'아기가 남자아이인 경우 포경수술',
+    csupport:'수술실에 보호자 동반', cdrape:'가능하다면 가림막을 내리거나 투명 가림막을 사용하여 아기가 태어나는 모습 보기', cskin:'가능하다면 수술실에서 피부 맞대기', ctell:'수술 중 진행 상황 알려 주기', cmusic:'수술실에서 음악',
+    culture:'문화적, 종교적 또는 개인적 선호', concerns:'진료팀이 알아야 할 두려움이나 걱정', notes:'기타 메모' },
+  opt:{ pain:{ epidural:'무통 주사(경막외 마취)를 받을 계획입니다', open:'약 없이 시작하고 진통 중에 결정하고 싶습니다', none:'진통제를 피하고 싶습니다. 원하면 직접 요청하겠습니다.', undecided:'아직 정하지 않았습니다' },
+    feed:{ breast:'모유만', formula:'분유', both:'모유와 분유', undecided:'아직 정하지 않음' },
+    circ:{ yes:'예', no:'아니요', undecided:'아직 정하지 않음' } } },
+ht: { title:'Preferans pou Akouchman', sub:'Ranpli epi enprime',
+  intro:'Chwazi sa ki enpòtan pou ou. Enprime yon kopi oswa anrejistre l kòm PDF, revize l ak founisè ou nan yon vizit prenatal, epi pote l lopital la. Akouchman ka pa pase jan ou te prevwa. Ekip swen ou ap swiv preferans ou yo lè sa an sekirite pou ou ak tibebe ou.',
+  saved:'Repons yo anrejistre sèlman sou aparèy sa a.', print:'Enprime oswa anrejistre kòm PDF', clear:'Efase repons yo', clearConfirm:'Efase tout repons preferans pou akouchman sou aparèy sa a?', link:'Ranpli preferans mwen pou akouchman',
+  sheet:'Preferans Mwen pou Akouchman', doctor:'Doktè', practice:'Pratik', phone:'Telefòn biwo a', prepared:'Prepare', reviewed:'Revize ak founisè mwen (siyati founisè a)', date:'Dat', patientSig:'Siyati pasyan an', yes:'Wi',
+  secs:{ about:'Konsènan mwen', env:'Anviwònman pandan tranche', labor:'Pandan tranche', pain:'Soulajman doulè', birth:'Pouse ak akouchman', after:'Apre akouchman', csec:'Si mwen bezwen yon sezaryèn', other:'Lòt bagay' },
+  q:{ name:'Non mwen', due:'Dat akouchman', support:'Moun k ap sipòte m (non ak relasyon)', doula:'Doula (non, si genyen)', peds:'Pedyat tibebe mwen', interp:'Mwen bezwen yon entèprèt medikal', interpLang:'Lang',
+    lights:'Limyè ba', quiet:'Yon chanm trankil', music:'Pwòp mizik mwen', clothes:'Mete pwòp rad mwen', visitors:'Vizitè limite a moun k ap sipòte m yo', photos:'Foto oswa videyo (selon règ lopital la)',
+    move:'Mache epi chanje pozisyon', monitor:'Siveyans kè tibebe a de tanzantan, si sa an sekirite pou mwen ak tibebe m', fluids:'Bwè likid klè, si founisè m di sa an sekirite', saline:'Yon kateter nan venn san sewòm kontinyèl, si posib', explain:'Esplike m chak pwosedi epi mande m anvan yo fè l',
+    pain:'Plan mwen pou soulaje doulè', comfort:'Metòd konfò mwen vle eseye', breathing:'Respirasyon ak detant', massage:'Masaj', heat:'Konprès cho oswa frèt', ball:'Balon akouchman', shower:'Douch',
+    pushurge:'Pouse lè m santi anvi a, avèk gid si sa nesesè', pushpos:'Eseye diferan pozisyon pou pouse', mirror:'Yon glas pou wè akouchman an', touch:'Manyen tèt tibebe m pandan l ap fèt', cut:'Moun k ap sipòte m nan vle koupe kòd la', delay:'Tann anvan yo kranpe kòd la, si tibebe m fèt an sante', cordblood:'Konsève oswa bay san kòd lonbrit la (ranje davans)',
+    skin:'Kontak po ak po touswit, omwen premye èdtan an si tibebe m ak mwen byen', weigh:'Peze ak mezire tibebe m apre premye tete a', room:'Kenbe tibebe m nan chanm mwen', feed:'Kijan m planifye nouri tibebe m', pacifier:'Si m ap bay tete: pa bay sousèt oswa fòmil sof si sa nesesè medikalman oswa si m mande l', lactation:'Yon vizit ak yon konsiltan laktasyon', newbornmeds:'Mwen gen kesyon sou medikaman pou tibebe ki fèk fèt (piki vitamin K, pomad pou je, vaksen epatit B)', circ:'Si tibebe m se yon ti gason, sikonsizyon',
+    csupport:'Moun k ap sipòte m nan avè m nan sal operasyon an', cdrape:'Bese rido a oswa sèvi ak yon rido transparan pou m ka wè tibebe m fèt, si posib', cskin:'Kontak po ak po nan sal operasyon an, si posib', ctell:'Di m sa k ap pase pandan operasyon an', cmusic:'Mizik nan sal operasyon an',
+    culture:'Preferans kiltirèl, relijye, oswa pèsonèl', concerns:'Laperèz oswa enkyetid ekip swen m nan dwe konnen', notes:'Lòt nòt' },
+  opt:{ pain:{ epidural:'Mwen planifye pran yon epidiral', open:'Mwen vle kòmanse san medikaman epi deside pandan tranche a', none:'Mwen ta renmen evite medikaman pou doulè. M ap mande l si m vle l.', undecided:'Mwen poko deside' },
+    feed:{ breast:'Lèt manman sèlman', formula:'Fòmil', both:'Lèt manman ak fòmil', undecided:'Poko deside' },
+    circ:{ yes:'Wi', no:'Non', undecided:'Poko deside' } } }
+};
 
 /* ---------- state ---------- */
 const $ = id => document.getElementById(id);
@@ -491,7 +607,7 @@ function homeHTML() {
     </div>`;
   return hero + `
     <div class="sectitle">${u.tools}</div>
-    <div class="tiles">${tile('week', u.toolTiles.week[0], u.toolTiles.week[1], 'week', 'tool')}${tile('warn', u.toolTiles.warn[0], u.toolTiles.warn[1], 'warn', 'tool')}${tile('weight', u.toolTiles.weight[0], u.toolTiles.weight[1], 'weight', 'tool')}</div>
+    <div class="tiles">${tile('week', u.toolTiles.week[0], u.toolTiles.week[1], 'week', 'tool')}${tile('warn', u.toolTiles.warn[0], u.toolTiles.warn[1], 'warn', 'tool')}${tile('weight', u.toolTiles.weight[0], u.toolTiles.weight[1], 'weight', 'tool')}${tile('bp', BP[lang].title, BP[lang].sub, 'bp', 'tool')}</div>
     <div class="sectitle">${u.topicsHead}</div>
     <div class="tiles">${tile('team', u.team, u.teamSub, 'team')}${TOPIC_ORDER.map(t => tile('t-' + t, u.topics[t][0], u.topics[t][1], t)).join('')}</div>
     <p class="foot">Holy Name Medical Center${doctor ? ' · ' + esc(PRACTICE_NAMES[practice]) : ''}</p>`;
@@ -512,6 +628,7 @@ function topicHTML(t) {
     pg.items.forEach(it => { h += accordion(it, n++, t === 'refs' || t === 'portal'); });
     if (pg.src) srcs.push(pg.src);
   });
+  if (t === 's7') h += `<p style="margin-top:1rem"><button class="linkbtn" data-go="bp">${BP[lang].link} &rarr;</button></p>`;
   if (srcs.length) h += `<details class="srcbox"><summary>${u.sources}</summary>${srcs.map(x => `<div class="src">${x}</div>`).join('')}</details>`;
   return h + '</div>';
 }
@@ -581,6 +698,68 @@ function warnHTML() {
   return h + '</div>';
 }
 
+function bpLoad() { let a = {}; try { a = JSON.parse(localStorage.getItem('hn_bp') || '{}') || {}; } catch(e) {} if (!a.due) { try { a.due = localStorage.getItem('hn_due') || ''; } catch(e) {} } return a; }
+function bpSave(a) { try { localStorage.setItem('hn_bp', JSON.stringify(a)); if (a.due) localStorage.setItem('hn_due', a.due); } catch(e) {} }
+function bpHTML() {
+  const b = BP[lang], a = bpLoad();
+  const btns = `<div class="bpbtns"><button type="button" class="primary" data-bpact="print">${b.print}</button><button type="button" class="linkbtn" data-bpact="clear">${b.clear}</button></div>`;
+  let h = `<button class="back" data-go="home">${UI[lang].home}</button><h1>${esc(b.title)}</h1><p style="margin-top:.5rem">${b.intro}</p><p class="small">${b.saved}</p>${btns}`;
+  for (const [sec, items] of BP_FORM) {
+    h += `<div class="card"><h2 style="margin-bottom:.5rem">${esc(b.secs[sec])}</h2>`;
+    for (const [id, type, opts] of items) {
+      const v = a[id] || '', lab = esc(b.q[id]);
+      if (type === 'check') h += `<label class="bpq"><input type="checkbox" data-bp="${id}"${v ? ' checked' : ''}><span>${lab}</span></label>`;
+      else if (type === 'head') h += `<div class="bpsub">${lab}</div>`;
+      else if (type === 'radio') h += `<fieldset class="bpr"><legend>${lab}</legend>` + opts.map(o => `<label class="bpq"><input type="radio" name="bp_${id}" data-bp="${id}" value="${o}"${v === o ? ' checked' : ''}><span>${esc(b.opt[id][o])}</span></label>`).join('') + `</fieldset>`;
+      else if (type === 'area') h += `<div class="field"><label for="bp_${id}">${lab}</label><textarea id="bp_${id}" data-bp="${id}">${esc(v)}</textarea></div>`;
+      else h += `<div class="field"><label for="bp_${id}">${lab}</label><input type="${type}" id="bp_${id}" data-bp="${id}" value="${esc(v)}"></div>`;
+    }
+    h += `</div>`;
+  }
+  return h + btns + `<div class="bpprint" id="bpPrint"></div>`;
+}
+function bpUpdate(el) {
+  const a = bpLoad(), id = el.dataset.bp;
+  if (el.type === 'checkbox') { if (el.checked) a[id] = '1'; else delete a[id]; }
+  else if (el.type === 'radio') { if (el.checked) a[id] = el.value; }
+  else { if (el.value.trim()) a[id] = el.value; else delete a[id]; }
+  bpSave(a);
+}
+function bpDate(v) { if (!v) return ''; const d = new Date(v + 'T00:00:00'); if (isNaN(d)) return esc(v); try { return d.toLocaleDateString(BP_LOCALE[lang], {year:'numeric', month:'long', day:'numeric'}); } catch(e) { return v; } }
+function bpPrintHTML() {
+  const b = BP[lang], en = BP.en, a = bpLoad(), p = PRACTICES[practice], d = doctor ? docById(doctor) : null, two = lang !== 'en';
+  const lbl = (txt, eng) => esc(txt) + (two ? `<span class="en">${esc(eng)}</span>` : '');
+  const txt = v => esc(v).replace(/\n/g, '<br>');
+  let rows = '';
+  const row = (k, ek, val) => { if (val) rows += `<tr><th>${lbl(k, ek)}</th><td>${val}</td></tr>`; };
+  row(b.q.name, en.q.name, a.name ? txt(a.name) : '');
+  row(b.q.due, en.q.due, bpDate(a.due));
+  if (d) { row(b.doctor, en.doctor, esc(`${d.first} ${d.last}, ${d.cred}`)); row(b.practice, en.practice, `${p.org} · ${p.phone}`); }
+  row(b.q.support, en.q.support, a.support ? txt(a.support) : '');
+  row(b.q.doula, en.q.doula, a.doula ? txt(a.doula) : '');
+  row(b.q.peds, en.q.peds, a.peds ? txt(a.peds) : '');
+  if (a.interp) row(b.q.interp, en.q.interp, lbl(b.yes, en.yes));
+  row(b.q.interpLang, en.q.interpLang, a.interpLang ? txt(a.interpLang) : '');
+  let secs = '';
+  for (const [sec, items] of BP_FORM) {
+    if (sec === 'about') continue;
+    let li = '';
+    for (const [id, type] of items) {
+      const v = a[id]; if (!v) continue;
+      if (type === 'check') li += `<li>${lbl(b.q[id], en.q[id])}</li>`;
+      else if (type === 'radio') li += `<li><b>${esc(b.q[id])}:</b> ${esc(b.opt[id][v])}${two ? `<span class="en">${esc(en.q[id])}: ${esc(en.opt[id][v])}</span>` : ''}</li>`;
+      else if (type === 'area') li += `<li><b>${lbl(b.q[id], en.q[id])}</b><span style="display:block">${txt(v)}</span></li>`;
+    }
+    if (li) secs += `<div class="sec"><h2>${lbl(b.secs[sec], en.secs[sec])}</h2><ul>${li}</ul></div>`;
+  }
+  const today = new Date(); const td = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  return `<div class="bph"><div><h1>${lbl(b.sheet, en.sheet)}</h1><div class="disc" style="margin:0">${esc(b.prepared)}${two ? ' / ' + esc(en.prepared) : ''}: ${bpDate(td)}</div></div><img src="${d ? p.logo : 'img/logo_hn.png'}" alt=""></div>
+    ${rows ? `<table>${rows}</table>` : ''}
+    <p class="disc">${b.intro}</p>
+    <div class="cols">${secs}</div>
+    <div class="sign"><div>${lbl(b.patientSig, en.patientSig)}</div><div>${lbl(b.date, en.date)}</div><div>${lbl(b.reviewed, en.reviewed)}</div><div>${lbl(b.date, en.date)}</div></div>`;
+}
+
 function searchHTML(q) {
   const u = UI[lang], terms = q.trim().split(/\s+/).filter(Boolean), lower = terms.map(x => x.toLowerCase());
   let h = `<button class="back" data-go="home">${u.home}</button><h1>${esc(u.results)}</h1><div class="results"><ol>`; let n = 0;
@@ -607,13 +786,14 @@ function highlight(root, terms) {
 function show(id, opts) {
   opts = opts || {};
   const main = $('main'); screen = id;
-  document.body.className = practice;
+  document.body.className = practice + (id === 'bp' ? ' bpmode' : '');
   if (id === 'home') main.innerHTML = homeHTML();
   else if (id === 'team') main.innerHTML = `<button class="back" data-go="home">${UI[lang].home}</button>` + (doctor ? coverHTML() : `<div class="card"><p>${UI[lang].choosePrompt}</p><button class="linkbtn" data-focus="doctor">${UI[lang].chooseBtn}</button></div>`);
   else if (id.startsWith('t-')) main.innerHTML = topicHTML(id.slice(2));
   else if (id === 'week') { main.innerHTML = weekHTML(); renderWeek(); $('due').addEventListener('change', renderWeek); $('due').addEventListener('input', renderWeek); }
   else if (id === 'weight') { main.innerHTML = weightHTML(); main.querySelectorAll('input').forEach(i => i.addEventListener('input', renderWeight)); main.querySelectorAll('[data-u]').forEach(b => b.addEventListener('click', () => { wUnits = b.dataset.u; show('weight'); })); }
   else if (id === 'warn') main.innerHTML = warnHTML();
+  else if (id === 'bp') { main.innerHTML = bpHTML(); main.querySelectorAll('[data-bp]').forEach(el => { el.addEventListener('change', () => bpUpdate(el)); el.addEventListener('input', () => bpUpdate(el)); }); }
   else if (id === 'search') main.innerHTML = searchHTML(opts.q || '');
   else { main.innerHTML = homeHTML(); screen = 'home'; }
   main.querySelectorAll('.ph').forEach(el => el.innerHTML = doctor ? telLink(PRACTICES[practice].phone) : UI[lang].yourOffice);
@@ -623,6 +803,11 @@ function show(id, opts) {
 
 $('main').addEventListener('click', e => {
   const go = e.target.closest('[data-go]'); if (go) { show(go.dataset.go); return; }
+  const bpa = e.target.closest('[data-bpact]'); if (bpa) {
+    if (bpa.dataset.bpact === 'print') { $('bpPrint').innerHTML = bpPrintHTML(); window.print(); }
+    else if (confirm(BP[lang].clearConfirm)) { try { localStorage.removeItem('hn_bp'); } catch(err) {} show('bp'); }
+    return;
+  }
   const f = e.target.closest('[data-focus]'); if (f) { window.scrollTo({top:0}); const sel = $(f.dataset.focus); sel.focus(); try { sel.showPicker(); } catch(err) {} return; }
   const acc = e.target.closest('.acc > button'); if (acc) { const a = acc.parentNode; a.classList.toggle('open'); acc.setAttribute('aria-expanded', a.classList.contains('open')); return; }
   const all = e.target.closest('[data-acc]'); if (all) { $('main').querySelectorAll('.acc').forEach(a => a.classList.toggle('open', all.dataset.acc === 'open')); return; }
