@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holy Name Prenatal Packet</title>
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="theme-color" content="#1b3456">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&family=Noto+Serif:wght@700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#1b3456; --teal:#4ba69b; --teal-lt:#e4f2f0; --navy-lt:#eaeff5; --ink:#222; --mute:#5a6472; --rule:#cfd8e0; --bg:#f4f6f8; --amber:#fff4d6; --amber-b:#e0a800; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background: var(--bg); }
+  body { font-family: "Noto Sans", "Noto Sans KR", Arial, sans-serif; font-size: 16px; line-height: 1.5; color: var(--ink); -webkit-text-size-adjust: 100%; }
+  html[lang="ko"] body { font-family: "Noto Sans KR", "Noto Sans", sans-serif; }
+  h1, h2, h3, h4 { font-family: "Noto Serif", Georgia, serif; color: var(--navy); margin: 0; line-height: 1.25; }
+  html[lang="ko"] h1, html[lang="ko"] h2, html[lang="ko"] h3 { font-family: "Noto Sans KR", sans-serif; }
+  h1 { font-size: 1.6rem; font-weight: 700; }
+  h2 { font-size: 1.35rem; font-weight: 700; }
+  h3 { font-size: 1.1rem; font-weight: 700; margin: 1rem 0 .3rem 0; }
+  h4 { font-size: 1rem; font-weight: 700; margin: .9rem 0 .25rem 0; font-family: "Noto Sans", "Noto Sans KR", sans-serif; }
+  p { margin: 0 0 .6rem 0; }
+  ul { margin: 0 0 .6rem 0; padding-left: 1.3rem; }
+  li { margin: 0 0 .3rem 0; }
+  strong { color: var(--navy); }
+  a { color: var(--navy); }
+  button { font: inherit; }
+
+  /* ---- header ---- */
+  .top { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--rule); box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .top .bar { max-width: 960px; margin: 0 auto; padding: .45rem .8rem; display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+  .iconbtn { width: 46px; height: 46px; border: 0; padding: 0; background: none; cursor: pointer; border-radius: 12px; flex: 0 0 auto; }
+  .iconbtn img { width: 46px; height: 46px; border-radius: 12px; display:block; }
+  .appname { font-family: "Noto Serif", Georgia, serif; color: var(--navy); font-weight: 700; font-size: 1.05rem; flex: 1 1 auto; white-space: nowrap; cursor: pointer; }
+  .sel { display: flex; flex-direction: column; font-size: .68rem; color: var(--mute); text-transform: uppercase; letter-spacing: .06em; }
+  .sel select { font: inherit; font-size: .95rem; text-transform: none; letter-spacing: 0; color: var(--navy); font-weight: 700; border: 1px solid var(--rule); border-radius: 8px; padding: .35rem .5rem; background: #fff; max-width: 46vw; }
+  .selrow { display: flex; gap: .6rem; }
+  @media (max-width: 560px) { .selrow { width: 100%; } .sel { flex: 1 1 0; } .sel select { max-width: 100%; width: 100%; } }
+  .search { display: flex; gap: .4rem; width: 100%; }
+  .search input { flex: 1 1 auto; font: inherit; font-size: 1rem; border: 1px solid var(--rule); border-radius: 10px; padding: .5rem .8rem; min-width: 0; }
+  .search button { font-weight: 700; color: #fff; background: var(--navy); border: 0; border-radius: 10px; padding: .5rem 1rem; cursor: pointer; }
+
+  main { max-width: 960px; margin: 0 auto; padding: 1rem .8rem 3rem .8rem; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+  .back { display: inline-flex; align-items: center; gap: .4rem; background: none; border: 0; color: var(--navy); font-weight: 700; padding: .3rem 0; margin-bottom: .6rem; cursor: pointer; }
+  .back::before { content: "\2190"; font-size: 1.2rem; }
+  .card { background: #fff; border-radius: 12px; padding: 1.1rem 1rem; box-shadow: 0 1px 3px rgba(0,0,0,.06); margin-bottom: 1rem; }
+  @media (min-width: 700px) { .card { padding: 1.4rem 1.6rem; } }
+
+  /* ---- home ---- */
+  .hero { display: grid; grid-template-columns: 1fr; gap: .8rem; align-items: center; }
+  @media (min-width: 640px) { .hero { grid-template-columns: 1fr auto; } }
+  .hero img { width: min(300px, 80%); display: block; }
+  .hero .who { font-size: .9rem; color: var(--mute); margin: .3rem 0 0 0; }
+  .callbtn { display: inline-flex; flex-direction: column; align-items: center; text-decoration: none; background: var(--navy); color: #fff; border-radius: 14px; padding: .7rem 1.3rem; min-width: 200px; }
+  .callbtn b { font-size: 1.35rem; font-family: "Noto Serif", Georgia, serif; letter-spacing: .01em; }
+  .callbtn span { font-size: .78rem; opacity: .85; text-transform: uppercase; letter-spacing: .08em; }
+  .herorow { display: flex; flex-direction: column; gap: .5rem; align-items: stretch; }
+  .linkbtn { display: inline-block; text-align: center; text-decoration: none; color: var(--navy); background: var(--navy-lt); border-radius: 12px; padding: .55rem 1rem; font-weight: 700; border: 0; cursor: pointer; }
+  .sectitle { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); font-weight: 700; margin: 1.2rem 0 .5rem 0; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+  @media (min-width: 640px) { .tiles { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 900px) { .tiles { grid-template-columns: repeat(4, 1fr); } }
+  .tile { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; text-align: left; background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: .9rem .9rem; cursor: pointer; min-height: 118px; box-shadow: 0 1px 3px rgba(0,0,0,.05); transition: transform .1s, box-shadow .1s; color: var(--ink); }
+  .tile:hover, .tile:focus { box-shadow: 0 4px 14px rgba(27,52,86,.14); transform: translateY(-1px); border-color: var(--teal); }
+  .tile .ic { width: 40px; height: 40px; border-radius: 12px; background: var(--teal-lt); color: var(--teal); display: flex; align-items: center; justify-content: center; }
+  .tile .ic svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .tile.tool .ic { background: var(--navy-lt); color: var(--navy); }
+  .tile b { font-family: "Noto Serif", Georgia, serif; color: var(--navy); font-size: 1.02rem; line-height: 1.25; }
+  html[lang="ko"] .tile b { font-family: "Noto Sans KR", sans-serif; }
+  .tile small { color: var(--mute); font-size: .8rem; line-height: 1.3; }
+
+  /* ---- topic screen ---- */
+  .topic h1 { margin-bottom: .4rem; }
+  .pagehead { font-family: "Noto Serif", Georgia, serif; color: var(--teal); font-size: 1.05rem; margin: 1.2rem 0 .5rem 0; }
+  .intro { margin-bottom: .8rem; }
+  .acc { background: #fff; border: 1px solid var(--rule); border-radius: 12px; margin-bottom: .6rem; overflow: hidden; }
+  .acc > button { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: .8rem; text-align: left; background: none; border: 0; padding: .9rem 1rem; cursor: pointer; color: var(--navy); font-weight: 700; font-size: 1.02rem; }
+  .acc > button::after { content: "+"; font-size: 1.4rem; line-height: 1; color: var(--teal); flex: 0 0 auto; }
+  .acc.open > button::after { content: "\2212"; }
+  .acc > button:hover { background: var(--navy-lt); }
+  .acc .ac { display: none; padding: 0 1rem 1rem 1rem; border-top: 1px solid var(--rule); }
+  .acc.open .ac { display: block; }
+  .ac > :first-child { margin-top: .8rem; }
+  .ac h4:first-child { margin-top: .8rem; }
+  .card-body.warn { border-left: 4px solid var(--navy); padding-left: .8rem; }
+  .card-body.callout { background: var(--teal-lt); padding: .8rem; border-radius: 8px; margin-top: .8rem; }
+  .card-body.callout.navy { background: var(--navy-lt); }
+  .srcbox { margin-top: 1rem; }
+  .srcbox summary { cursor: pointer; color: var(--mute); font-size: .85rem; font-weight: 700; }
+  .srcbox .src { font-size: .8rem; color: var(--mute); margin: .4rem 0 .6rem 0; line-height: 1.4; }
+  .rowbtns { display: flex; gap: .5rem; flex-wrap: wrap; margin: .5rem 0 1rem 0; }
+  .rowbtns button { background: var(--navy-lt); color: var(--navy); border: 0; border-radius: 8px; padding: .35rem .8rem; cursor: pointer; font-size: .85rem; font-weight: 700; }
+
+  /* content styles (from the packet) */
+  .section-label { display: none; }
+  .callout { background: var(--teal-lt); border-left: 5px solid var(--teal); padding: .7rem .9rem; margin: .7rem 0; border-radius: 6px; }
+  .callout.navy { background: var(--navy-lt); border-left-color: var(--navy); }
+  .callout h4 { margin-top: 0; }
+  .callout ul:last-child, .callout p:last-child { margin-bottom: 0; }
+  .two { column-count: 1; }
+  .grid2, .grid3 { display: grid; grid-template-columns: 1fr; gap: .9rem 1.4rem; }
+  @media (min-width: 700px) { .grid2 { grid-template-columns: 1fr 1fr; } .two { column-count: 2; column-gap: 2rem; } }
+  .avoid { font-size: .95rem; color: var(--navy); font-weight: 700; margin-top: .6rem; }
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; margin: .4rem 0 .9rem 0; }
+  th, td { text-align: left; padding: .35rem .5rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { background: var(--navy-lt); color: var(--navy); font-weight: 700; }
+  .qrrow { display:flex; align-items:center; gap: .8rem; margin-top: .9rem; padding: .8rem 1rem; background: var(--navy-lt); border-radius: 10px; }
+  a.qrrow.link { text-decoration: none; color: var(--ink); border: 2px solid var(--navy); background: #fff; }
+  a.qrrow.link:hover { background: var(--navy-lt); }
+  a.qrrow.link > div { flex: 1 1 auto; }
+  a.qrrow.link .arrow { font-size: 1.4rem; color: var(--teal); flex: 0 0 auto; }
+  .classes .row { display: grid; grid-template-columns: 1fr; gap: .25rem; padding: .7rem 0; border-bottom: 1px dotted var(--rule); }
+  @media (min-width: 700px) { .classes .row { grid-template-columns: 220px 1fr; gap: 1rem; } }
+  .classes .row b { font-family: "Noto Serif", Georgia, serif; color: var(--navy); font-size: 1.1rem; }
+  .pos { display: grid; grid-template-columns: 1fr; gap: 1rem 1.4rem; }
+  @media (min-width: 700px) { .pos { grid-template-columns: 1fr 1fr; } }
+  .pos .item { display: grid; grid-template-columns: 110px 1fr; gap: .8rem; align-items: start; }
+  .pos img { width: 110px; border-radius: 6px; }
+  .ref { font-size: .85rem; line-height: 1.35; }
+  .ref ol { padding-left: 1.4rem; margin: 0; }
+  .ref li { margin-bottom: .35rem; }
+  .small { font-size: .88rem; color: var(--mute); }
+  .note { font-size: .9rem; color: var(--mute); font-style: italic; }
+  .big { font-size: 1.08rem; }
+  .pcard { display:grid; grid-template-columns: 86px 1fr; gap: .7rem; align-items:start; border: 1px solid var(--rule); border-top: 4px solid var(--teal); border-radius: 8px; padding: .6rem .7rem; }
+  .pcard .photo { width:86px; height:104px; background: var(--navy-lt); border-radius: 6px; overflow:hidden; }
+  .pcard .photo img { width:100%; height:100%; object-fit:cover; display:block; }
+  .phone { font-family: "Noto Serif", Georgia, serif; font-size: 1.5rem; color: var(--navy); font-weight: 700; }
+  .phone a { text-decoration: none; }
+  body:not(.wch):not(.fc) .wch-only { display: none; }
+  mark { background: #ffe58a; color: inherit; padding: 0 .1em; border-radius: 2px; }
+
+  /* ---- team screen ---- */
+  .cover-logo { width: min(320px, 80%); display:block; margin: 0 0 1.2rem 0; }
+  .team { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem 1rem; margin: .6rem 0 1rem 0; font-size: .95rem; }
+  @media (min-width: 700px) { .team { grid-template-columns: repeat(3, 1fr); } }
+  .team b { display:block; color: var(--teal); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .2rem; }
+  .offices { display: grid; grid-template-columns: 1fr; gap: .6rem; margin: .5rem 0 1rem 0; }
+  @media (min-width: 600px) { .offices { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 860px) { .offices { grid-template-columns: repeat(3, 1fr); } }
+  .office { border: 1px solid var(--rule); border-top: 4px solid var(--teal); border-radius: 8px; padding: .6rem .8rem; font-size: .92rem; line-height: 1.4; }
+  .office b { color: var(--navy); }
+  .office .docs { color: var(--mute); font-size: .85rem; }
+
+  /* ---- tools ---- */
+  .field { display: flex; flex-direction: column; gap: .25rem; margin-bottom: .8rem; }
+  .field label { font-size: .8rem; color: var(--mute); text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
+  .field input, .field select { font: inherit; font-size: 1.05rem; border: 1px solid var(--rule); border-radius: 10px; padding: .5rem .7rem; background: #fff; }
+  .field .pair { display: flex; gap: .5rem; }
+  .field .pair input { flex: 1 1 0; min-width: 0; }
+  .stat { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin: .6rem 0 1rem 0; }
+  .stat div { background: var(--navy-lt); border-radius: 10px; padding: .7rem .8rem; }
+  .stat b { display: block; font-family: "Noto Serif", Georgia, serif; color: var(--navy); font-size: 1.3rem; }
+  .stat span { font-size: .8rem; color: var(--mute); text-transform: uppercase; letter-spacing: .06em; }
+  .chk { list-style: none; padding: 0; margin: 0; }
+  .chk li { display: flex; gap: .7rem; align-items: flex-start; padding: .55rem 0; border-bottom: 1px solid var(--rule); }
+  .chk .dot { flex: 0 0 auto; width: 14px; height: 14px; border-radius: 50%; margin-top: .35rem; background: var(--rule); }
+  .chk li.now .dot { background: var(--teal); box-shadow: 0 0 0 4px var(--teal-lt); }
+  .chk li.past .dot { background: var(--navy); }
+  .chk li.now { background: var(--teal-lt); margin: 0 -.5rem; padding: .55rem .5rem; border-radius: 8px; }
+  .chk .w { font-size: .8rem; color: var(--mute); display: block; }
+  .chk .tag { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--teal); margin-left: .4rem; }
+  .chk li.past .tag { color: var(--mute); }
+  .warnlist .acc > button { color: var(--navy); }
+  .urgent { background: var(--amber); border-left: 5px solid var(--amber-b); padding: .7rem .9rem; border-radius: 6px; margin-bottom: .8rem; }
+  .units { display: flex; gap: .3rem; }
+  .units button { border: 1px solid var(--rule); background: #fff; border-radius: 8px; padding: .3rem .7rem; cursor: pointer; font-size: .85rem; }
+  .units button.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+  /* ---- search results ---- */
+  .results ol { list-style: none; margin: 0; padding: 0; }
+  .results li button { display: block; width: 100%; text-align: left; background: #fff; border: 1px solid var(--rule); border-radius: 10px; padding: .7rem .9rem; cursor: pointer; color: var(--ink); line-height: 1.35; margin-bottom: .5rem; }
+  .results li button:hover { background: var(--navy-lt); }
+  .results li button b { color: var(--navy); display: block; font-size: 1rem; }
+  .results li button small { color: var(--teal); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+  .results li button .snip { font-size: .9rem; color: var(--mute); }
+  .loading { text-align: center; color: var(--mute); padding: 3rem 1rem; }
+  .foot { font-size: .78rem; color: var(--mute); margin-top: 2rem; text-align: center; }
+</style>
+</head>
+<body class="wch">
+
+<header class="top"><div class="bar">
+  <button class="iconbtn" id="homeBtn" aria-label="Home"><img src="icon.png" alt=""></button>
+  <div class="appname" id="appName">Prenatal Packet</div>
+  <div class="selrow">
+    <label class="sel"><span id="lblPractice">My doctor</span><select id="doctor"></select></label>
+    <label class="sel"><span id="lblLang">Language</span>
+      <select id="lang">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="ko">한국어</option>
+        <option value="ht">Kreyòl Ayisyen</option>
+      </select></label>
+  </div>
+  <form class="search" id="searchForm" role="search">
+    <input type="search" id="q" autocomplete="off" placeholder="Search…" aria-label="Search">
+    <button type="submit" id="searchBtn">Search</button>
+  </form>
+</div></header>
+
+<main id="main"><div class="loading" id="loading">Loading…</div></main>
+
+<script>
+const PRACTICES = {
+  wch: { org: "Holy Name Women's &amp; Children's Health", logo: 'img/logo.png', phone: '(201) 541-5909', afterhours: 'main',
+    groups: [
+      { k:'attending', names:[['Bibiancy Gutierrez','f'],['Andrea Hubschmann','f'],['Babalola Jinadu','m'],['Judith Pinto','f'],['Ben Mapa','m']] },
+      { k:'residents', names:[['Andrea Dwiggins','f'],['Noelle Mayers','f'],['Brianna Mosley','f']] },
+      { k:'cnm', names:[['Atinuke Asaolu, CNM, DNP',''],['Sheva Gluck, CNM','']] },
+      { k:'pa', names:[['Linneah Olsen, PA','']] } ],
+    offices: [] },
+  whp: { org: "Holy Name Women's Health Partners", logo: 'img/logo_whp.png', phone: '(201) 833-7087', afterhours: 'office',
+    groups: [
+      { k:'whpDocs', names:[['JaQuellah Taylor','f'],['Paula Barcia-Pena','f'],['Vibha Joshi','f'],['Tamara Aviles','f'],['Neelam Sharma','f'],['Angelica Matteo De Pablo','f'],['Hazel Brana-Leon','f'],['Ruben Barrera Vera','m'],['Maria Pachon','f'],['Weiping Lin','m'],['Henry Fernandez-Cos','m'],['Yissel Borrego, APN','']] },
+      { k:'laborists', names:[['Andrea Hubschmann','f'],['Babalola Jinadu','m'],['Bibiancy Gutierrez','f'],['Judith Pinto','f'],['Ben Mapa','m']] },
+      { k:'cnm', names:[['Atinuke Asaolu, CNM, DNP',''],['Sheva Gluck, CNM','']] } ],
+    offices: [
+      { city:'Teaneck', addr:'222 Cedar Lane, Suite 207<br>Teaneck, NJ 07666', phone:'(201) 833-7087', docs:[['JaQuellah Taylor','f'],['Paula Barcia-Pena','f'],['Hazel Brana-Leon','f']] },
+      { city:'Englewood', addr:'46 North Van Brunt Street<br>Englewood, NJ 07631', phone:'(551) 333-1322', docs:[['Weiping Lin','m'],['Neelam Sharma','f']] },
+      { city:'Hackensack', addr:'301 Beech Street<br>Hackensack, NJ 07601', phone:'(201) 880-7641', docs:[['Vibha Joshi','f']] },
+      { city:'Cliffside Park', addr:'663 Palisade Avenue, Suite 301<br>Cliffside Park, NJ 07010', phone:'(201) 943-4884', docs:[['Ruben Barrera Vera','m'],['Maria Pachon','f'],['Angelica Matteo De Pablo','f']] },
+      { city:'West New York', addr:'419 66th Street<br>West New York, NJ 07093', phone:'(201) 861-9229', docs:[['Tamara Aviles','f'],['Henry Fernandez-Cos','m'],['Yissel Borrego, APN','']] } ] },
+  whcg: { org: "Holy Name Women's Health Care Group", logo: 'img/logo_whcg.png', phone: '(201) 907-0900', afterhours: 'main',
+    groups: [
+      { k:'whcgDocs', names:[['Payal Shah','f'],['Nicole Palomar','f'],['Sneha Sudanagunta','f'],['Amalia Gonzalez-Tineo','f'],['Gokce Incekara, APN','']] },
+      { k:'partners', names:[['Kimberly Fallon','f'],['Shonda Corbett','f']] },
+      { k:'laborists', names:[['Andrea Hubschmann','f'],['Babalola Jinadu','m'],['Bibiancy Gutierrez','f'],['Judith Pinto','f'],['Ben Mapa','m']] },
+      { k:'cnm', names:[['Atinuke Asaolu, CNM, DNP',''],['Sheva Gluck, CNM','']] },
+      { k:'residents', names:[['Andrea Dwiggins','f'],['Noelle Mayers','f'],['Brianna Mosley','f']] } ],
+    offices: [
+      { city:'Teaneck', addr:'870 Palisade Avenue, Suite 301<br>Teaneck, NJ 07666', phone:'(201) 907-0900', docs:[] },
+      { city:'Rutherford', addr:'71 Union Avenue, Suite 101<br>Rutherford, NJ 07070', phone:'(201) 907-0900', docs:[] },
+      { city:'Westwood', addr:'354 Old Hook Road, Suite 203<br>Westwood, NJ 07675', phone:'(201) 907-0900', docs:[] } ] },
+  fc: { org: "Drs. Fallon &amp; Corbett", logo: 'img/logo_fc.png', phone: '(551) 288-1025', afterhours: 'main',
+    groups: [
+      { k:'fcDocs', names:[['Kimberly Fallon','f'],['Shonda Corbett','f']] },
+      { k:'whcgPartners', names:[['Payal Shah','f'],['Nicole Palomar','f'],['Sneha Sudanagunta','f'],['Amalia Gonzalez-Tineo','f'],['Gokce Incekara, APN','']] },
+      { k:'laborists', names:[['Andrea Hubschmann','f'],['Babalola Jinadu','m'],['Bibiancy Gutierrez','f'],['Judith Pinto','f'],['Ben Mapa','m']] },
+      { k:'cnm', names:[['Atinuke Asaolu, CNM, DNP',''],['Sheva Gluck, CNM','']] },
+      { k:'residents', names:[['Andrea Dwiggins','f'],['Noelle Mayers','f'],['Brianna Mosley','f']] } ],
+    offices: [
+      { city:'Teaneck', addr:'222 Cedar Lane, Suite 303<br>Teaneck, NJ 07666', phone:'(551) 288-1025', docs:[] } ] }
+};
+
+
+const STR = {
+en: { app:'Prenatal Packet', practice:'My doctor', choose:'Choose your doctor…', search:'Search', searchPh:'Search the packet…', results:'results', noResults:'No results', clear:'Clear', language:'Language', contents:'Contents', prev:'Previous', next:'Next', page:'Page', of:'of', welcome:'Welcome', loading:'Loading…',
+  dr:{m:'Dr.', f:'Dr.'},
+  label:'Prenatal Care Packet', h1:'Welcome to the Obstetrics Team',
+  p1:'We are honored to care for you during your pregnancy, your delivery, and the weeks after your baby is born.',
+  p2:'We are proud to serve families from many cultures and backgrounds. Our team gives respectful, caring, and personal care. We honor your values and your goals for your pregnancy and birth.',
+  p3:'This packet answers many of the questions we hear most often. One of the most common is, "Who will deliver my baby?"',
+  team:{ wch:'At Holy Name, we believe the best care comes from a team. Our team includes attending doctors, certified nurse midwives, a physician assistant, and resident doctors. Resident doctors are physicians who are completing their specialty training in obstetrics and gynecology. Together, we give you care that is coordinated and based on the best evidence.',
+    whp:"At Holy Name, we believe the best care comes from a team. Our team includes your Women's Health Partners doctors, laborists, and certified nurse midwives. Laborists are obstetricians who are in the hospital 24 hours a day to care for patients in labor. Together, we give you care that is coordinated and based on the best evidence.",
+    whcg:"At Holy Name, we believe the best care comes from a team. Our team includes Women's Health Care Group doctors, our partners: Drs. Fallon and Corbett, laborists, certified nurse midwives and residents. Laborists are obstetricians who are in the hospital 24 hours a day to care for patients in labor. Residents are physicians completing their specialty training in obstetrics and gynecology. Together, we give you care that is coordinated and based on the best evidence.",
+    fc:"At Holy Name, we believe the best care comes from a team. Our team includes Drs. Fallon and Corbett, our partners at Women's Health Care Group, laborists, certified nurse midwives and residents. Laborists are obstetricians who are in the hospital 24 hours a day to care for patients in labor. Residents are physicians completing their specialty training in obstetrics and gynecology. Together, we give you care that is coordinated and based on the best evidence." },
+  p5:'Our team is here 24 hours a day. Every member of the team knows your pregnancy and your birth plan. No matter who is with you at your delivery, you will get careful, thoughtful care from providers who are committed to your health and safety.',
+  teamHeading:'Our Care Team', officesHeading:'Our Offices',
+  groups:{ attending:'Attending Physicians', residents:'Resident Physicians', cnm:'Certified Nurse Midwives', pa:'Physician Assistant', whpDocs:"Women's Health Partners Physicians", laborists:'Laborists', partners:'Our Partners', whcgDocs:"Women's Health Care Group", fcDocs:'Drs. Fallon &amp; Corbett', whcgPartners:"Our Partners at Women's Health Care Group" },
+  p6:'This packet also covers many topics that come up during pregnancy. Please bring any other questions to your prenatal visits, or call our office to speak with a member of our team.',
+  after:{ main:'If you have an urgent concern after hours or on weekends, or if you think you are in labor, call our main office number. Our answering service is open 24 hours a day, 7 days a week.',
+    office:'If you have an urgent concern after hours or on weekends, or if you think you are in labor, call your office. Our answering service is open 24 hours a day, 7 days a week.' },
+  thanks:'Thank you for trusting our team with your care. We look forward to supporting you and your growing family.',
+  sig:'— The Obstetrics Team, ' },
+es: { app:'Paquete Prenatal', practice:'Mi médico', choose:'Elija a su médico…', search:'Buscar', searchPh:'Buscar en el paquete…', results:'resultados', noResults:'Sin resultados', clear:'Borrar', language:'Idioma', contents:'Contenido', prev:'Anterior', next:'Siguiente', page:'Página', of:'de', welcome:'Bienvenida', loading:'Cargando…',
+  dr:{m:'Dr.', f:'Dra.'},
+  label:'Paquete de Atención Prenatal', h1:'Bienvenida al Equipo de Obstetricia',
+  p1:'Es un honor cuidar de usted durante su embarazo, su parto y las semanas después del nacimiento de su bebé.',
+  p2:'Nos enorgullece atender a familias de muchas culturas y orígenes. Nuestro equipo brinda una atención respetuosa, cálida y personal. Respetamos sus valores y sus metas para su embarazo y su parto.',
+  p3:'Este paquete responde a muchas de las preguntas que escuchamos con más frecuencia. Una de las más comunes es: "¿Quién va a atender mi parto?"',
+  team:{ wch:'En Holy Name creemos que la mejor atención viene de un equipo. Nuestro equipo incluye médicos tratantes, enfermeras parteras certificadas, una asistente médica (PA) y médicos residentes. Los médicos residentes son médicos que están completando su especialización en obstetricia y ginecología. Juntos, le brindamos una atención coordinada y basada en la mejor evidencia.',
+    whp:"En Holy Name creemos que la mejor atención viene de un equipo. Nuestro equipo incluye a sus médicos de Women's Health Partners, los laboristas y las enfermeras parteras certificadas. Los laboristas son obstetras que están en el hospital las 24 horas del día para atender a las pacientes en trabajo de parto. Juntos, le brindamos una atención coordinada y basada en la mejor evidencia.",
+    whcg:"En Holy Name creemos que la mejor atención viene de un equipo. Nuestro equipo incluye a los médicos de Women's Health Care Group, nuestras socias, las Dras. Fallon y Corbett, los laboristas, las enfermeras parteras certificadas y los residentes. Los laboristas son obstetras que están en el hospital las 24 horas del día para atender a las pacientes en trabajo de parto. Los residentes son médicos que están completando su especialización en obstetricia y ginecología. Juntos, le brindamos una atención coordinada y basada en la mejor evidencia.",
+    fc:"En Holy Name creemos que la mejor atención viene de un equipo. Nuestro equipo incluye a las Dras. Fallon y Corbett, nuestros socios de Women's Health Care Group, los laboristas, las enfermeras parteras certificadas y los residentes. Los laboristas son obstetras que están en el hospital las 24 horas del día para atender a las pacientes en trabajo de parto. Los residentes son médicos que están completando su especialización en obstetricia y ginecología. Juntos, le brindamos una atención coordinada y basada en la mejor evidencia." },
+  p5:'Nuestro equipo está disponible las 24 horas del día. Cada miembro del equipo conoce su embarazo y su plan de parto. Sin importar quién esté con usted en el momento del parto, recibirá una atención cuidadosa y atenta de proveedores comprometidos con su salud y su seguridad.',
+  teamHeading:'Nuestro Equipo de Atención', officesHeading:'Nuestras Oficinas',
+  groups:{ attending:'Médicos Tratantes', residents:'Médicos Residentes', cnm:'Enfermeras Parteras Certificadas', pa:'Asistente Médica', whpDocs:"Médicos de Women's Health Partners", laborists:'Laboristas', partners:'Nuestras Socias', whcgDocs:"Women's Health Care Group", fcDocs:'Dras. Fallon y Corbett', whcgPartners:"Nuestros Socios de Women's Health Care Group" },
+  p6:'Este paquete también cubre muchos temas que surgen durante el embarazo. Traiga cualquier otra pregunta a sus visitas prenatales, o llame a nuestra oficina para hablar con un miembro de nuestro equipo.',
+  after:{ main:'Si tiene una preocupación urgente fuera del horario de oficina o los fines de semana, o si cree que está en trabajo de parto, llame al número principal de nuestra oficina. Nuestro servicio de llamadas fuera de horario de atención está disponible las 24 horas del día, los 7 días de la semana.',
+    office:'Si tiene una preocupación urgente fuera del horario de oficina o los fines de semana, o si cree que está en trabajo de parto, llame a su oficina. Nuestro servicio de llamadas fuera de horario de atención está disponible las 24 horas del día, los 7 días de la semana.' },
+  thanks:'Gracias por confiar su atención a nuestro equipo. Esperamos acompañarla a usted y a su familia que crece.',
+  sig:'— El Equipo de Obstetricia, ' },
+ko: { app:'산전 관리 안내서', practice:'담당 의사', choose:'담당 의사를 선택하세요…', search:'검색', searchPh:'안내서 검색…', results:'개 결과', noResults:'결과 없음', clear:'지우기', language:'언어', contents:'목차', prev:'이전', next:'다음', page:'페이지', of:'/', welcome:'환영합니다', loading:'불러오는 중…',
+  dr:{m:'Dr.', f:'Dr.'},
+  label:'산전 관리 안내서', h1:'산부인과 팀에 오신 것을 환영합니다',
+  p1:'임신 기간과 출산, 그리고 아기가 태어난 후 몇 주 동안 귀하를 돌보게 되어 영광입니다.',
+  p2:'저희는 다양한 문화와 배경을 가진 가족들을 돌보는 것을 자랑스럽게 생각합니다. 저희 팀은 존중하고 따뜻하며 개인에 맞춘 진료를 제공합니다. 귀하의 가치관과 임신 및 출산에 대한 목표를 존중합니다.',
+  p3:'이 안내서는 저희가 가장 자주 듣는 질문들에 답합니다. 가장 흔한 질문 중 하나는 "누가 제 아기를 받아 주나요?"입니다.',
+  team:{ wch:'Holy Name에서는 최고의 진료는 팀에서 나온다고 믿습니다. 저희 팀은 주치의, 공인 간호 조산사, 의사 보조사(PA), 그리고 레지던트 의사로 구성되어 있습니다. 레지던트 의사는 산부인과 전문의 수련을 마치고 있는 의사입니다. 저희는 함께 최선의 근거에 기반한 조율된 진료를 제공합니다.',
+    whp:"Holy Name에서는 최고의 진료는 팀에서 나온다고 믿습니다. 저희 팀은 귀하의 Women's Health Partners 의사, 분만 전담 의사(laborist), 그리고 공인 간호 조산사로 구성되어 있습니다. 분만 전담 의사는 하루 24시간 병원에 상주하며 진통 중인 환자를 돌보는 산과 의사입니다. 저희는 함께 최선의 근거에 기반한 조율된 진료를 제공합니다.",
+    whcg:"Holy Name에서는 최고의 진료는 팀에서 나온다고 믿습니다. 저희 팀은 Women's Health Care Group 의사, 파트너인 Dr. Fallon과 Dr. Corbett, 분만 전담 의사(laborist), 공인 간호 조산사, 그리고 레지던트로 구성되어 있습니다. 분만 전담 의사는 하루 24시간 병원에 상주하며 진통 중인 환자를 돌보는 산과 의사입니다. 레지던트는 산부인과 전문의 수련을 마치고 있는 의사입니다. 저희는 함께 최선의 근거에 기반한 조율된 진료를 제공합니다.",
+    fc:"Holy Name에서는 최고의 진료는 팀에서 나온다고 믿습니다. 저희 팀은 Dr. Fallon과 Dr. Corbett, Women's Health Care Group의 파트너 의사, 분만 전담 의사(laborist), 공인 간호 조산사, 그리고 레지던트로 구성되어 있습니다. 분만 전담 의사는 하루 24시간 병원에 상주하며 진통 중인 환자를 돌보는 산과 의사입니다. 레지던트는 산부인과 전문의 수련을 마치고 있는 의사입니다. 저희는 함께 최선의 근거에 기반한 조율된 진료를 제공합니다." },
+  p5:'저희 팀은 하루 24시간 대기하고 있습니다. 팀의 모든 구성원이 귀하의 임신과 출산 계획을 알고 있습니다. 출산 시 누가 함께 있든, 귀하의 건강과 안전에 헌신하는 의료진으로부터 세심하고 사려 깊은 진료를 받으시게 됩니다.',
+  teamHeading:'저희 진료팀', officesHeading:'저희 진료소',
+  groups:{ attending:'주치의', residents:'레지던트 의사', cnm:'공인 간호 조산사', pa:'의사 보조사 (PA)', whpDocs:"Women's Health Partners 의사", laborists:'분만 전담 의사', partners:'파트너 의사', whcgDocs:"Women's Health Care Group", fcDocs:'Dr. Fallon &amp; Dr. Corbett', whcgPartners:"Women's Health Care Group 파트너 의사" },
+  p6:'이 안내서는 임신 중 생기는 여러 주제도 다룹니다. 다른 질문이 있으시면 산전 진료 방문 시 말씀해 주시거나, 저희 사무실로 전화하여 팀원과 상담하십시오.',
+  after:{ main:'진료 시간 외나 주말에 긴급한 문제가 있거나 진통이 시작된 것 같으면 저희 사무실 대표 번호로 전화하십시오. 저희 전화 응답 서비스는 연중무휴 24시간 운영됩니다.',
+    office:'진료 시간 외나 주말에 긴급한 문제가 있거나 진통이 시작된 것 같으면 귀하의 진료소로 전화하십시오. 저희 전화 응답 서비스는 연중무휴 24시간 운영됩니다.' },
+  thanks:'귀하의 진료를 저희 팀에 맡겨 주셔서 감사합니다. 귀하와 귀하의 커져 가는 가족을 함께 돕게 되기를 기대합니다.',
+  sig:'— 산부인과 팀, ' },
+ht: { app:'Pake Prenatal', practice:'Doktè mwen', choose:'Chwazi doktè ou…', search:'Chèche', searchPh:'Chèche nan pake a…', results:'rezilta', noResults:'Pa gen rezilta', clear:'Efase', language:'Lang', contents:'Kontni', prev:'Anvan', next:'Apre', page:'Paj', of:'sou', welcome:'Byenveni', loading:'Ap chaje…',
+  dr:{m:'Dr.', f:'Dr.'},
+  label:'Pake Swen Prenatal', h1:'Byenveni nan Ekip Obstetrik la',
+  p1:'Se yon onè pou nou pran swen ou pandan gwosès ou, akouchman ou, ak semèn apre pitit ou fèt.',
+  p2:'Nou fyè pou nou sèvi fanmi ki soti nan anpil kilti ak orijin diferan. Ekip nou an bay yon swen ki gen respè, ki gen kè, epi ki pèsonèl. Nou respekte valè ou yo ak objektif ou pou gwosès ou ak akouchman ou.',
+  p3:'Pake sa a reponn anpil nan kesyon nou tande pi souvan yo. Youn nan kesyon ki pi komen yo se: "Ki moun ki pral fè m akouche?"',
+  team:{ wch:'Nan Holy Name, nou kwè pi bon swen an soti nan yon ekip. Ekip nou an gen ladan doktè tretan, fanmsaj enfimyè sètifye, yon asistan doktè (PA), ak doktè rezidan. Doktè rezidan yo se doktè k ap fini fòmasyon espesyalite yo nan obstetrik ak jinekoloji. Ansanm, nou ba ou yon swen ki kowòdone e ki baze sou pi bon prèv syantifik.',
+    whp:"Nan Holy Name, nou kwè pi bon swen an soti nan yon ekip. Ekip nou an gen ladan doktè Women's Health Partners ou yo, doktè akouchman (laborists), ak fanmsaj enfimyè sètifye. Doktè akouchman yo se obstetrisyen ki nan lopital la 24 èdtan pa jou pou pran swen pasyan ki nan tranche. Ansanm, nou ba ou yon swen ki kowòdone e ki baze sou pi bon prèv syantifik.",
+    whcg:"Nan Holy Name, nou kwè pi bon swen an soti nan yon ekip. Ekip nou an gen ladan doktè Women's Health Care Group yo, patnè nou yo: Dr. Fallon ak Dr. Corbett, doktè akouchman (laborists), fanmsaj enfimyè sètifye, ak rezidan. Doktè akouchman yo se obstetrisyen ki nan lopital la 24 èdtan pa jou pou pran swen pasyan ki nan tranche. Rezidan yo se doktè k ap fini fòmasyon espesyalite yo nan obstetrik ak jinekoloji. Ansanm, nou ba ou yon swen ki kowòdone e ki baze sou pi bon prèv syantifik.",
+    fc:"Nan Holy Name, nou kwè pi bon swen an soti nan yon ekip. Ekip nou an gen ladan Dr. Fallon ak Dr. Corbett, patnè nou yo nan Women's Health Care Group, doktè akouchman (laborists), fanmsaj enfimyè sètifye, ak rezidan. Doktè akouchman yo se obstetrisyen ki nan lopital la 24 èdtan pa jou pou pran swen pasyan ki nan tranche. Rezidan yo se doktè k ap fini fòmasyon espesyalite yo nan obstetrik ak jinekoloji. Ansanm, nou ba ou yon swen ki kowòdone e ki baze sou pi bon prèv syantifik." },
+  p5:'Ekip nou an la 24 èdtan pa jou. Chak manm ekip la konnen gwosès ou ak plan akouchman ou. Kèlkeswa moun ki avèk ou nan akouchman an, w ap jwenn yon swen atansyone e reflechi nan men pwofesyonèl ki angaje pou sante ou ak sekirite ou.',
+  teamHeading:'Ekip Swen Nou an', officesHeading:'Biwo Nou yo',
+  groups:{ attending:'Doktè Tretan', residents:'Doktè Rezidan', cnm:'Fanmsaj Enfimyè Sètifye', pa:'Asistan Doktè', whpDocs:"Doktè Women's Health Partners", laborists:'Doktè Akouchman (Laborists)', partners:'Patnè Nou yo', whcgDocs:"Women's Health Care Group", fcDocs:'Dr. Fallon ak Dr. Corbett', whcgPartners:"Patnè Nou yo nan Women's Health Care Group" },
+  p6:'Pake sa a kouvri tou anpil sijè ki parèt pandan gwosès la. Tanpri pote nenpòt lòt kesyon nan vizit prenatal ou yo, oswa rele biwo nou an pou pale ak yon manm ekip nou an.',
+  after:{ main:'Si ou gen yon enkyetid ijan apre lè biwo oswa nan wikenn, oswa si ou panse ou nan tranche, rele nimewo prensipal biwo nou an. Sèvis repons telefòn nou an disponib 24 èdtan pa jou, 7 jou pa semèn.',
+    office:'Si ou gen yon enkyetid ijan apre lè biwo oswa nan wikenn, oswa si ou panse ou nan tranche, rele biwo ou a. Sèvis repons telefòn nou an disponib 24 èdtan pa jou, 7 jou pa semèn.' },
+  thanks:'Mèsi paske ou fè ekip nou an konfyans pou swen ou. Nou kontan pou nou sipòte ou ak fanmi ou k ap grandi a.',
+  sig:'— Ekip Obstetrik la, ' }
+};
+
+
+
+/* ---------- doctors (alphabetical by last name) ---------- */
+const DOCTORS = [
+  {last:'Asaolu', first:'Atinuke', cred:'CNM, DNP', p:'wch'},
+  {last:'Aviles', first:'Tamara', cred:'MD', p:'whp'},
+  {last:'Barcia-Pena', first:'Paula', cred:'MD', p:'whp'},
+  {last:'Barrera Vera', first:'Ruben', cred:'MD', p:'whp'},
+  {last:'Borrego', first:'Yissel', cred:'APN', p:'whp'},
+  {last:'Brana-Leon', first:'Hazel', cred:'MD', p:'whp'},
+  {last:'Corbett', first:'Shonda', cred:'MD', p:'fc'},
+  {last:'Fallon', first:'Kimberly', cred:'MD', p:'fc'},
+  {last:'Fernandez-Cos', first:'Henry', cred:'MD', p:'whp'},
+  {last:'Gluck', first:'Sheva', cred:'CNM', p:'wch'},
+  {last:'Gonzalez-Tineo', first:'Amalia', cred:'MD', p:'whcg'},
+  {last:'Gutierrez', first:'Bibiancy', cred:'MD', p:'wch'},
+  {last:'Hubschmann', first:'Andrea', cred:'MD', p:'wch'},
+  {last:'Incekara', first:'Gokce', cred:'APN', p:'whcg'},
+  {last:'Jinadu', first:'Babalola', cred:'MD', p:'wch'},
+  {last:'Joshi', first:'Vibha', cred:'MD', p:'whp'},
+  {last:'Lin', first:'Weiping', cred:'MD', p:'whp'},
+  {last:'Mapa', first:'Ben', cred:'MD', p:'wch'},
+  {last:'Matteo De Pablo', first:'Angelica', cred:'MD', p:'whp'},
+  {last:'Olsen', first:'Linneah', cred:'PA', p:'wch'},
+  {last:'Pachon', first:'Maria', cred:'MD', p:'whp'},
+  {last:'Palomar', first:'Nicole', cred:'MD', p:'whcg'},
+  {last:'Pinto', first:'Judith', cred:'MD', p:'wch'},
+  {last:'Shah', first:'Payal', cred:'MD', p:'whcg'},
+  {last:'Sharma', first:'Neelam', cred:'MD', p:'whp'},
+  {last:'Sudanagunta', first:'Sneha', cred:'MD', p:'whcg'},
+  {last:'Taylor', first:'JaQuellah', cred:'MD', p:'whp'}
+];
+DOCTORS.sort((a, b) => a.last.localeCompare(b.last) || a.first.localeCompare(b.first));
+const PRACTICE_NAMES = { wch:"Women's & Children's Health", whp:"Women's Health Partners", whcg:"Women's Health Care Group", fc:"Drs. Fallon & Corbett" };
+
+/* ---------- icons ---------- */
+const ICON = {
+  team:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.5a5 5 0 0 1 6 5"/></svg>',
+  portal:'<svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2"/><path d="M10 18h4"/><path d="M9.5 10l2 2 3.5-4"/></svg>',
+  s1:'<svg viewBox="0 0 24 24"><path d="M5 3h11l4 4v14H5z"/><path d="M15 3v5h5"/><path d="M8 12h8M8 16h6"/></svg>',
+  s2:'<svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6l-5.5 9a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7.5 16h9"/></svg>',
+  s3:'<svg viewBox="0 0 24 24"><path d="M12 7c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7z"/><path d="M12 7V4"/><path d="M12 4c1.5-1.5 3-1.5 4-1"/></svg>',
+  s4:'<svg viewBox="0 0 24 24"><circle cx="15" cy="5" r="2"/><path d="M4 20l5-6 3 2 3-5 4 3"/><path d="M9 14l-2 6"/></svg>',
+  s5:'<svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/><path d="M8 12h2l1.5-3 2 6 1.5-3h2"/></svg>',
+  s6:'<svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="8" rx="4" transform="rotate(-45 12 13)"/><path d="M9 9l6 6"/></svg>',
+  s7:'<svg viewBox="0 0 24 24"><path d="M12 3a7 7 0 0 1 7 7c0 4-3 6-3 9H8c0-3-3-5-3-9a7 7 0 0 1 7-7z"/><path d="M9 21h6"/></svg>',
+  s8:'<svg viewBox="0 0 24 24"><path d="M3 20V9l9-6 9 6v11"/><path d="M9 20v-6h6v6"/></svg>',
+  s9:'<svg viewBox="0 0 24 24"><path d="M6 4c0 6 3 9 6 9s6-3 6-9"/><path d="M12 13v8"/><path d="M8 21h8"/><circle cx="12" cy="4" r="1"/></svg>',
+  refs:'<svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></svg>',
+  week:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/></svg>',
+  warn:'<svg viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5"/><circle cx="12" cy="18" r=".6"/></svg>',
+  weight:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 7a5 5 0 0 1 5 5H7a5 5 0 0 1 5-5z"/><path d="M12 12l2-2.5"/></svg>'
+};
+const TOPIC_ORDER = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','portal','refs'];
+
+/* ---------- UI strings per language (home, tools) ---------- */
+const UI = {
+en: { topics:{ s1:['Getting Started','First visit, labs, visit schedule'], s2:['Tests by Trimester','Ultrasounds, screening, vaccines'], s3:['Food & Daily Life','Vitamins, weight, caffeine, fish'], s4:['Exercise & Everyday Questions','Sex, dental, travel, hair dye'], s5:['Common Symptoms','Nausea, heartburn, back pain, swelling'], s6:['Safe Medicines','What to take, what to avoid'], s7:['Planning for Birth','Vaginal birth, cesarean, VBAC'], s8:['Classes, Tour & Pediatrics','Register, book, choose a pediatrician'], s9:['Breastfeeding','Basics, positions, hunger cues'], portal:['Patient Portal App','HNCareCompass download'], refs:['References','ACOG sources'] },
+  toolTiles:{ week:['My Week','Enter your due date'], warn:['When to Call','Warning signs by topic'], weight:['Weight Gain','Calculator by BMI'] },
+  choosePrompt:'Choose your doctor from the list above to see your practice, phone number, care team, and offices.', chooseBtn:'Choose my doctor', yourOffice:'your office', home:'Home', back:'Back', team:'My Care Team', teamSub:'Welcome letter, team, offices', tools:'Tools', topicsHead:'Topics', call:'Call the office', afterhours:'24 hours a day, 7 days a week', sources:'Sources', expandAll:'Expand all', collapseAll:'Collapse all', results:'Search results', noResults:'No results', callNow:'Call now',
+  pediatrics:'Holy Name Pediatrics',
+  week:{ due:'Your due date', today:'Today you are', weeks:'weeks', days:'days', trimester:['First trimester','Second trimester','Third trimester','Past your due date'], visits:'Visit schedule', v1:'Every 4 weeks until 28 weeks', v2:'Every 2 weeks from 28 to 36 weeks', v3:'Every week from 36 weeks until birth', checklist:'Tests and vaccines', now:'Now', past:'Window passed', soon:'Coming up', any:'Any time', note:'Timing follows ACOG guidance as described in this packet. Your provider sets your actual schedule.', notset:'Enter your due date to see where you are in pregnancy and what is coming up.', open:'See details',
+    items:{ dating:'Dating ultrasound', labs:'First-visit blood and urine tests', carrier:'Carrier screening (any time, once in your life)', nipt:'Cell-free DNA screening (NIPT), 10 weeks or later', fts:'First-trimester screening (blood test + nuchal translucency ultrasound)', cvs:'CVS (diagnostic test, if chosen)', quad:'Quad screen or AFP blood test', amnio:'Amniocentesis (diagnostic test, if chosen), 16 weeks or later', anat:'Anatomy ultrasound, 20 weeks or later', glucose:'Glucose test for gestational diabetes', cbc:'Repeat blood count (anemia check)', tdap:'Tdap (whooping cough) vaccine', rhogam:'Rh immune globulin (RhoGAM) if Rh negative', rsv:'RSV vaccine (September through January)', gbs:'Group B strep (GBS) swab', hiv:'Third-trimester HIV and syphilis tests', flu:'Flu shot (during flu season)', covid:'COVID-19 vaccine' } },
+  weight:{ height:'Height before pregnancy', weight:'Weight before pregnancy', bmi:'BMI', cat:'Category', gain:'Recommended total gain', cats:['Underweight','Normal weight','Overweight','Obesity'], lb:'lb', kg:'kg', ftin:'ft / in', cm:'cm', note:'These ranges are a general guide (ACOG Committee Opinion No. 548). Your provider will tailor them to you. Most people need only about 340 extra calories a day in the second trimester and 450 in the third.', enter:'Enter your height and weight before pregnancy.' },
+  warn:{ intro:'These are the warning signs listed throughout this packet. If you have any of them, call your provider. For chest pain, trouble breathing, the worst headache of your life, or if you pass out, get emergency care.', labor:'If you think you are in labor, or you have an urgent concern after hours, call:' } },
+es: { topics:{ s1:['Primeros Pasos','Primera visita, análisis, calendario'], s2:['Pruebas por Trimestre','Ecografías, pruebas de detección, vacunas'], s3:['Alimentación y Vida Diaria','Vitaminas, peso, cafeína, pescado'], s4:['Ejercicio y Preguntas Comunes','Sexo, dentista, viajes, tinte'], s5:['Síntomas Comunes','Náuseas, acidez, dolor de espalda, hinchazón'], s6:['Medicamentos Seguros','Qué tomar y qué evitar'], s7:['Planificación del Parto','Parto vaginal, cesárea, PVDC'], s8:['Clases, Recorrido y Pediatría','Inscríbase, reserve, elija pediatra'], s9:['Lactancia Materna','Conceptos básicos, posiciones, señales de hambre'], portal:['Aplicación del Portal del Paciente','Descargue HNCareCompass'], refs:['Referencias','Fuentes de ACOG'] },
+  toolTiles:{ week:['Mi Semana','Ingrese su fecha probable de parto'], warn:['Cuándo Llamar','Señales de alarma por tema'], weight:['Aumento de Peso','Calculadora según IMC'] },
+  choosePrompt:'Elija a su médico en la lista de arriba para ver su consultorio, número de teléfono, equipo de atención y oficinas.', chooseBtn:'Elegir mi médico', yourOffice:'su oficina', home:'Inicio', back:'Atrás', team:'Mi Equipo de Atención', teamSub:'Carta de bienvenida, equipo, oficinas', tools:'Herramientas', topicsHead:'Temas', call:'Llamar a la oficina', afterhours:'24 horas al día, 7 días a la semana', sources:'Fuentes', expandAll:'Expandir todo', collapseAll:'Contraer todo', results:'Resultados de búsqueda', noResults:'Sin resultados', callNow:'Llamar ahora',
+  pediatrics:'Holy Name Pediatrics',
+  week:{ due:'Su fecha probable de parto', today:'Hoy tiene', weeks:'semanas', days:'días', trimester:['Primer trimestre','Segundo trimestre','Tercer trimestre','Pasada la fecha probable de parto'], visits:'Calendario de visitas', v1:'Cada 4 semanas hasta las 28 semanas', v2:'Cada 2 semanas de las 28 a las 36 semanas', v3:'Cada semana desde las 36 semanas hasta el parto', checklist:'Pruebas y vacunas', now:'Ahora', past:'Periodo pasado', soon:'Próximamente', any:'En cualquier momento', note:'Los tiempos siguen las guías de ACOG descritas en este paquete. Su proveedor define su calendario real.', notset:'Ingrese su fecha probable de parto para ver en qué punto del embarazo está y qué viene.', open:'Ver detalles',
+    items:{ dating:'Ecografía para fechar el embarazo', labs:'Análisis de sangre y orina de la primera visita', carrier:'Prueba de portadores (en cualquier momento, una vez en la vida)', nipt:'Prueba de ADN fetal libre (NIPT), desde las 10 semanas', fts:'Prueba de detección del primer trimestre (sangre + ecografía de translucencia nucal)', cvs:'Biopsia de vellosidades coriónicas (prueba diagnóstica, si la elige)', quad:'Prueba cuádruple o prueba de AFP en sangre', amnio:'Amniocentesis (prueba diagnóstica, si la elige), desde las 16 semanas', anat:'Ecografía de anatomía, desde las 20 semanas', glucose:'Prueba de glucosa para diabetes gestacional', cbc:'Repetición del hemograma (anemia)', tdap:'Vacuna Tdap (tos ferina)', rhogam:'Inmunoglobulina Rh (RhoGAM) si es Rh negativo', rsv:'Vacuna contra el VRS (septiembre a enero)', gbs:'Prueba de estreptococo del grupo B (EGB)', hiv:'Pruebas de VIH y sífilis del tercer trimestre', flu:'Vacuna contra la gripe (en temporada de gripe)', covid:'Vacuna contra la COVID-19' } },
+  weight:{ height:'Estatura antes del embarazo', weight:'Peso antes del embarazo', bmi:'IMC', cat:'Categoría', gain:'Aumento total recomendado', cats:['Bajo peso','Peso normal','Sobrepeso','Obesidad'], lb:'lb', kg:'kg', ftin:'pies / pulg', cm:'cm', note:'Estos rangos son una guía general (ACOG Committee Opinion No. 548). Su proveedor los adaptará a usted. La mayoría de las personas solo necesitan unas 340 calorías adicionales al día en el segundo trimestre y 450 en el tercero.', enter:'Ingrese su estatura y su peso antes del embarazo.' },
+  warn:{ intro:'Estas son las señales de alarma que aparecen en este paquete. Si tiene alguna, llame a su proveedor. Si tiene dolor en el pecho, dificultad para respirar, el peor dolor de cabeza de su vida o se desmaya, busque atención de emergencia.', labor:'Si cree que está en trabajo de parto, o tiene una preocupación urgente fuera del horario de oficina, llame al:' } },
+ko: { topics:{ s1:['시작하기','첫 진료, 검사, 진료 일정'], s2:['삼분기별 검사','초음파, 선별검사, 예방접종'], s3:['음식과 일상생활','비타민, 체중, 카페인, 생선'], s4:['운동과 자주 묻는 질문','성관계, 치과, 여행, 염색'], s5:['흔한 증상','메스꺼움, 속쓰림, 허리 통증, 부종'], s6:['안전한 약','복용 가능한 약과 피해야 할 약'], s7:['출산 계획','질식 분만, 제왕절개, VBAC'], s8:['교실, 견학, 소아과','등록, 예약, 소아과 선택'], s9:['모유 수유','기본, 자세, 배고픔 신호'], portal:['환자 포털 앱','HNCareCompass 다운로드'], refs:['참고 문헌','ACOG 출처'] },
+  toolTiles:{ week:['나의 임신 주수','출산 예정일 입력'], warn:['전화해야 할 때','주제별 경고 신호'], weight:['체중 증가','BMI 계산기'] },
+  choosePrompt:'위 목록에서 담당 의사를 선택하면 진료소, 전화번호, 진료팀, 사무실 정보를 볼 수 있습니다.', chooseBtn:'담당 의사 선택', yourOffice:'귀하의 진료소', home:'홈', back:'뒤로', team:'나의 진료팀', teamSub:'환영 편지, 팀, 진료소', tools:'도구', topicsHead:'주제', call:'사무실에 전화', afterhours:'연중무휴 24시간', sources:'출처', expandAll:'모두 펼치기', collapseAll:'모두 접기', results:'검색 결과', noResults:'결과 없음', callNow:'지금 전화',
+  pediatrics:'Holy Name 소아과',
+  week:{ due:'출산 예정일', today:'오늘 임신', weeks:'주', days:'일', trimester:['임신 초기','임신 중기','임신 후기','출산 예정일 경과'], visits:'진료 일정', v1:'28주까지 4주마다', v2:'28주부터 36주까지 2주마다', v3:'36주부터 출산까지 매주', checklist:'검사와 예방접종', now:'지금', past:'기간 지남', soon:'예정', any:'언제든지', note:'시기는 이 안내서에 설명된 ACOG 지침을 따릅니다. 실제 일정은 담당 의료진이 정합니다.', notset:'출산 예정일을 입력하면 현재 임신 주수와 앞으로의 일정을 볼 수 있습니다.', open:'자세히 보기',
+    items:{ dating:'임신 주수 확인 초음파', labs:'첫 진료 혈액 및 소변 검사', carrier:'보인자 선별검사 (언제든, 평생 한 번)', nipt:'세포 유리 DNA 선별검사(NIPT), 10주 이후', fts:'임신 초기 선별검사 (혈액 검사 + 목덜미 투명대 초음파)', cvs:'융모막 융모 검사(CVS) (진단검사, 선택 시)', quad:'쿼드 검사 또는 AFP 혈액 검사', amnio:'양수 검사 (진단검사, 선택 시), 16주 이후', anat:'정밀 초음파, 20주 이후', glucose:'임신성 당뇨 검사', cbc:'혈구 검사 재검 (빈혈 확인)', tdap:'Tdap (백일해) 백신', rhogam:'Rh 음성인 경우 Rh 면역글로불린(RhoGAM)', rsv:'RSV 백신 (9월–1월)', gbs:'B군 연쇄상구균(GBS) 검사', hiv:'임신 후기 HIV 및 매독 검사', flu:'독감 예방접종 (독감 유행 시기)', covid:'COVID-19 백신' } },
+  weight:{ height:'임신 전 키', weight:'임신 전 체중', bmi:'BMI', cat:'분류', gain:'권장 총 체중 증가', cats:['저체중','정상 체중','과체중','비만'], lb:'lb', kg:'kg', ftin:'피트 / 인치', cm:'cm', note:'이 범위는 일반적인 지침입니다 (ACOG Committee Opinion No. 548). 담당 의료진이 귀하에게 맞게 조정합니다. 대부분의 사람은 임신 중기에 하루 약 340칼로리, 후기에 450칼로리만 더 필요합니다.', enter:'임신 전 키와 체중을 입력하십시오.' },
+  warn:{ intro:'이 안내서 곳곳에 나오는 경고 신호입니다. 이 중 하나라도 있으면 담당 의료진에게 전화하십시오. 가슴 통증, 호흡 곤란, 생애 최악의 두통, 또는 의식을 잃으면 응급 진료를 받으십시오.', labor:'진통이 시작된 것 같거나 진료 시간 외에 긴급한 문제가 있으면 전화하십시오:' } },
+ht: { topics:{ s1:['Kòmanse','Premye vizit, tès, orè vizit'], s2:['Tès pa Trimès','Sonografi, depistaj, vaksen'], s3:['Manje ak Lavi Chak Jou','Vitamin, pwa, kafeyin, pwason'], s4:['Egzèsis ak Kesyon Kouran','Sèks, dantis, vwayaj, tenti cheve'], s5:['Sentòm Kouran','Kè plen, brili lestomak, doulè do, anfle'], s6:['Medikaman ki San Danje','Sa pou pran, sa pou evite'], s7:['Planifye Akouchman an','Akouchman nòmal, sezaryèn, VBAC'], s8:['Klas, Vizit ak Pedyatri','Enskri, rezève, chwazi yon pedyat'], s9:['Bay Tete','Baz, pozisyon, siy grangou'], portal:['Aplikasyon Pòtay Pasyan','Telechaje HNCareCompass'], refs:['Referans','Sous ACOG'] },
+  toolTiles:{ week:['Semèn Mwen','Antre dat akouchman ou'], warn:['Kilè pou Rele','Siy danje pa sijè'], weight:['Pran Pwa','Kalkilatè selon IMC'] },
+  choosePrompt:'Chwazi doktè ou nan lis ki anwo a pou wè pratik ou, nimewo telefòn, ekip swen, ak biwo yo.', chooseBtn:'Chwazi doktè mwen', yourOffice:'biwo ou a', home:'Akèy', back:'Retounen', team:'Ekip Swen Mwen', teamSub:'Lèt byenveni, ekip, biwo', tools:'Zouti', topicsHead:'Sijè', call:'Rele biwo a', afterhours:'24 èdtan pa jou, 7 jou pa semèn', sources:'Sous', expandAll:'Ouvri tout', collapseAll:'Fèmen tout', results:'Rezilta rechèch', noResults:'Pa gen rezilta', callNow:'Rele kounye a',
+  pediatrics:'Holy Name Pediatrics',
+  week:{ due:'Dat akouchman ou', today:'Jodi a ou gen', weeks:'semèn', days:'jou', trimester:['Premye trimès','Dezyèm trimès','Twazyèm trimès','Dat akouchman an pase'], visits:'Orè vizit', v1:'Chak 4 semèn jiska 28 semèn', v2:'Chak 2 semèn soti 28 rive 36 semèn', v3:'Chak semèn apati 36 semèn jiska akouchman', checklist:'Tès ak vaksen', now:'Kounye a', past:'Peryòd la pase', soon:'K ap vini', any:'Nenpòt lè', note:'Dat yo swiv gid ACOG jan yo dekri nan pake sa a. Se founisè ou ki fikse orè reyèl ou.', notset:'Antre dat akouchman ou pou wè ki kote ou ye nan gwosès la ak sa k ap vini.', open:'Wè detay',
+    items:{ dating:'Sonografi pou dat gwosès la', labs:'Tès san ak pipi premye vizit la', carrier:'Depistaj pòtè (nenpòt lè, yon sèl fwa nan lavi ou)', nipt:'Depistaj ADN lib (NIPT), apati 10 semèn', fts:'Depistaj premye trimès (tès san + sonografi klète nikal)', cvs:'CVS (tès dyagnostik, si ou chwazi l)', quad:'Tès quad oswa tès san AFP', amnio:'Amniyosentèz (tès dyagnostik, si ou chwazi l), apati 16 semèn', anat:'Sonografi anatomi, apati 20 semèn', glucose:'Tès glikoz pou dyabèt gwosès', cbc:'Repete konte san (anemi)', tdap:'Vaksen Tdap (koklich)', rhogam:'Iminoglobilin Rh (RhoGAM) si ou Rh negatif', rsv:'Vaksen RSV (septanm rive janvye)', gbs:'Tès estreptokòk gwoup B (GBS)', hiv:'Tès VIH ak sifilis twazyèm trimès', flu:'Vaksen grip (nan sezon grip)', covid:'Vaksen COVID-19' } },
+  weight:{ height:'Wotè anvan gwosès', weight:'Pwa anvan gwosès', bmi:'IMC', cat:'Kategori', gain:'Total pwa yo rekòmande pou pran', cats:['Pwa twò ba','Pwa nòmal','Twòp pwa','Obezite'], lb:'lb', kg:'kg', ftin:'pye / pous', cm:'cm', note:'Ranje sa yo se yon gid jeneral (ACOG Committee Opinion No. 548). Founisè ou ap adapte yo pou ou. Pifò moun bezwen sèlman anviwon 340 kalori anplis pa jou nan dezyèm trimès la ak 450 nan twazyèm lan.', enter:'Antre wotè ou ak pwa ou anvan gwosès la.' },
+  warn:{ intro:'Men siy danje ki parèt nan tout pake sa a. Si ou gen youn nan yo, rele founisè ou. Pou doulè nan pwatrin, difikilte pou respire, pi gwo tèt fè mal nan lavi ou, oswa si ou pèdi konesans, chèche swen ijans.', labor:'Si ou panse ou nan tranche, oswa ou gen yon enkyetid ijan apre lè biwo, rele:' } }
+};
+
+/* ---------- week-tool windows (weeks, inclusive; null = open) ---------- */
+const WINDOWS = [
+  ['dating',0,13,'s2'],['labs',0,13,'s1'],['carrier',null,null,'s2'],['nipt',10,null,'s2'],['fts',10,13,'s2'],['cvs',10,13,'s2'],
+  ['quad',15,22,'s2'],['amnio',16,null,'s2'],['anat',20,null,'s2'],['glucose',24,28,'s2'],['cbc',24,28,'s2'],
+  ['tdap',27,36,'s2'],['rhogam',28,28,'s2'],['rsv',32,36,'s2'],['gbs',36,37,'s2'],['hiv',28,null,'s2'],['flu',null,null,'s2'],['covid',null,null,'s2']
+];
+
+/* ---------- state ---------- */
+const $ = id => document.getElementById(id);
+let lang = 'en', doctor = '', practice = 'wch', content = null, screen = 'home';
+try { doctor = localStorage.getItem('hn_doctor') || ''; lang = localStorage.getItem('hn_lang') || lang; } catch(e) {}
+if (!STR[lang]) lang = 'en';
+const docById = id => DOCTORS.find(d => d.last + '|' + d.first === id);
+if (!docById(doctor)) doctor = '';
+practice = doctor ? docById(doctor).p : 'wch';
+$('lang').value = lang;
+
+function esc(t) { return String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function telLink(p) { return `<a href="tel:${p.replace(/[^0-9]/g,'')}">${p}</a>`; }
+function nameLine(n, s) { const [name, g] = n; return g ? `${s.dr[g]} ${name}` : name; }
+
+function buildDoctorSelect() {
+  const s = STR[lang], sel = $('doctor'); sel.innerHTML = '';
+  const o0 = document.createElement('option'); o0.value = ''; o0.textContent = s.choose; sel.appendChild(o0);
+  for (const d of DOCTORS) { const o = document.createElement('option'); o.value = d.last + '|' + d.first; o.textContent = `${d.last}, ${d.first}, ${d.cred}`; sel.appendChild(o); }
+  sel.value = doctor;
+}
+
+/* ---------- screens ---------- */
+function coverHTML() {
+  const s = STR[lang], p = PRACTICES[practice];
+  const groups = p.groups.map(g => `<div><b>${s.groups[g.k]}</b>${g.names.map(n => nameLine(n, s)).join('<br>')}</div>`).join('');
+  let offices = '';
+  if (p.offices.length) offices = `<h3>${s.officesHeading}</h3><div class="offices">` + p.offices.map(o => `<div class="office"><b>${o.city}</b><br>${o.addr}<br><b>${telLink(o.phone)}</b>${o.docs.length ? '<br><span class="docs">' + o.docs.map(n => nameLine(n, s)).join(', ') + '</span>' : ''}</div>`).join('') + '</div>';
+  return `<div class="card">
+    <img class="cover-logo" src="${p.logo}" alt="${p.org}">
+    <h1>${s.h1}</h1>
+    <p class="big" style="margin-top:.6rem">${s.p1}</p>
+    <p>${s.p2}</p><p>${s.p3}</p><p>${s.team[practice]}</p><p>${s.p5}</p>
+    <h3>${s.teamHeading}</h3><div class="team">${groups}</div>${offices}
+    <p>${s.p6}</p>
+    <div class="callout navy"><p style="margin-bottom:.2rem">${s.after[p.afterhours]}</p><div class="phone">${telLink(p.phone)}</div></div>
+    <p>${s.thanks}</p>
+    <p style="font-family:'Noto Serif',Georgia,serif;color:var(--navy);font-style:italic">${s.sig}${p.org}</p>
+  </div>`;
+}
+
+function tile(id, title, sub, icon, cls) {
+  return `<button class="tile ${cls||''}" data-go="${id}"><span class="ic">${ICON[icon] || ''}</span><b>${esc(title)}</b><small>${esc(sub)}</small></button>`;
+}
+
+function homeHTML() {
+  const u = UI[lang], s = STR[lang], p = PRACTICES[practice];
+  const d = doctor ? docById(doctor) : null;
+  const who = d ? `${d.last}, ${d.first}, ${d.cred} · ${PRACTICE_NAMES[practice]}` : PRACTICE_NAMES[practice];
+  const hero = doctor ? `<div class="card hero">
+      <div><img src="${p.logo}" alt="${p.org}"><p class="who">${esc(who)}</p><div class="small" style="margin-top:.3rem">${s.after[p.afterhours]}</div></div>
+      <div class="herorow"><a class="callbtn" href="tel:${p.phone.replace(/[^0-9]/g,'')}"><span>${u.call}</span><b>${p.phone}</b></a></div>
+    </div>` : `<div class="card hero">
+      <div><img src="img/logo_hn.png" alt="Holy Name"><p style="margin-top:.6rem">${u.choosePrompt}</p></div>
+      <div class="herorow"><button class="linkbtn" data-focus="doctor">${u.chooseBtn}</button></div>
+    </div>`;
+  return hero + `
+    <div class="sectitle">${u.tools}</div>
+    <div class="tiles">${tile('week', u.toolTiles.week[0], u.toolTiles.week[1], 'week', 'tool')}${tile('warn', u.toolTiles.warn[0], u.toolTiles.warn[1], 'warn', 'tool')}${tile('weight', u.toolTiles.weight[0], u.toolTiles.weight[1], 'weight', 'tool')}</div>
+    <div class="sectitle">${u.topicsHead}</div>
+    <div class="tiles">${tile('team', u.team, u.teamSub, 'team')}${TOPIC_ORDER.map(t => tile('t-' + t, u.topics[t][0], u.topics[t][1], t)).join('')}</div>
+    <p class="foot">Holy Name Medical Center${doctor ? ' · ' + esc(PRACTICE_NAMES[practice]) : ''}</p>`;
+}
+
+function accordion(item, idx, open) {
+  return `<div class="acc${open ? ' open' : ''}" data-i="${idx}"><button type="button" aria-expanded="${open ? 'true' : 'false'}">${item.t}</button><div class="ac">${item.h}</div></div>`;
+}
+
+function topicHTML(t) {
+  const u = UI[lang], pages = content.topics[t] || [];
+  let h = `<button class="back" data-go="home">${u.home}</button><div class="topic"><h1>${esc(u.topics[t][0])}</h1>`;
+  h += `<div class="rowbtns"><button type="button" data-acc="open">${u.expandAll}</button><button type="button" data-acc="close">${u.collapseAll}</button></div>`;
+  let n = 0, srcs = [];
+  pages.forEach((pg, pi) => {
+    if (pages.length > 1 && pg.title !== (pages[pi-1] || {}).title && pg.title !== u.topics[t][0] && !(pg.items.length === 1 && pg.items[0].t === pg.title)) h += `<div class="pagehead">${esc(pg.title)}</div>`;
+    if (pg.intro) h += `<div class="intro">${pg.intro}</div>`;
+    pg.items.forEach(it => { h += accordion(it, n++, t === 'refs' || t === 'portal'); });
+    if (pg.src) srcs.push(pg.src);
+  });
+  if (srcs.length) h += `<details class="srcbox"><summary>${u.sources}</summary>${srcs.map(x => `<div class="src">${x}</div>`).join('')}</details>`;
+  return h + '</div>';
+}
+
+function weekHTML() {
+  const u = UI[lang].week, uu = UI[lang];
+  let due = ''; try { due = localStorage.getItem('hn_due') || ''; } catch(e) {}
+  return `<button class="back" data-go="home">${uu.home}</button><h1>${esc(uu.toolTiles.week[0])}</h1>
+    <div class="card"><div class="field"><label for="due">${u.due}</label><input type="date" id="due" value="${esc(due)}"></div><div id="weekOut"></div><p class="note">${u.note}</p></div>`;
+}
+function renderWeek() {
+  const u = UI[lang].week, out = $('weekOut'), v = $('due').value;
+  try { localStorage.setItem('hn_due', v); } catch(e) {}
+  if (!v) { out.innerHTML = `<p class="small">${u.notset}</p>`; return; }
+  const due = new Date(v + 'T00:00:00'), today = new Date(); today.setHours(0,0,0,0);
+  const daysLeft = Math.round((due - today) / 86400000); const ga = 280 - daysLeft; const w = Math.floor(ga / 7), d = ga - w * 7;
+  if (ga < 0) { out.innerHTML = `<p class="small">${u.notset}</p>`; return; }
+  const tri = w < 14 ? 0 : w < 28 ? 1 : w < 41 ? 2 : 3;
+  const visits = w < 28 ? u.v1 : w < 36 ? u.v2 : u.v3;
+  let h = `<div class="stat"><div><span>${u.today}</span><b>${w} ${u.weeks}, ${d} ${u.days}</b></div><div><span>${u.visits}</span><b style="font-size:1rem">${u.trimester[tri]}</b><div class="small">${visits}</div></div></div>`;
+  h += `<h3>${u.checklist}</h3><ul class="chk">`;
+  const rows = WINDOWS.map(([k, a, b, t]) => {
+    let st = 'soon', lab = '';
+    if (a === null) { st = 'any'; lab = u.any; }
+    else if (w >= a && (b === null || w <= b)) { st = 'now'; lab = u.now; }
+    else if (w > b) { st = 'past'; lab = u.past; }
+    else { lab = u.soon; }
+    const win = a === null ? '' : (a === b ? `${a} ${u.weeks}` : (b === null ? `${a}+ ${u.weeks}` : `${a}–${b} ${u.weeks}`));
+    return {k, st, lab, win, t, order: st === 'now' ? 0 : st === 'soon' ? 1 : st === 'any' ? 2 : 3, a: a === null ? 99 : a};
+  }).sort((x, y) => x.order - y.order || x.a - y.a);
+  rows.forEach(r => { h += `<li class="${r.st}"><span class="dot"></span><div>${u.items[r.k]}<span class="tag">${r.lab}</span><span class="w">${r.win}</span></div></li>`; });
+  h += `</ul><p style="margin-top:.8rem"><button class="linkbtn" data-go="t-s2">${u.open} &rarr;</button></p>`;
+  out.innerHTML = h;
+}
+
+let wUnits = 'us';
+function weightHTML() {
+  const u = UI[lang].weight, uu = UI[lang];
+  return `<button class="back" data-go="home">${uu.home}</button><h1>${esc(uu.toolTiles.weight[0])}</h1>
+    <div class="card"><div class="units" style="margin-bottom:.8rem"><button type="button" data-u="us" class="${wUnits==='us'?'on':''}">${u.ftin} · ${u.lb}</button><button type="button" data-u="metric" class="${wUnits==='metric'?'on':''}">${u.cm} · ${u.kg}</button></div>
+    <div class="field"><label>${u.height}</label>${wUnits === 'us' ? `<div class="pair"><input type="number" id="hft" min="3" max="7" placeholder="ft"><input type="number" id="hin" min="0" max="11" placeholder="in"></div>` : `<input type="number" id="hcm" min="100" max="220" placeholder="cm">`}</div>
+    <div class="field"><label>${u.weight}</label><input type="number" id="wt" min="50" max="600" placeholder="${wUnits === 'us' ? u.lb : u.kg}"></div>
+    <div id="wOut"><p class="small">${u.enter}</p></div><p class="note">${u.note}</p></div>`;
+}
+function renderWeight() {
+  const u = UI[lang].weight, out = $('wOut'); let hm, kg;
+  if (wUnits === 'us') { const ft = +($('hft').value || 0), inch = +($('hin').value || 0); hm = (ft * 12 + inch) * 0.0254; kg = +($('wt').value || 0) * 0.4536; }
+  else { hm = +($('hcm').value || 0) / 100; kg = +($('wt').value || 0); }
+  if (!(hm > 0.9) || !(kg > 20)) { out.innerHTML = `<p class="small">${u.enter}</p>`; return; }
+  const bmi = kg / (hm * hm); const ci = bmi < 18.5 ? 0 : bmi < 25 ? 1 : bmi < 30 ? 2 : 3;
+  const lb = [[28,40],[25,35],[15,25],[11,20]][ci]; const kgr = lb.map(x => Math.round(x * 0.4536));
+  out.innerHTML = `<div class="stat"><div><span>${u.bmi}</span><b>${bmi.toFixed(1)}</b><div class="small">${u.cats[ci]}</div></div><div><span>${u.gain}</span><b>${lb[0]}–${lb[1]} ${u.lb}</b><div class="small">${kgr[0]}–${kgr[1]} ${u.kg}</div></div></div>`;
+}
+
+function warnHTML() {
+  const u = UI[lang], p = PRACTICES[practice];
+  let h = `<button class="back" data-go="home">${u.home}</button><h1>${esc(u.toolTiles.warn[0])}</h1><div class="urgent">${u.warn.intro}</div>
+    <div class="card"><p style="margin-bottom:.4rem">${u.warn.labor}</p>${doctor ? `<a class="callbtn" href="tel:${p.phone.replace(/[^0-9]/g,'')}"><span>${u.callNow}</span><b>${p.phone}</b></a>` : `<p class="small">${u.choosePrompt}</p><button class="linkbtn" data-focus="doctor">${u.chooseBtn}</button>`}</div><div class="warnlist">`;
+  let n = 0;
+  for (const t of TOPIC_ORDER) for (const pg of (content.topics[t] || [])) for (const it of pg.items) {
+    const tmp = document.createElement('div'); tmp.innerHTML = it.h;
+    const found = [];
+    tmp.querySelectorAll('.callout.navy').forEach(c => { const h4 = c.querySelector('h4'); const ul = c.querySelector('ul'); if (h4 && ul) found.push(`<h4>${h4.innerHTML}</h4>${ul.outerHTML}`); });
+    if (it.t.match(/call|llame|전화|rele/i) && tmp.querySelector('.card-body.callout')) found.push(tmp.querySelector('.card-body.callout').innerHTML);
+    if (found.length) h += accordion({t: it.t, h: found.join('')}, n++, true);
+  }
+  return h + '</div>';
+}
+
+function searchHTML(q) {
+  const u = UI[lang], terms = q.trim().split(/\s+/).filter(Boolean), lower = terms.map(x => x.toLowerCase());
+  let h = `<button class="back" data-go="home">${u.home}</button><h1>${esc(u.results)}</h1><div class="results"><ol>`; let n = 0;
+  if (lower.length) for (const t of TOPIC_ORDER) (content.topics[t] || []).forEach((pg, pi) => pg.items.forEach((it, ii) => {
+    const tmp = document.createElement('div'); tmp.innerHTML = it.h.replace(/</g, ' <'); const text = (it.t + ' ' + tmp.textContent).replace(/\s+/g, ' ');
+    const lt = text.toLowerCase(); if (!lower.every(x => lt.includes(x))) return;
+    const idx = lt.indexOf(lower[0]); const a = Math.max(0, idx - 60), b = Math.min(text.length, idx + 120);
+    const re = new RegExp('(' + terms.map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'gi');
+    const snip = esc((a > 0 ? '…' : '') + text.slice(a, b) + (b < text.length ? '…' : '')).replace(re, '<mark>$1</mark>');
+    h += `<li><button type="button" data-open="${t}|${pi}|${ii}" data-terms="${esc(q)}"><small>${esc(u.topics[t][0])}</small><b>${esc(it.t)}</b><span class="snip">${snip}</span></button></li>`; n++;
+  }));
+  if (!n) h += `<li><p class="small">${u.noResults}</p></li>`;
+  return h + '</ol></div>';
+}
+
+function highlight(root, terms) {
+  const re = new RegExp('(' + terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'gi');
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => re.test(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT });
+  const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n => { const frag = document.createDocumentFragment(); n.nodeValue.split(re).forEach((part, i) => { if (i % 2) { const m = document.createElement('mark'); m.textContent = part; frag.appendChild(m); } else if (part) frag.appendChild(document.createTextNode(part)); }); n.parentNode.replaceChild(frag, n); });
+}
+
+/* ---------- router ---------- */
+function show(id, opts) {
+  opts = opts || {};
+  const main = $('main'); screen = id;
+  document.body.className = practice;
+  if (id === 'home') main.innerHTML = homeHTML();
+  else if (id === 'team') main.innerHTML = `<button class="back" data-go="home">${UI[lang].home}</button>` + (doctor ? coverHTML() : `<div class="card"><p>${UI[lang].choosePrompt}</p><button class="linkbtn" data-focus="doctor">${UI[lang].chooseBtn}</button></div>`);
+  else if (id.startsWith('t-')) main.innerHTML = topicHTML(id.slice(2));
+  else if (id === 'week') { main.innerHTML = weekHTML(); renderWeek(); $('due').addEventListener('change', renderWeek); $('due').addEventListener('input', renderWeek); }
+  else if (id === 'weight') { main.innerHTML = weightHTML(); main.querySelectorAll('input').forEach(i => i.addEventListener('input', renderWeight)); main.querySelectorAll('[data-u]').forEach(b => b.addEventListener('click', () => { wUnits = b.dataset.u; show('weight'); })); }
+  else if (id === 'warn') main.innerHTML = warnHTML();
+  else if (id === 'search') main.innerHTML = searchHTML(opts.q || '');
+  else { main.innerHTML = homeHTML(); screen = 'home'; }
+  main.querySelectorAll('.ph').forEach(el => el.innerHTML = doctor ? telLink(PRACTICES[practice].phone) : UI[lang].yourOffice);
+  if (!opts.silent) { try { history.replaceState(null, '', '#' + screen); } catch(e) {} }
+  window.scrollTo({top: 0});
+}
+
+$('main').addEventListener('click', e => {
+  const go = e.target.closest('[data-go]'); if (go) { show(go.dataset.go); return; }
+  const f = e.target.closest('[data-focus]'); if (f) { window.scrollTo({top:0}); const sel = $(f.dataset.focus); sel.focus(); try { sel.showPicker(); } catch(err) {} return; }
+  const acc = e.target.closest('.acc > button'); if (acc) { const a = acc.parentNode; a.classList.toggle('open'); acc.setAttribute('aria-expanded', a.classList.contains('open')); return; }
+  const all = e.target.closest('[data-acc]'); if (all) { $('main').querySelectorAll('.acc').forEach(a => a.classList.toggle('open', all.dataset.acc === 'open')); return; }
+  const op = e.target.closest('[data-open]'); if (op) {
+    const [t, pi, ii] = op.dataset.open.split('|'); const terms = op.dataset.terms.trim().split(/\s+/);
+    show('t-' + t); let idx = 0; for (let k = 0; k < +pi; k++) idx += content.topics[t][k].items.length; idx += +ii;
+    const a = $('main').querySelector(`.acc[data-i="${idx}"]`); if (a) { a.classList.add('open'); highlight(a, terms); setTimeout(() => a.scrollIntoView({block:'start', behavior:'smooth'}), 50); }
+  }
+});
+$('homeBtn').addEventListener('click', () => show('home'));
+$('appName').addEventListener('click', () => show('home'));
+$('searchForm').addEventListener('submit', e => { e.preventDefault(); show('search', {q: $('q').value}); });
+$('doctor').addEventListener('change', e => { doctor = e.target.value; practice = doctor ? docById(doctor).p : 'wch'; try { localStorage.setItem('hn_doctor', doctor); } catch(err) {} show('home'); });
+$('lang').addEventListener('change', e => { lang = e.target.value; try { localStorage.setItem('hn_lang', lang); } catch(err) {} loadLang(); });
+window.addEventListener('hashchange', () => { const id = location.hash.slice(1); if (id && id !== screen) show(id, {silent:true}); });
+
+async function loadLang() {
+  const s = STR[lang], u = UI[lang];
+  document.documentElement.lang = lang;
+  $('appName').textContent = s.app; $('lblPractice').textContent = s.practice; $('lblLang').textContent = s.language;
+  $('q').placeholder = s.searchPh; $('searchBtn').textContent = s.search; $('homeBtn').setAttribute('aria-label', u.home);
+  document.title = 'Holy Name ' + s.app; buildDoctorSelect();
+  $('main').innerHTML = `<div class="loading">${s.loading}</div>`;
+  try { const r = await fetch(`content/${lang}.json`, {cache:'no-cache'}); if (!r.ok) throw new Error(r.status); content = await r.json(); }
+  catch (e) { content = {topics:{}}; }
+  const id = location.hash.slice(1) || 'home';
+  show(id === 'search' ? 'home' : id, {silent:true});
+}
+loadLang();
+
+</script>
+</body>
+</html>
